@@ -23,7 +23,6 @@ class GameGrid:
         return False
 
 
-
 class WordscapesGame:
     def __init__(self, letters, words, grids, positions):
         self.letters = letters
@@ -34,10 +33,15 @@ class WordscapesGame:
     def shuffle_letters(self):
         pass
 
-    def 
+    def is_valid_guess(self, guess):
+        return guess in self.words
 
     def play(self):
         pass
 
 game = WordscapesGame(letters, words, grid, positions)
 game.play()
+
+if __name__ == "__main__":
+    game = WordscapesGame(letters, words, grid, positions)
+    game.play()
