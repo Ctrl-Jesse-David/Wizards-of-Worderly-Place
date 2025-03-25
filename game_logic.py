@@ -1,18 +1,21 @@
-import os
+import os, time
 from game_levels import letters, words, grid, positions
+import random
 
 class GameGrid:
     def __init__(self, grid, positions):
         self.grid = grid
-        self.positons = positions
+        self.positions = positions
 
     def refresh_display(self):
         return os.system('cls' if os.name == 'nt' else 'clear')
                          
-    def display_grid(self, grid):
+    def display_grid(self):
+        time.sleep(1.5)
+        self.refresh_display()
         print('WELCOME TO WORDSCAPES')
         for row in self.grid:
-            print(''.join(row))
+            print(' '.join(row))
         print('\n')
 
     def update_grid(self, word):
@@ -24,23 +27,57 @@ class GameGrid:
 
 
 class WordscapesGame:
-    def __init__(self, letters, words, grids, positions):
+    def __init__(self, letters, words, grid, positions):
         self.letters = letters
         self.words = words
-        self.grids = grids
+        self.grid = GameGrid(grid, positions)
         self.positions = positions
+        self.found_words = set()
     
-    def shuffle_letters(self):
+    def shuffle_letters(self, guess):
+        # use random.shuffle()
         pass
 
-    def is_valid_guess(self, guess):
-        return guess in self.words
+    def is_valid(self, guess):
+        return all(guess.count(letter) <= self.letters.count(guess) 
+                   for letter in guess)
 
     def play(self):
-        pass
+        while self.words != self.found_words:
+            self.grid.display_grid()
+            print(f"Available letters: {self.letters}")
+            print("Commands: [shuffle] to shuffle letters, [exit] to quit\n")
 
-game = WordscapesGame(letters, words, grid, positions)
-game.play()
+            guess = input('Guess a word: ').upper()
+
+            if guess == 'SHUFFLE':
+                self.shuffle_letters()
+                continue
+            
+            elif guess == 'EXIT':
+                print('Thank you for playing')
+                break
+
+            elif guess in self.words:
+                if guess in self.found_words:
+                    print('Word has already been found')
+                
+                elif self.is_valid(guess):
+                    self.found_words.add(guess)
+                    self.grid.update_grid(guess)
+                    print('Correct!')
+                    
+                else:
+                    print('invalid Word') 
+
+            else:
+                print('Word not in list')
+            print('Press enter to continue...')
+
+        self.grid.display_grid()
+        print('Congratulations! ou guessed all the words. ')
+
+            
 
 if __name__ == "__main__":
     game = WordscapesGame(letters, words, grid, positions)
