@@ -11,11 +11,10 @@ class GameGrid:
         return os.system('cls' if os.name == 'nt' else 'clear')
                          
     def display_grid(self):
-        time.sleep(1.5)
         self.refresh_display()
-        print('WELCOME TO WORDSCAPES')
+        print('WELCOME TO WORDSCAPES\n')
         for row in self.grid:
-            print(' '.join(row))
+            print('  '.join(row))
         print('\n')
 
     def update_grid(self, word):
@@ -34,12 +33,13 @@ class WordscapesGame:
         self.positions = positions
         self.found_words = set()
     
-    def shuffle_letters(self, guess):
-        # use random.shuffle()
-        pass
+    def shuffle_letters(self):
+        list_letters = list(self.letters)
+        random.shuffle(list_letters)
+        self.letters = ''.join(list_letters)
 
     def is_valid(self, guess):
-        return all(guess.count(letter) <= self.letters.count(guess) 
+        return all(guess.count(letter) <= self.letters.count(letter) 
                    for letter in guess)
 
     def play(self):
@@ -55,27 +55,34 @@ class WordscapesGame:
                 continue
             
             elif guess == 'EXIT':
-                print('Thank you for playing')
+                time.sleep(0.5)
                 break
 
             elif guess in self.words:
                 if guess in self.found_words:
                     print('Word has already been found')
+                    time.sleep(0.85)
                 
                 elif self.is_valid(guess):
                     self.found_words.add(guess)
                     self.grid.update_grid(guess)
                     print('Correct!')
+                    time.sleep(0.85)
                     
                 else:
-                    print('invalid Word') 
+                    print('invalid Word')
+                    time.sleep(0.85)
 
             else:
                 print('Word not in list')
             print('Press enter to continue...')
 
         self.grid.display_grid()
-        print('Congratulations! ou guessed all the words. ')
+
+        if self.words == self.found_words:
+            print('Congratulations! You guessed all the words.')
+        else:
+            print('Thank you for playing!\n')
 
             
 
