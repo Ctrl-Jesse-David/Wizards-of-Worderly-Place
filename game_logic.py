@@ -32,7 +32,10 @@ class WordscapesGame:
         self.grid = GameGrid(grid, positions)
         self.positions = positions
         self.found_words = set()
-    
+        self.lives = 5
+        self.points = 0
+        self.last_guess = None
+        
     def shuffle_letters(self):
         list_letters = list(self.letters)
         random.shuffle(list_letters)
@@ -43,52 +46,59 @@ class WordscapesGame:
                    for letter in guess)
 
     def play(self):
-        while True:
+        while len(self.found_words) < len(self.words) and self.lives > 0:
 
             self.grid.display_grid()
 
             if self.words == self.found_words:
                 break
+            self.cur_state()
 
-            print(f"Available letters: {self.letters}")
-            print("Commands: [shuffle] to shuffle letters, [exit] to quit\n")
-
-            guess = input('Guess a word: ').upper()
+            guess = input('\nGuess a word: ').upper()
 
             if guess == 'SHUFFLE':
                 self.shuffle_letters()
                 continue
             
-            elif guess == 'EXIT':
+            elif guess == 'EXIT': #MAY BUGS ATA KAPAG NAGEEXIT
                 time.sleep(0.35)
                 break
 
-            elif guess in self.words:
-                if guess in self.found_words:
-                    print('Word has already been found')
-                    time.sleep(0.35)
-                
-                elif self.is_valid(guess):
-                    self.found_words.add(guess)
-                    self.grid.update_grid(guess)
-                    print('Correct!')
-                    time.sleep(0.35)
-                    
-                else:
-                    print('invalid Word')
-                    time.sleep(0.35)
+            self.the_guess(guess)
 
-            else:
-                print('Word not in list')
-                time.sleep(0.35)
+        self.end_game()
 
+    def cur_state(self):
+        print(f"\nAvailable letters: {self.letters}")
+        print(f"Lives: {self.lives}")
+        print(f"Points: {self.points}") 
+        print(f"Words found: {len(self.found_words)}/{len(self.words)}")
+        print(f"Last guess: {self.last_guess}")
+        print("Commands: [shuffle] to shuffle letters, [exit] to quit\n")
 
-        if self.words == self.found_words:
-            print('Congratulations! You guessed all the words.')
+    def the_guess(self, guess):
+        if guess in self.words and guess not in self.found_words:
+            self.found_words.add(guess)
+            self.grid.update_grid(guess)
+            self.last_guess = guess
+            self.points += 1 #PER NEW LETTER DISC DAPAT UNG POINTS PERO NEXT TIME NA
+            print('Correct!')
+
         else:
-            print('Thank you for playing!\n')
+            print('Invalid word')
+            self.lives -= 1
 
-            
+        time.sleep(0.35)        
+
+    def end_game(self):
+        if len(self.found_words) == len(self.words):
+            print('\nCongratulations! You guessed all the words.\n')
+        else:
+            print('Game Over! Thank you for playing!\n')
+
+        print(f"Words: {self.words}")
+        print(f"Found words: {self.found_words}")
+        #REVISION KO PA SIGURO*
 
 if __name__ == "__main__":
     game = WordscapesGame(letters, words, grid, positions)
