@@ -96,9 +96,10 @@ class WordscapesGame:
         else:
             print('Game Over! Thank you for playing!\n')
 
-        print(f"Words: {self.words}")
-        print(f"Found words: {self.found_words}")
-        #REVISION KO PA SIGURO*
+        print(f"Words: {', '.join(self.words)}")
+        print(f"Found words: {', '.join(self.found_words)}\n")
+        
+        # oks na ong
 
 if __name__ == "__main__":
     game = WordscapesGame(letters, words, grid, positions)
