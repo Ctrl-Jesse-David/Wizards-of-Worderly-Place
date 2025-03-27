@@ -43,8 +43,13 @@ class WordscapesGame:
                    for letter in guess)
 
     def play(self):
-        while self.words != self.found_words:
+        while True:
+
             self.grid.display_grid()
+
+            if self.words == self.found_words:
+                break
+
             print(f"Available letters: {self.letters}")
             print("Commands: [shuffle] to shuffle letters, [exit] to quit\n")
 
@@ -55,29 +60,28 @@ class WordscapesGame:
                 continue
             
             elif guess == 'EXIT':
-                time.sleep(0.5)
+                time.sleep(0.35)
                 break
 
             elif guess in self.words:
                 if guess in self.found_words:
                     print('Word has already been found')
-                    time.sleep(0.85)
+                    time.sleep(0.35)
                 
                 elif self.is_valid(guess):
                     self.found_words.add(guess)
                     self.grid.update_grid(guess)
                     print('Correct!')
-                    time.sleep(0.85)
+                    time.sleep(0.35)
                     
                 else:
                     print('invalid Word')
-                    time.sleep(0.85)
+                    time.sleep(0.35)
 
             else:
                 print('Word not in list')
-            print('Press enter to continue...')
+                time.sleep(0.35)
 
-        self.grid.display_grid()
 
         if self.words == self.found_words:
             print('Congratulations! You guessed all the words.')
