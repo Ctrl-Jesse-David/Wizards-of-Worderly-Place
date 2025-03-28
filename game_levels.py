@@ -1,5 +1,5 @@
 letters = "TEAM"
-words = {"TEAM", "MEAT", "MATE", "TEA", "TAME"}
+# words = {"TEAM", "MEAT", "MATE", "TEA", "TAME"}
 grid = [
     ['.', '.', '.', '#', '.'],
     ['.', '.', '.', '#', '.'],
