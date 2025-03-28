@@ -1,57 +1,9 @@
-import os, time
+import time, random
 from game_levels import letters, grid, positions
-import random
-player_nick = ""
+from utilities import clear_screen, GameGrid
+from termcolor import cprint
 
-def menu():
-    global player_nick
-
-    while True:
-        print("\n" + "="*40)
-        print("🧙 Welcome to Wizards of Worderly Place!".center(40))
-        print("="*40)
-        print("\n1. 🎮 Start Game")
-        print("2. 🚪 Exit")
-        choice = input("\n👉 Enter your choice: ")
-
-        if choice == "1":
-            print("\n🎲 Starting the game...")
-            time.sleep(0.25)
-            if not player_nick:
-                print("\n" + "-"*40)
-                player_nick = input("👤 Enter your nickname: ")
-            return True
-
-        elif choice == "2":
-            return False 
-
-        else:
-            print("Invalid choice. Please try again.")
-            time.sleep(0.5)
-
-class GameGrid:
-    def __init__(self, grid, positions):
-        self.grid = grid
-        self.positions = positions
-
-    def refresh_display(self):
-        return os.system('cls' if os.name == 'nt' else 'clear')
-                         
-    def display_grid(self):
-        self.refresh_display()
-        print(f'Welcome to Wizards of Worderly Place, {player_nick}!\n')
-        for row in self.grid:
-            print('  '.join(row))
-        print('\n')
-
-    def update_grid(self, word):
-        if word in self.positions:
-            for idx, (row, col) in enumerate(self.positions[word]):
-                self.grid[row][col] = word[idx]
-            return True
-        return False
-
-
+# next time na ako mag-aadd ng termcolor edits katamad pa di naman required
 class WordscapesGame:
     def __init__(self, letters, grid, positions):
         self.letters = letters
@@ -77,13 +29,13 @@ class WordscapesGame:
             set(coordinate for word in found_words 
                 for coordinate in self.positions[word]))
 
-    def play(self):
+    def play(self, nickname):
         while self.found_words != self.words and self.lives > 0:
 
-            self.grid.display_grid()
+            self.grid.display_grid(nickname)
             self.cur_state()
 
-            guess = input('\nGuess a word: ').upper()
+            guess = input('Guess a word: ').upper()
 
             if guess == 'SHUFFLE':
                 self.shuffle_letters()
@@ -94,18 +46,20 @@ class WordscapesGame:
 
             self.the_guess(guess)
             
-        self.grid.refresh_display()
-        self.grid.display_grid()
+        clear_screen()
+        self.grid.display_grid(nickname)
         self.end_game()
-        return True #Means game is complete
+        return
 
     def cur_state(self):
-        print(f"\nAvailable letters: {self.letters}")
-        print(f"Lives: {self.lives}")
-        print(f"Points: {self.points}") 
-        print(f"Words found: {len(self.found_words)}/{len(self.words)}")
-        print(f"Last guess: {self.last_guess}")
-        print("Commands: [shuffle] to shuffle letters, [exit] to quit\n")
+        print('-'*75)
+        print(f"🔠Available letters: {self.letters}")
+        print(f"❤️‍🔥 Lives: {self.lives}")
+        print(f"🌟 Score: {self.points}") 
+        print(f"📖 Words found: {len(self.found_words)}/{len(self.words)}")
+        print(f"📝 Last guess: {self.last_guess}") # hindi to nag-uupdate pag mali yung guess (intentional ba to)
+        print("🛠️ Commands: [shuffle] to shuffle letters, [exit] to quit")
+        print('-'*75)
 
     def the_guess(self, guess):
         if self.is_valid(guess):
@@ -114,16 +68,17 @@ class WordscapesGame:
                 self.last_guess = guess
                 self.points += self.calculate_points(guess, self.found_words)
                 self.found_words.add(guess)
-                print('Correct!')
+                cprint('Correct!', "green", attrs=["bold"])
 
             elif guess in self.words and guess in self.found_words:
-                print('Word has already been found.')
+                cprint('Word has already been found.', "red", attrs=["bold"])
             
             else:
-                print('Incorrect.')
+                self.lives -= 1
+                cprint('Incorrect.', "red", attrs=["bold"])
 
         else:
-            print(f"Invalid word! Only {'-'.join(list(self.letters))} is allowed")
+            cprint(f"Invalid word! Only {'-'.join(list(self.letters))} is allowed", "red", attrs=["bold"])
             self.lives -= 1
             time.sleep(1)
             return
@@ -131,40 +86,15 @@ class WordscapesGame:
         time.sleep(0.35)        
 
     def end_game(self):
+        print('-'*75)
         print(f"WORDS: {', '.join(self.words)}")
         print(f"FOUND WORDS: {', '.join(self.found_words) if self.found_words else None}") 
-        print(f"SCORE: {self.points}\n")
+        print(f"SCORE: {self.points}")
+        print('-'*75)
 
         if len(self.found_words) == len(self.words):
-            print('Congratulations! You guessed all the words.\n')
+            cprint('Congratulations! You guessed all the words.'.center(75), color="green", attrs=["bold"])
+            print('-'*75)
         else:
-            print('Game Over!\n')
-
-def main():
-    while True:  
-        game = WordscapesGame(letters, grid, positions)
-        game.play()
-        
-        while True:
-            retry = input("\n🔄 Would you like to play again? [y/n]: ").lower().strip()
-            if retry in ['y', 'n']:
-                time.sleep(0.25)
-                break
-            else:
-                print("baliw ka ba. Please enter 'y' or 'n'.")
-        
-        if retry == 'n':
-            print("\nReturning to main menu...")
-            time.sleep(0.5)
-            break
-
-if __name__ == "__main__":
-    while True:
-        game_start = menu()
-        if game_start:
-            main()
-
-        else:
-            time.sleep(0.25)
-            print("Exiting the game...")
-            break
+            cprint('Game Over!'.center(75), "red", attrs=["bold"])
+            print('-'*75)
