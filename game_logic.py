@@ -1,6 +1,33 @@
 import os, time
 from game_levels import letters, grid, positions
 import random
+player_nick = ""
+
+def menu():
+    global player_nick
+
+    while True:
+        print("\n" + "="*40)
+        print("🧙 Welcome to Wizards of Worderly Place!".center(40))
+        print("="*40)
+        print("\n1. 🎮 Start Game")
+        print("2. 🚪 Exit")
+        choice = input("\n👉 Enter your choice: ")
+
+        if choice == "1":
+            print("\n🎲 Starting the game...")
+            time.sleep(0.25)
+            if not player_nick:
+                print("\n" + "-"*40)
+                player_nick = input("👤 Enter your nickname: ")
+            return True
+
+        elif choice == "2":
+            return False 
+
+        else:
+            print("Invalid choice. Please try again.")
+            time.sleep(0.5)
 
 class GameGrid:
     def __init__(self, grid, positions):
@@ -12,7 +39,7 @@ class GameGrid:
                          
     def display_grid(self):
         self.refresh_display()
-        print('WELCOME TO WORDSCAPES\n')
+        print(f'Welcome to Wizards of Worderly Place, {player_nick}!\n')
         for row in self.grid:
             print('  '.join(row))
         print('\n')
@@ -63,8 +90,6 @@ class WordscapesGame:
                 continue
             
             elif guess == 'EXIT': 
-                # MAY BUGS ATA KAPAG NAGEEXIT - N
-                # Anong bug cuh - D
                 break
 
             self.the_guess(guess)
@@ -72,6 +97,7 @@ class WordscapesGame:
         self.grid.refresh_display()
         self.grid.display_grid()
         self.end_game()
+        return True #Means game is complete
 
     def cur_state(self):
         print(f"\nAvailable letters: {self.letters}")
@@ -112,9 +138,33 @@ class WordscapesGame:
         if len(self.found_words) == len(self.words):
             print('Congratulations! You guessed all the words.\n')
         else:
-            print('Game Over! Thank you for playing!\n')
+            print('Game Over!\n')
 
+def main():
+    while True:  
+        game = WordscapesGame(letters, grid, positions)
+        game.play()
+        
+        while True:
+            retry = input("\n🔄 Would you like to play again? [y/n]: ").lower().strip()
+            if retry in ['y', 'n']:
+                time.sleep(0.25)
+                break
+            else:
+                print("baliw ka ba. Please enter 'y' or 'n'.")
+        
+        if retry == 'n':
+            print("\nReturning to main menu...")
+            time.sleep(0.5)
+            break
 
 if __name__ == "__main__":
-    game = WordscapesGame(letters, grid, positions)
-    game.play()
+    while True:
+        game_start = menu()
+        if game_start:
+            main()
+
+        else:
+            time.sleep(0.25)
+            print("Exiting the game...")
+            break
