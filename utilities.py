@@ -10,6 +10,14 @@ def display_header(title, color):
     cprint(title.center(75), color, attrs=["bold"])
     print("="*75)
 
+def is_valid(guess, letters):
+    return all(guess.count(letter) <= letters.count(letter) 
+        for letter in guess)
+
+def update_leaderboard(name, score):
+    with open("leaderboard.txt", "a") as file:
+        file.write(f"{name}: {score}\n")
+
 class GameGrid:
     def __init__(self, grid, positions):
         self.grid = grid

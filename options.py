@@ -1,15 +1,18 @@
 from termcolor import cprint, colored
-from utilities import clear_screen, display_header
+from utilities import clear_screen, display_header, update_leaderboard
 from game_logic import WordscapesGame
-import time
+import time, copy
 
+def start_game(letters, grid, positions, name):
+    while True:
+        # para new grid each play
+        game = WordscapesGame(
+            list(letters),
+            copy.deepcopy(grid),
+            copy.deepcopy(positions)
+        )
+        game.play(name)
 
-
-def start_game(letters, grid, positions, nickname):
-    while True:  
-        game = WordscapesGame(letters, grid, positions)
-        game.play(nickname)
-        
         while True:
             retry_option = input("🔄 Would you like to play again? " 
                             + colored("[y/n]", "blue", attrs=["bold"]) + ": ")\
@@ -19,16 +22,20 @@ def start_game(letters, grid, positions, nickname):
                 break
             else:
                 cprint("Invalid response!", "red", attrs=["bold"])
+                time.sleep(0.1)
         
+        update_leaderboard(name, game.points)
+
         if retry_option == 'n':
             print("Returning to main menu...")
-            time.sleep(0.6)
+            time.sleep(0.5)
             clear_screen()
             break
         else:
             print("Restarting the game...")
             time.sleep(0.6)
             continue
+
 
 
 def display_instructions():
@@ -59,7 +66,22 @@ def display_instructions():
 
 
 def display_leaderboard():
-    '''
-    di ko pa alam if may leaderboard so placeholder muna to
-    '''
-    clear_screen()
+    display_header(
+        title="🏆 LEADERBOARD 🏆",
+        color="yellow"
+    )
+    try:
+        with open("leaderboard.txt", "r") as file:
+            scores = sorted((line.strip().split(": ") for line in file), 
+                            key=lambda x: int(x[1]), reverse=True)[:8]
+        if scores:
+            for rank, (name, score) in enumerate(scores, start=1):
+                print(f"{rank}. {name} - {score}")
+        else:
+            print("No scores yet! Play to be the first on the leaderboard!")
+
+    except FileNotFoundError:
+        print("No leaderboard found. Play the game to create one!")
+
+    print("-"*75)
+    input(colored("Press Enter to return to the main menu.", 'yellow', attrs=["bold"]))

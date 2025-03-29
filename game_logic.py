@@ -1,6 +1,6 @@
 import time, random
 from game_levels import letters, grid, positions
-from utilities import clear_screen, GameGrid
+from utilities import clear_screen, is_valid, GameGrid
 from termcolor import cprint
 
 # next time na ako mag-aadd ng termcolor edits katamad pa di naman required
@@ -16,13 +16,7 @@ class WordscapesGame:
         self.last_guess = None
         
     def shuffle_letters(self):
-        list_letters = list(self.letters)
-        random.shuffle(list_letters)
-        self.letters = ''.join(list_letters)
-
-    def is_valid(self, guess):
-        return all(guess.count(letter) <= self.letters.count(letter) 
-                   for letter in guess)
+        random.shuffle(self.letters)
     
     def calculate_points(self, guess, found_words):
         return len(set(self.positions[guess]) - \
@@ -53,16 +47,16 @@ class WordscapesGame:
 
     def cur_state(self):
         print('-'*75)
-        print(f"🔠Available letters: {self.letters}")
+        print(f"🔠Available letters: {'-'.join(self.letters)}")
         print(f"❤️‍🔥 Lives: {self.lives}")
         print(f"🌟 Score: {self.points}") 
         print(f"📖 Words found: {len(self.found_words)}/{len(self.words)}")
-        print(f"📝 Last guess: {self.last_guess}") # hindi to nag-uupdate pag mali yung guess (intentional ba to)
+        print(f"📝 Last correct guess: {self.last_guess}")
         print("🛠️ Commands: [shuffle] to shuffle letters, [exit] to quit")
         print('-'*75)
 
     def the_guess(self, guess):
-        if self.is_valid(guess):
+        if is_valid(guess, ''.join(self.letters)):
             if guess in self.words and guess not in self.found_words:
                 self.grid.update_grid(guess)
                 self.last_guess = guess
