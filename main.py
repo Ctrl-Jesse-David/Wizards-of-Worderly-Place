@@ -4,29 +4,42 @@ from utilities import clear_screen
 from game_levels import letters, grid, positions
 import sys, time
 
-def main_menu():
-    while True:
-        display_header(
+def display_menu():
+    display_header(
             title="🧙 Welcome to Wizards of Worderly Place! 🧙",
             color="light_blue"
         )
-        print("Can you uncover all the hidden words?".center(75))
-        print("Test your wits and master the art of wordplay!".center(75))
-        print("-" * 75)
+    print("Can you uncover all the hidden words?".center(75))
+    print("Test your wits and master the art of wordplay!".center(75))
+    print("-" * 75)
 
-        print((" "*11 + "📖  " + colored("[S]", "light_blue", attrs=["bold"]) + "  Start Game   📖").center(75))
-        print((" "*11 + "📜  " + colored("[I]", "light_blue", attrs=["bold"]) + "  Instructions 📜").center(75))
-        print((" "*11 + "🏆  " + colored("[L]", "light_blue", attrs=["bold"]) + "  Leaderboards 🏆").center(75))
-        print((" "*11 + "🚪  " + colored("[E]", "light_blue", attrs=["bold"]) + "  Exit Game    🚪").center(75))
+    print((" "*11 + "📖  " + colored("[S]", "light_blue", attrs=["bold"]) + "  Start Game   📖").center(75))
+    print((" "*11 + "📜  " + colored("[I]", "light_blue", attrs=["bold"]) + "  Instructions 📜").center(75))
+    print((" "*11 + "🏆  " + colored("[L]", "light_blue", attrs=["bold"]) + "  Leaderboards 🏆").center(75))
+    print((" "*11 + "🚪  " + colored("[E]", "light_blue", attrs=["bold"]) + "  Exit Game    🚪").center(75))
 
-        print("-" * 75)
-        print("Please enter a choice and press Enter.".center(75))
-        print("=" * 75)
+    print("-" * 75)
+    print("Please enter a choice and press Enter.".center(75))
+    print("=" * 75)
+    
+
+def main_menu():
+    while True:
+        display_menu()
 
         choice = input(colored("Select an option: ", "light_blue", attrs=["bold"])).strip().upper()
 
         if choice == "S": 
-            nickname = input("👤 Enter your nickname: ")
+            while True:
+                nickname = input("👤 Enter your nickname: ").strip()
+                if nickname:
+                    break
+                else:
+                    cprint("Input your name!", "red", attrs=["bold"])
+                    time.sleep(0.3)
+                    clear_screen()
+                    display_menu()
+
             clear_screen()
             start_game(letters, grid, positions, nickname)
 
