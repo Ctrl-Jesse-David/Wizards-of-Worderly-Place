@@ -25,7 +25,7 @@ def get_main_and_valid_words(file_path):
                 try:
                     with open(file_path, 'r') as file:
                         for word in map(str.strip, file):
-                            if is_valid(word, base_word):
+                            if is_valid(word, base_word) and word != base_word:
                                 valid_words.append(word)
                 except FileNotFoundError:
                     print("bat wala yung file")
@@ -42,3 +42,22 @@ def get_main_and_valid_words(file_path):
 
 print(get_main_and_valid_words("word_dictionary.txt"))
 
+# di ko gets yung main_diagonal pero if 
+# pwede siya on all parts of the grid ganito code ko
+
+def main_diagonal_generator(word, grid):
+    step = 2
+
+    rand_x = random.randint(0, 4)
+    rand_y = random.randint(0, 14)
+
+    for i, letter in enumerate(word):
+        grid[rand_x + i * step][rand_y + i * step] = letter
+
+    return grid
+
+grid = [['.' for _ in range(25)] for _ in range(15)]
+updated_grid = main_diagonal_generator('streak', grid)
+
+for row in updated_grid:
+    print(' '.join(row))
