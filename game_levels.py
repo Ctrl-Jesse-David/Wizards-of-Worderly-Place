@@ -1,5 +1,4 @@
 # Sample level
-import random
 
 
 letters = "TEAM"
