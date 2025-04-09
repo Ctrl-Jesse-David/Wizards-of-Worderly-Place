@@ -2,7 +2,7 @@ from termcolor import cprint, colored
 from options import start_game, display_instructions, display_leaderboard, display_header
 from utilities import clear_screen, update_leaderboard
 from grid_generator import generate_word_grid, generate_positions_dict
-import sys, time
+import sys, time, random
 
 def display_menu():
     '''
@@ -34,7 +34,8 @@ def display_menu():
 #PANG GENERATE NA NUNG GRID NA DI NA SAMPLE
 def get_game_level(): 
     grid_data, placed_words = generate_word_grid()
-    letters = placed_words[0][0]
+    letters = list(placed_words[0][0])
+    random.shuffle(letters)
 
     game_grid = []
     for row in grid_data:
