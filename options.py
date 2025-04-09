@@ -4,8 +4,30 @@ from game_logic import WordscapesGame
 import time, copy
 
 def start_game(letters, grid, positions, name):
+    '''
+    
+    Initializes and manages a WoWP game session for the player.
+
+    This function creates a new WordscapesGame instance and 
+    handles the game flow. The player is prompted to either 
+    play again or return to the main menu after each game.
+
+    ==========
+    Parameters:
+    ==========
+    letters: str
+        The letters available for forming words in the game
+    grid: list
+        The puzzle grid structure to be filled with words
+    positions: dict
+        Mapping of word positions within the grid
+    name: str
+        Player's nickname for score tracking
+
+    '''
+
+    # For creating a new grid
     while True:
-        # para new grid each play
         game = WordscapesGame(
             list(letters),
             copy.deepcopy(grid),
@@ -13,6 +35,7 @@ def start_game(letters, grid, positions, name):
         )
         game.play(name)
 
+        # Replay Option
         while True:
             retry_option = input("🔄 Would you like to play again? " 
                             + colored("[y/n]", "blue", attrs=["bold"]) + ": ")\
@@ -39,6 +62,13 @@ def start_game(letters, grid, positions, name):
 
 
 def display_instructions():
+    '''
+    Displays the game instructions and rules to the player.
+
+    This function shows a formatted display of how to play the game,
+    including game rules and available power-ups/hints. 
+    '''
+
     display_header(
         title="📜 GAME INSTRUCTIONS 📜",
         color="light_red"
@@ -66,6 +96,13 @@ def display_instructions():
 
 
 def display_leaderboard():
+    '''
+    Displays the top 8 player scores from the leaderboard.
+
+    This function reads player scores from 'leaderboard.txt', sorts them
+    in descending order, and displays the top scores.
+    '''
+
     display_header(
         title="🏆 LEADERBOARD 🏆",
         color="yellow"
