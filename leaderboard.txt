@@ -4,3 +4,6 @@ Jesse: 0
 Jesse: 6
 sadas: 6
 sadas: 6
+adas: 0
+adas: 0
+asds: 6

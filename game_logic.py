@@ -149,7 +149,22 @@ class WordscapesGame:
             time.sleep(1)
             return
 
-        time.sleep(0.35)        
+        time.sleep(0.35)       
+
+    def print_wrapped_words(self, label, word_list, width=75):
+        words = sorted(word_list)
+        prefix = f"{label}: "
+        line = prefix
+        for word in words:
+            word_str = f"{word}, "
+            if len(line) + len(word_str.rstrip()) > width:
+                print(line.rstrip(', '))
+                line = " " * len(prefix) + word_str
+            else:
+                line += word_str
+        if line.strip():
+            print(line.rstrip(', '))
+ 
 
     def end_game(self):
         '''
@@ -160,8 +175,8 @@ class WordscapesGame:
         '''
 
         print('-'*75)
-        print(f"WORDS: {', '.join(self.words)}")
-        print(f"FOUND WORDS: {', '.join(self.found_words) if self.found_words else None}") 
+        self.print_wrapped_words("WORDS", self.words)
+        self.print_wrapped_words("FOUND WORDS", self.found_words) if self.found_words else print("FOUND WORDS: None")
         print(f"SCORE: {self.points}")
         print('-'*75)
 
