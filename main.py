@@ -1,7 +1,8 @@
 from termcolor import cprint, colored
 from options import start_game,display_instructions, display_leaderboard, display_header
 from utilities import clear_screen
-from game_levels import letters, grid, positions
+# from game_levels import letters, grid, positions (Tinanggal ko muna)
+from grid_generator import generate_word_grid, generate_positions_dict
 import sys, time
 
 def display_menu():
@@ -29,7 +30,24 @@ def display_menu():
     print("-" * 75)
     print("Please enter a choice and press Enter.".center(75))
     print("=" * 75)
+
+
+#PANG GENERATE NA NUNG GRID NA DI NA SAMPLE
+def get_game_level(): 
+    grid_data, placed_words = generate_word_grid()
     
+    valid_words = [word_info[0] for word_info in placed_words]
+    
+    game_grid = []
+    for row in grid_data:
+        game_row = []
+        for cell in row:
+            game_row.append(cell if cell == '.' else '#')
+        game_grid.append(game_row)
+    
+    positions_dict = generate_positions_dict(placed_words)
+
+    return valid_words, game_grid, positions_dict
 
 def main_menu():
     '''
@@ -46,6 +64,7 @@ def main_menu():
     - L: Display leaderboard
     - E: Exit the application
     '''
+    
     while True:
         display_menu()
 
@@ -63,6 +82,7 @@ def main_menu():
                     display_menu()
 
             clear_screen()
+            letters, grid, positions = get_game_level()
             start_game(letters, grid, positions, nickname)
 
         elif choice == "I":

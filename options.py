@@ -6,7 +6,7 @@ import time, copy
 def start_game(letters, grid, positions, name):
     '''
     
-    Initializes and manages a Wordscapes game session for the player.
+    Initializes and manages a WoWP game session for the player.
 
     This function creates a new WordscapesGame instance and 
     handles the game flow. The player is prompted to either 
@@ -22,7 +22,7 @@ def start_game(letters, grid, positions, name):
     positions: dict
         Mapping of word positions within the grid
     name: str
-        Player's name for score tracking
+        Player's nickname for score tracking
 
     '''
 
