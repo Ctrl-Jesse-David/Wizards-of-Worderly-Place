@@ -5,6 +5,14 @@ from game_levels import letters, grid, positions
 import sys, time
 
 def display_menu():
+    '''
+    Displays the main menu interface of the game.
+    
+    This function presents a formatted menu showing the game title
+    and available options including starting the game, viewing instructions,
+    checking the leaderboard, and exiting the game.
+    '''
+
     display_header(
             title="🧙 Welcome to Wizards of Worderly Place! 🧙",
             color="light_blue"
@@ -24,6 +32,20 @@ def display_menu():
     
 
 def main_menu():
+    '''
+    Manages the main menu flow and user interaction.
+    
+    This function implements the main control loop for the game menu,
+    handling user input and directing program flow to the appropriate
+    functions based on user selection. It continues running until the
+    player chooses to exit the game.
+    
+    Options:
+    - S: Start a new game (prompts for the player's nickname)
+    - I: Display game instructions
+    - L: Display leaderboard
+    - E: Exit the application
+    '''
     while True:
         display_menu()
 
@@ -62,4 +84,8 @@ def main_menu():
             clear_screen()
 
 if __name__ == "__main__":
+    '''
+    Entry point of the program.
+    '''
+
     main_menu()
