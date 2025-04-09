@@ -1,0 +1,5 @@
+- Animations
+- Bonus life feature
+- gawing emoji yung letters like 🅰️ para readable grid
+- gawing maganda ung UI
+- Gawan ng tutorial (?)
