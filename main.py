@@ -1,10 +1,18 @@
 from termcolor import cprint, colored
-from options import start_game,display_instructions, display_leaderboard, display_header
+from options import start_game, display_instructions, display_leaderboard, display_header
 from utilities import clear_screen
-from game_levels import letters, grid, positions
+from grid_generator import generate_word_grid, generate_positions_dict
 import sys, time
 
 def display_menu():
+    '''
+    Displays the main menu interface of the game.
+    
+    This function presents a formatted menu showing the game title
+    and available options including starting the game, viewing instructions,
+    checking the leaderboard, and exiting the game.
+    '''
+
     display_header(
             title="🧙 Welcome to Wizards of Worderly Place! 🧙",
             color="light_blue"
@@ -21,9 +29,40 @@ def display_menu():
     print("-" * 75)
     print("Please enter a choice and press Enter.".center(75))
     print("=" * 75)
+
+
+#PANG GENERATE NA NUNG GRID NA DI NA SAMPLE
+def get_game_level(): 
+    grid_data, placed_words = generate_word_grid()
+    letters = placed_words[0][0]
+
+    game_grid = []
+    for row in grid_data:
+        game_row = []
+        for cell in row:
+            game_row.append(cell if cell == '.' else '#')
+        game_grid.append(game_row)
     
+    positions_dict = generate_positions_dict(placed_words)
+
+    return letters, game_grid, positions_dict
 
 def main_menu():
+    '''
+    Manages the main menu flow and user interaction.
+    
+    This function implements the main control loop for the game menu,
+    handling user input and directing program flow to the appropriate
+    functions based on user selection. It continues running until the
+    player chooses to exit the game.
+    
+    Options:
+    - S: Start a new game (prompts for the player's nickname)
+    - I: Display game instructions
+    - L: Display leaderboard
+    - E: Exit the application
+    '''
+    
     while True:
         display_menu()
 
@@ -41,6 +80,7 @@ def main_menu():
                     display_menu()
 
             clear_screen()
+            letters, grid, positions = get_game_level()
             start_game(letters, grid, positions, nickname)
 
         elif choice == "I":
@@ -62,4 +102,8 @@ def main_menu():
             clear_screen()
 
 if __name__ == "__main__":
+    '''
+    Entry point of the program.
+    '''
+
     main_menu()

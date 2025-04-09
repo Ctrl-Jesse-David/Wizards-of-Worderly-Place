@@ -11,8 +11,10 @@ def display_header(title, color):
     print("="*75)
 
 def is_valid(guess, letters):
-    return all(guess.count(letter) <= letters.count(letter) 
-        for letter in guess)
+    guess_cap = guess.upper()
+    letters_cap = letters.upper()
+    return all(guess_cap.count(letter) <= letters_cap.count(letter) 
+        for letter in guess_cap)
 
 def update_leaderboard(name, score):
     with open("leaderboard.txt", "a") as file:
