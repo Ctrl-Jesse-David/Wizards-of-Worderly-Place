@@ -115,6 +115,48 @@ def generate_word_grid():
         if placed_count >= 20:
             return grid, placed_words
 
+
+### 
+# FOR HIDING THE WORDS 
+def generate_positions_dict(placed_words):
+    positions = {}
+    for word, coords, direction in placed_words:
+        if coords is None:
+            positions[word] = [(2, 1 + i) for i in range(len(word))]
+
+        elif direction == 'h':
+            row, col = coords
+            positions[word] = [(row, col + i) for i in range(len(word))]
+
+        elif direction == 'v':
+            row, col = coords
+            positions[word] = [(row + i, col) for i in range(len(word))]
+    
+    return positions
+
+def convert_grid_to_display(grid):
+    display_grid = []
+    
+    for row in grid:
+        display_row = []
+        for cell in row:
+            if cell == '.':
+                display_row.append('.')
+            else:
+                display_row.append('#')
+        display_grid.append(display_row)
+        
+    return display_grid
+
+def reveal_word(display_grid, word, positions):
+    if word in positions:
+        for i, (row, col) in enumerate(positions[word]):
+            display_grid[row][col] = word[i]
+    
+    return display_grid
+
+####
+
 if __name__ == '__main__':
     '''para mas readable return values'''
     grid, placed_words = generate_word_grid()
@@ -126,7 +168,6 @@ if __name__ == '__main__':
     print("\nPlaced Words (Total: {}):".format(len(placed_words)))
     for word, coords, direction in placed_words:
         print(f"{word}: {'diagonal' if direction == 'diagonal' else f'{direction} at {coords}'}")   
-
 
 '''
 bale per valid word ganito return value nung placed_words lag nirun yung generate_word_grid()
