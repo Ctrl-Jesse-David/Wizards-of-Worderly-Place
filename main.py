@@ -1,6 +1,6 @@
 from termcolor import cprint, colored
 from options import start_game, display_instructions, display_leaderboard, display_header
-from utilities import clear_screen
+from utilities import clear_screen, update_leaderboard
 from grid_generator import generate_word_grid, generate_positions_dict
 import sys, time
 
@@ -80,8 +80,19 @@ def main_menu():
                     display_menu()
 
             clear_screen()
-            letters, grid, positions = get_game_level()
-            start_game(letters, grid, positions, nickname)
+            while True:
+                letters, grid, positions = get_game_level()
+                retry_option = start_game(letters, grid, positions, nickname)
+
+                if retry_option == 'n':
+                    print("Returning to main menu...")
+                    time.sleep(0.5)
+                    clear_screen()
+                    break
+                else:
+                    print("Restarting the game...")
+                    time.sleep(0.6)
+                    continue
 
         elif choice == "I":
             display_instructions()
