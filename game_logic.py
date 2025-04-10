@@ -105,6 +105,7 @@ class WordscapesGame:
         Shows available letters, remaining lives, current score,
         words found, last correct guess, and available commands to the player.
         '''
+
         print('-'*75)
         print(f"🔠Available letters: {'-'.join(self.letters)}")
         print(f"❤️‍🔥 Lives: {self.lives}")
