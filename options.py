@@ -45,64 +45,10 @@ def start_game(letters, grid, positions, name):
             time.sleep(0.1)
         
 
-    # while True:
-    #     game = WordscapesGame(
-    #         list(letters),
-    #         copy.deepcopy(grid),
-    #         copy.deepcopy(positions)
-    #     )
-    #     game.play(name)
-
-    #     # Replay Option
-    #     while True:
-    #         retry_option = input("🔄 Would you like to play again? " 
-    #                         + colored("[y/n]", "blue", attrs=["bold"]) + ": ")\
-    #                         .lower().strip()
-    #         if retry_option in ['y', 'n']:
-    #             time.sleep(0.25)
-    #             break
-    #         else:
-    #             cprint("Invalid response!", "red", attrs=["bold"])
-    #             time.sleep(0.1)
-        
-    #     update_leaderboard(name, game.points)
-
-    #     if retry_option == 'n':
-    #         print("Returning to main menu...")
-    #         time.sleep(0.5)
-    #         clear_screen()
-    #         break
-    #     else:
-    #         print("Restarting the game...")
-    #         time.sleep(0.6)
-    #         continue
-
-
 
 
 def display_instructions():
-    '''
-    Displays the game instructions and rules to the player.
-
-    This function shows a formatted display of how to play the game,
-    including game rules and available power-ups/hints. 
-    '''
-
-    display_header(
-        title="📜 GAME INSTRUCTIONS 📜",
-        color="light_red"
-    )
-
-    cprint("🕹️  How to Play:", "light_red", attrs=["bold"])
-    print("  Form words using the given letters to solve the puzzle.")
-    print("  Type the words and press Enter to submit your answer.")
-    print("-"*75)
     
-    cprint("✨ Game Rules:", "light_red", attrs=["bold"])
-    print("  🏆 Find all possible words to complete the level.")
-    print("  🚫 Invalid words or repeated words will not be accepted.")
-    print("  💀 Choose your words wisely! You have limited lives.")
-    print("-"*75)
     
     cprint("🔮 Power-ups & Hints:", "light_red", attrs=["bold"])
     print("  🪄 Shuffle - Rearranges the given letters.")
