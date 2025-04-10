@@ -85,6 +85,9 @@ def place_word(word, grid):
         if is_valid_placement(word, row, col, direction, grid):
             place_word_on_grid(word, row, col, direction, grid)
             return True, (row, col, direction)
+        else:
+            return False, None
+        
     
     return False, None
 
@@ -102,6 +105,7 @@ def generate_word_grid():
     while True:
         grid = [['.' for _ in range(25)] for _ in range(15)]
         placed_words = [(main_word.upper(), (2, 7), 'd')]
+        non_placed_words = []
         place_main_diagonal(main_word, grid)
 
         placed_count = 0
@@ -111,9 +115,11 @@ def generate_word_grid():
             if success:
                 placed_words.append((word, (placement[0], placement[1]), placement[2]))
                 placed_count += 1
+            else:
+                non_placed_words.append(word.upper())
 
         if placed_count >= 20:
-            return grid, placed_words
+            return grid, placed_words, non_placed_words
 
 
 ### 
@@ -168,42 +174,3 @@ if __name__ == '__main__':
     print("\nPlaced Words (Total: {}):".format(len(placed_words)))
     for word, coords, direction in placed_words:
         print(f"{word}: {'diagonal' if direction == 'diagonal' else f'{direction} at {coords}'}")   
-
-'''
-bale per valid word ganito return value nung placed_words lag nirun yung generate_word_grid()
-
-('RABIES', (8, 10), 'h'), ('ABIES', (7, 12), 'v')
-
-so need mo pang lagay yung individual coordinates per letter nung word
-like create a fcn na pag h nakalagay then starting from coordinate (r, c) bibigay lahat ng coords
-
-similar sa sample level which is ganito dapat final na return value:
-
-
-letters = "TEAM" (main_word)
-
-grid = [
-    ['.', '.', '.', '#', '.'],
-    ['.', '.', '.', '#', '.'],
-    ['.', '#', '#', '#', '#'],
-    ['.', '#', '.', '.', '.'],
-    ['.', '#', '.', '.', '.'],
-    ['#', '#', '#', '#', '.'],
-    ['#', '.', '.', '.', '.'],
-    ['#', '.', '.', '.', '.'],
-    ['#', '.', '.', '.', '.']
-] (given na ung grid sa generate_wor_grid() so nested for loops then if (r, c) != '.' then '#')
-
-
-positions = {
-    "TEAM": [(2, 1), (2, 2), (2, 3), (2, 4)],
-    "MEAT": [(5, 0), (5, 1), (5, 2), (5, 3)],
-    "MATE": [(5, 0), (6, 0), (7, 0), (8, 0)],
-    "TEA": [(0, 3), (1, 3), (2, 3)],
-    "TAME": [(2, 1), (3, 1), (4, 1), (5, 1)]
-} (ito na yung sinasabi ko nung una since medyo incomplete yung code na ginawa 
-ko where (word, (r,c), h) lang gawa ko
-
-read animations.py after
-
-'''
