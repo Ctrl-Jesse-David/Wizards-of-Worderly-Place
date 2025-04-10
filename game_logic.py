@@ -11,7 +11,7 @@ class WordscapesGame:
     word guessing, scoring, grid updates, and game state tracking.
     '''
 
-    def __init__(self, letters, grid, positions):
+    def __init__(self, letters, grid, positions, non_placed_words):
         '''
         Initialize a new WordscapesGame instance.
         
@@ -30,6 +30,7 @@ class WordscapesGame:
         self.words = set(positions.keys())
         self.grid = GameGrid(grid, positions)
         self.positions = positions
+        self.non_placed_words = non_placed_words
         self.found_words = set()
         self.lives = 5
         self.points = 0
@@ -171,15 +172,21 @@ class WordscapesGame:
         '''
 
         if is_valid(guess, ''.join(self.letters)):
-            if guess in self.words and guess not in self.found_words:
-                self.grid.update_grid(guess)
-                self.last_guess = guess
-                self.points += self.calculate_points(guess, self.found_words)
-                self.found_words.add(guess)
-                cprint('Correct!', "green", attrs=["bold"])
+            if guess not in self.found_words:
+                if guess in self.words:
+                    self.grid.update_grid(guess)
+                    self.last_guess = guess
+                    self.points += self.calculate_points(guess, self.found_words)
+                    self.found_words.add(guess)
+                    cprint('Correct!', "green", attrs=["bold"])
 
-            elif guess in self.words and guess in self.found_words:
+                elif guess in self.non_placed_words:
+                    self.lives += 1
+                    cprint('Word not found in the grid. Bonus life granted!', 'green', attrs=['bold'])
+
+            elif (guess in self.words or guess in self.non_placed_words) and guess in self.found_words:
                 cprint('Word has already been found.', "red", attrs=["bold"])
+            
             
             else:
                 self.lives -= 1
