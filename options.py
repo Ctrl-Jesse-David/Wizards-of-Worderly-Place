@@ -43,41 +43,7 @@ def start_game(letters, grid, positions, name):
         else:
             cprint("Invalid response!", "red", attrs=["bold"])
             time.sleep(0.1)
-        
-
-    # while True:
-    #     game = WordscapesGame(
-    #         list(letters),
-    #         copy.deepcopy(grid),
-    #         copy.deepcopy(positions)
-    #     )
-    #     game.play(name)
-
-    #     # Replay Option
-    #     while True:
-    #         retry_option = input("🔄 Would you like to play again? " 
-    #                         + colored("[y/n]", "blue", attrs=["bold"]) + ": ")\
-    #                         .lower().strip()
-    #         if retry_option in ['y', 'n']:
-    #             time.sleep(0.25)
-    #             break
-    #         else:
-    #             cprint("Invalid response!", "red", attrs=["bold"])
-    #             time.sleep(0.1)
-        
-    #     update_leaderboard(name, game.points)
-
-    #     if retry_option == 'n':
-    #         print("Returning to main menu...")
-    #         time.sleep(0.5)
-    #         clear_screen()
-    #         break
-    #     else:
-    #         print("Restarting the game...")
-    #         time.sleep(0.6)
-    #         continue
-
-
+sadasds
 
 
 def display_instructions():
