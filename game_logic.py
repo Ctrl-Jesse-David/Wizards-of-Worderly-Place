@@ -34,6 +34,7 @@ class WordscapesGame:
         self.lives = 5
         self.points = 0
         self.last_guess = None
+        self.hints_remaining = 3 #Tentative
         
     def shuffle_letters(self):
         '''
@@ -63,6 +64,42 @@ class WordscapesGame:
             set(coordinate for word in found_words 
                 for coordinate in self.positions[word]))
 
+    def get_hint(self):
+        '''
+        Reveals a random unrevealed letter in the grid.
+        '''
+
+        #No hints left
+        if self.hints_remaining <= 0:
+            cprint("No hints remaining!", "red", attrs=["bold"])
+            time.sleep(1)
+            return False
+            
+        #All unrevealed pos
+        all_positions = set(pos for word in self.words for pos in self.positions[word])
+        revealed_positions = set(pos for word in self.found_words for pos in self.positions[word])
+        hidden_positions = list(all_positions - revealed_positions)
+        
+        if not hidden_positions:
+            cprint("No hidden letters to reveal!", "yellow", attrs=["bold"])
+            time.sleep(1)
+            return False
+            
+        #Reveal random pos
+        row, col = random.choice(hidden_positions)
+        
+        #Finds the letter and updates grid
+        for word, positions in self.positions.items():
+            if (row, col) in positions:
+                letter_index = positions.index((row, col))
+                self.grid.grid[row][col] = word[letter_index]
+                break
+                
+        self.hints_remaining -= 1
+        cprint(f"Hint used! {self.hints_remaining} hints remaining.", "green", attrs=["bold"])
+        time.sleep(1)
+        return True
+
     def play(self, nickname):
         '''
         Main game loop that manages the gameplay flow.
@@ -78,17 +115,20 @@ class WordscapesGame:
         '''
 
         while self.found_words != self.words and self.lives > 0:
-
             self.grid.display_grid(nickname)
             self.cur_state()
 
             guess = input('Guess a word: ').upper()
 
-            if guess == 'SHUFFLE':
+            if guess in ['SHUFFLE', 'S']:
                 self.shuffle_letters()
                 continue
             
-            elif guess == 'EXIT': 
+            elif guess in ['HINT', 'H']:
+                self.get_hint()
+                continue
+            
+            elif guess in ['EXIT', 'E']: 
                 break
 
             self.the_guess(guess)
@@ -110,9 +150,10 @@ class WordscapesGame:
         print(f"🔠Available letters: {'-'.join(self.letters)}")
         print(f"❤️‍🔥 Lives: {self.lives}")
         print(f"🌟 Score: {self.points}") 
+        print(f"💡 Hints remaining: {self.hints_remaining}")
         print(f"📖 Words found: {len(self.found_words)}/{len(self.words)}")
         print(f"📝 Last correct guess: {self.last_guess}")
-        print("🛠️ Commands: [shuffle] to shuffle letters, [exit] to quit")
+        print("🛠️ Commands: [shuffle|s] to shuffle letters, [hint|h] for a hint, [exit|e] to quit")
         print('-'*75)
 
     def the_guess(self, guess):
