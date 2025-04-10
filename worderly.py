@@ -31,9 +31,8 @@ def display_menu():
     print("=" * 75)
 
 
-#PANG GENERATE NA NUNG GRID NA DI NA SAMPLE
 def get_game_level(): 
-    grid_data, placed_words = generate_word_grid()
+    grid_data, placed_words, non_placed_words = generate_word_grid()
     letters = list(placed_words[0][0])
     random.shuffle(letters)
 
@@ -46,7 +45,7 @@ def get_game_level():
     
     positions_dict = generate_positions_dict(placed_words)
 
-    return letters, game_grid, positions_dict
+    return letters, game_grid, positions_dict, non_placed_words
 
 def main_menu():
     '''
@@ -82,8 +81,8 @@ def main_menu():
 
             clear_screen()
             while True:
-                letters, grid, positions = get_game_level()
-                retry_option = start_game(letters, grid, positions, nickname)
+                letters, grid, positions, non_placed_words = get_game_level()
+                retry_option = start_game(letters, grid, positions, nickname, non_placed_words)
 
                 if retry_option.lower() == 'n':
                     print("Returning to main menu...")

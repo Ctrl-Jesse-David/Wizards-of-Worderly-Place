@@ -3,7 +3,7 @@ from utilities import clear_screen, display_header, update_leaderboard
 from game_logic import WordscapesGame
 import time, copy
 
-def start_game(letters, grid, positions, name):
+def start_game(letters, grid, positions, name, non_placed_words):
     '''
     Initializes and manages a WoWP game session for the player.
 
@@ -29,7 +29,8 @@ def start_game(letters, grid, positions, name):
         game = WordscapesGame(
             list(letters),
             copy.deepcopy(grid),
-            copy.deepcopy(positions)
+            copy.deepcopy(positions),
+            copy.deepcopy(non_placed_words)
         )
         game.play(name)
         update_leaderboard(name, game.points)
@@ -43,8 +44,6 @@ def start_game(letters, grid, positions, name):
         else:
             cprint("Invalid response!", "red", attrs=["bold"])
             time.sleep(0.1)
-sadasds
-
 
 def display_instructions():
     '''
