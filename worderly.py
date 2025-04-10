@@ -47,6 +47,49 @@ def get_game_level():
 
     return letters, game_grid, positions_dict, non_placed_words
 
+def get_player_nickname():
+    '''
+    Prompts for and validates player nickname.
+    '''
+
+    while True:
+        nickname = input("👤 Enter your nickname: ").strip()
+        if nickname:
+            return nickname
+        
+        cprint("Input your name!", "red", attrs=["bold"])
+        time.sleep(0.3)
+        clear_screen()
+        display_menu()
+
+def handle_game_session():
+    '''
+    Manages a complete game session including nickname input,
+    game initialization, and retry logic.
+    '''
+
+    nickname = get_player_nickname()
+    clear_screen()
+    
+    while True:
+        letters, grid, positions, non_placed_words = get_game_level()
+        retry_option = start_game(letters, grid, positions, nickname, non_placed_words)
+
+        if retry_option.lower() == 'n':
+            cprint("Returning to main menu...", "yellow", attrs=["bold"])
+            time.sleep(0.5)
+            clear_screen()
+            break
+        elif retry_option.lower() == 'y':
+            cprint("Restarting the game...", "yellow", attrs=["bold"])
+            time.sleep(0.6)
+            continue
+        else:
+            cprint("Invalid option. Returning to main menu...", "red", attrs=["bold"])
+            time.sleep(0.5)
+            clear_screen()
+            break
+
 def main_menu():
     '''
     Manages the main menu flow and user interaction.
@@ -68,43 +111,12 @@ def main_menu():
 
         choice = input(colored("Select an option: ", "light_blue", attrs=["bold"])).strip().upper()
 
-        if choice == "S": 
-            while True:
-                nickname = input("👤 Enter your nickname: ").strip()
-                if nickname:
-                    break
-                else:
-                    cprint("Input your name!", "red", attrs=["bold"])
-                    time.sleep(0.3)
-                    clear_screen()
-                    display_menu()
-
-            clear_screen()
-            while True:
-                letters, grid, positions, non_placed_words = get_game_level()
-                retry_option = start_game(letters, grid, positions, nickname, non_placed_words)
-
-                if retry_option.lower() == 'n':
-                    print("Returning to main menu...")
-                    time.sleep(0.5)
-                    clear_screen()
-                    break
-                elif retry_option.lower() == 'y':
-                    print("Restarting the game...")
-                    time.sleep(0.6)
-                    continue
-                else:
-                    print("Invalid option. Returning to main menu...")
-                    time.sleep(0.5)
-                    clear_screen()
-                    break
-
+        if choice == "S":
+            handle_game_session()
         elif choice == "I":
             display_instructions()
-
         elif choice == "L":
             display_leaderboard()
-
         elif choice == "E":
             print("Exiting...") # gagawa ako ng animation stuff pero ito muna for the meantime
             time.sleep(0.8)
