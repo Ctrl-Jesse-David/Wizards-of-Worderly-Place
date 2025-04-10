@@ -85,15 +85,20 @@ def main_menu():
                 letters, grid, positions = get_game_level()
                 retry_option = start_game(letters, grid, positions, nickname)
 
-                if retry_option == 'n':
+                if retry_option.lower() == 'n':
                     print("Returning to main menu...")
                     time.sleep(0.5)
                     clear_screen()
                     break
-                else:
+                elif retry_option.lower() == 'y':
                     print("Restarting the game...")
                     time.sleep(0.6)
                     continue
+                else:
+                    print("Invalid option. Returning to main menu...")
+                    time.sleep(0.5)
+                    clear_screen()
+                    break
 
         elif choice == "I":
             display_instructions()
