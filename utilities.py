@@ -1,6 +1,12 @@
 import os
 from termcolor import cprint
 
+'''
+Utilities
+
+DAVID LAGYAN KO PA BA DOCUMENTATION DITO?
+'''
+
 def clear_screen():
     return os.system('cls' if os.name == 'nt' else 'clear')
 
