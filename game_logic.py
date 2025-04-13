@@ -2,6 +2,13 @@ import time, random
 from utilities import clear_screen, is_valid, GameGrid
 from termcolor import cprint
 
+'''
+Game Logic
+
+This module implements the core game mechanics for Wizards of Worderly Place,
+including word validation, scoring, and game state management.
+'''
+
 # next time na ako mag-aadd ng termcolor edits katamad pa di naman required
 class WordscapesGame:
     '''

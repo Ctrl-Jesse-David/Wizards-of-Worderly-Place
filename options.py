@@ -3,6 +3,13 @@ from utilities import clear_screen, display_header, update_leaderboard
 from game_logic import WordscapesGame
 import time, copy
 
+'''
+Options
+
+This module handles the game's menu options and player interactions for Wizards of Worderly Place.
+It manages game sessions, displays instructions, and maintains the leaderboard system.
+'''
+
 def start_game(letters, grid, positions, name, non_placed_words):
     '''
     Initializes and manages a WoWP game session for the player.

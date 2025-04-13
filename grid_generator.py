@@ -1,7 +1,25 @@
 import random
 from utilities import is_valid
 
+'''
+Grid Generator
+
+This module handles the word grid generation for the Wizards of Worderly Place game.
+It includes functions for creating the game grid, placing words, and managing word positions.
+The grid generation follows a specific set of rules for word placement and intersections.
+'''
+
 def get_main_and_valid_words(file_path):
+    '''
+    Retrieves a main 6-letter word and its associated valid sub-words from a dictionary file.
+    
+    ==========
+    Parameters:
+    ==========
+        file_path: str
+            Path to the dictionary file containing the word list.
+    '''
+    
     def read_words():
         try:
             with open(file_path) as f:
@@ -23,11 +41,35 @@ def get_main_and_valid_words(file_path):
     return (main_word, valid_words) if len(valid_words) >= 20 else get_main_and_valid_words(file_path)
 
 def place_main_diagonal(word, grid):
+    '''
+    Places the main word diagonally on the grid with spacing.
+    
+    ==========
+    Parameters:
+    ==========
+    word: str
+        The main 6-letter word to be placed
+    grid: list 
+        2D list representing the game grid
+    '''
+    
     for i, letter in enumerate(word.upper()):
         grid[2 + i*2][7 + i*2] = letter
     return grid
 
 def find_intersections(word, grid):
+    '''
+    Finds all possible intersection points where a word can be placed on the grid.
+    
+    ==========
+    Parameters:
+    ==========
+    word: str 
+        The word to be placed
+    grid: list 
+        Current state of the game grid
+    '''
+    
     intersections = []
     for i, letter in enumerate(word):
         for row in range(len(grid)):
@@ -42,6 +84,24 @@ def find_intersections(word, grid):
     return intersections
 
 def is_valid_placement(word, row, col, direction, grid):
+    '''
+    Checks if a word can be validly placed at the specified position and direction.
+    
+    ==========
+    Parameters:
+    ==========
+    word: str
+        Word to be placed
+    row: int
+        Starting row position
+    col: int
+        Starting column position
+    direction: str
+        'h' for horizontal or 'v' for vertical placement
+    grid: list
+        Current state of the game grid
+    '''
+    
     if direction == 'h':
         for i in range(len(word)):
             cell = grid[row][col+i]
@@ -67,6 +127,18 @@ def is_valid_placement(word, row, col, direction, grid):
     return True
 
 def place_word(word, grid):
+    '''
+    Attempts to place a word on the grid, first trying intersections then random positions.
+    
+    ==========
+    Parameters:
+    ==========
+    word: str 
+        Word to be placed
+    grid: list 
+        Current state of the game grid
+    '''
+    
     intersections = find_intersections(word, grid)
     random.shuffle(intersections)
     
@@ -92,6 +164,24 @@ def place_word(word, grid):
     return False, None
 
 def place_word_on_grid(word, row, col, direction, grid):
+    '''
+    Places a word on the grid at the specified position and direction.
+    
+    ==========
+    Parameters:
+    ==========
+    word: str 
+        Word to be placed
+    row: int
+        Starting row position
+    col: int
+        Starting column position
+    direction: str
+        'h' for horizontal or 'v' for vertical placement
+    grid: list
+        Grid to place the word on
+    '''
+    
     for i, letter in enumerate(word):
         if direction == 'h':
             grid[row][col + i] = letter
@@ -100,6 +190,10 @@ def place_word_on_grid(word, row, col, direction, grid):
 
 
 def generate_word_grid():
+    '''
+    Generates a complete word grid for the game with at least 20 placed words.
+    '''
+
     main_word, valid_words = get_main_and_valid_words("word_dictionary.txt")
 
     while True:
@@ -121,10 +215,17 @@ def generate_word_grid():
         if placed_count >= 20:
             return grid, placed_words, non_placed_words
 
-
-### 
-# FOR HIDING THE WORDS 
 def generate_positions_dict(placed_words):
+    '''
+    Creates a dictionary mapping words to their positions on the grid.
+    
+    ==========
+    Parameters:
+    ==========
+    placed_words: list 
+        List of (word, coords, direction) tuples for placed words
+    '''
+    
     positions = {}
     for word, coords, direction in placed_words:
         if coords == (2,7):
@@ -142,6 +243,16 @@ def generate_positions_dict(placed_words):
     return positions
 
 def convert_grid_to_display(grid):
+    '''
+    Converts the internal grid representation to a display format.
+    
+    ==========
+    Parameters:
+    ==========
+    grid: list
+        The internal game grid
+    '''
+    
     display_grid = []
     
     for row in grid:
@@ -156,15 +267,26 @@ def convert_grid_to_display(grid):
     return display_grid
 
 def reveal_word(display_grid, word, positions):
+    '''
+    Reveals a specific word on the display grid.
+    
+    ==========
+    Parameters:
+    ==========
+    display_grid: list
+        Current display state of the grid
+    word: str
+        Word to reveal
+    positions: dict
+        Dictionary mapping words to their positions
+    '''
+    
     if word in positions:
         for i, (row, col) in enumerate(positions[word]):
             display_grid[row][col] = word[i]
     return display_grid
 
-####
-
 if __name__ == '__main__':
-    '''para mas readable return values'''
     grid, placed_words = generate_word_grid()
 
     print("\nGrid:")
