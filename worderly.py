@@ -10,7 +10,6 @@ Worderly
 This module serves as the main entry point for the Wizards of Worderly Place game,
 handling the main menu system and game flow control.
 '''
-
 def display_menu():
     '''
     Displays the main menu interface of the game.
