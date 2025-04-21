@@ -1,4 +1,0 @@
-- Animations
-- gawing emoji yung letters like 🅰️ para readable grid (#yeah siguro kahit idict nalang to)
-- gawing maganda ung UI
-- Gawan ng tutorial (?)
