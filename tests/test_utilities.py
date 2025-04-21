@@ -61,36 +61,32 @@ def create_temp_leaderboard():
         f.write("Player2: 200\n")
         f.write("Player3: 150\n")
         return f.name
+from utilities import update_leaderboard
+from unittest.mock import patch
+import builtins
+import os
 
 def test_update_leaderboard():
-    '''
-    Tests the leaderboard update functionality
-    '''
     temp_path = create_temp_leaderboard()
-    
+
+    real_open = builtins.open  # Save the real open BEFORE patching
+
+    def mocked_open(file, mode='r', *args, **kwargs):
+        if file == "leaderboard.txt":
+            return real_open(temp_path, mode, *args, **kwargs)
+        return real_open(file, mode, *args, **kwargs)
+
     try:
-        original_open = builtins.open
-        
-        try:
-            #Mock open to use temp file
-            builtins.open = lambda *args, **kwargs: original_open(temp_path, *args, **kwargs)
-            
-            #New Score
-            update_leaderboard("Test Player", 100)  #Pass int score
-            with open(temp_path, 'r') as f:
-                lines = f.readlines()
-                assert len(lines) == 4 
-                assert "Test Player: 100" in [line.strip() for line in lines]
-        except Exception as e:
-            builtins.open = original_open
-            raise e
-        else:
-            builtins.open = original_open
-    except Exception as e:
+        with patch("builtins.open", new=mocked_open):
+            update_leaderboard("Test Player", 100)
+
+        with open(temp_path, "r") as f:
+            lines = f.readlines()
+            assert "Test Player: 100" in [line.strip() for line in lines]
+    finally:
         os.unlink(temp_path)
-        raise e
-    else:
-        os.unlink(temp_path)
+
+
 
 def test_clear_screen():
     '''

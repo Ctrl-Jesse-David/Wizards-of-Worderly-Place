@@ -10,7 +10,7 @@ This module handles the game's menu options and player interactions for Wizards 
 It manages game sessions, displays instructions, and maintains the leaderboard system.
 '''
 
-def start_game(letters, grid, positions, name, non_placed_words):
+def start_game(letters, incomplete_grid, positions, name, non_placed_words, complete_grid):
     '''
     Initializes and manages a WoWP game session for the player.
 
@@ -35,9 +35,10 @@ def start_game(letters, grid, positions, name, non_placed_words):
     while True:
         game = WordscapesGame(
             list(letters),
-            copy.deepcopy(grid),
+            copy.deepcopy(incomplete_grid),
             copy.deepcopy(positions),
-            copy.deepcopy(non_placed_words)
+            copy.deepcopy(non_placed_words),
+            copy.deepcopy(complete_grid)
         )
         game.play(name)
         update_leaderboard(name, game.points)

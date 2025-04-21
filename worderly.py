@@ -1,6 +1,6 @@
 from termcolor import cprint, colored
 from options import start_game, display_instructions, display_leaderboard, display_header
-from utilities import clear_screen, update_leaderboard
+from utilities import clear_screen
 from grid_generator import generate_word_grid, generate_positions_dict
 import sys, time, random
 
@@ -51,7 +51,7 @@ def get_game_level():
     
     positions_dict = generate_positions_dict(placed_words)
 
-    return letters, game_grid, positions_dict, non_placed_words
+    return letters, game_grid, positions_dict, non_placed_words, grid_data
 
 def get_player_nickname():
     '''
@@ -78,8 +78,8 @@ def handle_game_session():
     clear_screen()
     
     while True:
-        letters, grid, positions, non_placed_words = get_game_level()
-        retry_option = start_game(letters, grid, positions, nickname, non_placed_words)
+        letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level()
+        retry_option = start_game(letters, incomplete_grid, positions, nickname, non_placed_words, complete_grid)
 
         if retry_option.lower() == 'n':
             cprint("Returning to main menu...", "yellow", attrs=["bold"])

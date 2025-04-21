@@ -1,199 +1,96 @@
 import random
 from utilities import is_valid
 
-'''
-Grid Generator
-
-This module handles the word grid generation for the Wizards of Worderly Place game.
-It includes functions for creating the game grid, placing words, and managing word positions.
-The grid generation follows a specific set of rules for word placement and intersections.
-'''
-
 def get_main_and_valid_words(file_path):
-    '''
-    Retrieves a main 6-letter word and its associated valid sub-words from a dictionary file.
-    
-    ==========
-    Parameters:
-    ==========
-        file_path: str
-            Path to the dictionary file containing the word list.
-    '''
-    
     def read_words():
         try:
             with open(file_path) as f:
                 return [line.strip() for line in f]
         except FileNotFoundError:
             return None
-    
+
     words = read_words()
-    six_letter_words = [word for word in words if len(word) == 6]
+    six_letter_words = [w for w in words if len(w) == 6]
     if not six_letter_words:
         return None
-    
+
     main_word = random.choice(six_letter_words)
-    valid_words = [word for word in words 
-                  if 3 <= len(word) <= 6 
-                  and is_valid(word, main_word) 
-                  and word != main_word]
-    
+    valid_words = [w for w in words if 3 <= len(w) <= 6 and w != main_word and is_valid(w, main_word)]
+
     return (main_word, valid_words) if len(valid_words) >= 20 else get_main_and_valid_words(file_path)
 
 def place_main_diagonal(word, grid):
-    '''
-    Places the main word diagonally on the grid with spacing.
-    
-    ==========
-    Parameters:
-    ==========
-    word: str
-        The main 6-letter word to be placed
-    grid: list 
-        2D list representing the game grid
-    '''
-    
     for i, letter in enumerate(word.upper()):
         grid[2 + i*2][7 + i*2] = letter
     return grid
 
 def find_intersections(word, grid):
-    '''
-    Finds all possible intersection points where a word can be placed on the grid.
-    
-    ==========
-    Parameters:
-    ==========
-    word: str 
-        The word to be placed
-    grid: list 
-        Current state of the game grid
-    '''
-    
     intersections = []
     for i, letter in enumerate(word):
-        for row in range(len(grid)):
-            for col in range(len(grid[0])):
-                if grid[row][col] == letter:
-                    if (col - i >= 0 and col + len(word) - i <= len(grid[0])):
-                        if all(grid[row][col-i+j] in ('.', word[j]) for j in range(len(word))):
-                            intersections.append((row, col-i, 'h'))
-                    if (row - i >= 0 and row + len(word) - i <= len(grid)):
-                        if all(grid[row-i+j][col] in ('.', word[j]) for j in range(len(word))):
-                            intersections.append((row-i, col, 'v'))
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c] == letter:
+                    start_c = c - i
+                    if 0 <= start_c and start_c + len(word) <= len(grid[0]):
+                        if all(grid[r][start_c + j] in ('.', word[j]) for j in range(len(word))):
+                            intersections.append((r, start_c, 'h'))
+                    start_r = r - i
+                    if 0 <= start_r and start_r + len(word) <= len(grid):
+                        if all(grid[start_r + j][c] in ('.', word[j]) for j in range(len(word))):
+                            intersections.append((start_r, c, 'v'))
     return intersections
 
+def place_word_on_grid(word, row, col, direction, grid):
+    for i, letter in enumerate(word):
+        r = row + (i if direction == 'v' else 0)
+        c = col + (i if direction == 'h' else 0)
+        grid[r][c] = letter
+
 def is_valid_placement(word, row, col, direction, grid):
-    '''
-    Checks if a word can be validly placed at the specified position and direction.
-    
-    ==========
-    Parameters:
-    ==========
-    word: str
-        Word to be placed
-    row: int
-        Starting row position
-    col: int
-        Starting column position
-    direction: str
-        'h' for horizontal or 'v' for vertical placement
-    grid: list
-        Current state of the game grid
-    '''
-    
-    if direction == 'h':
-        for i in range(len(word)):
-            cell = grid[row][col+i]
-            if cell != '.' and cell != word[i]:
+    rows, cols = len(grid), len(grid[0])
+    for i, letter in enumerate(word):
+        r, c = row + (i if direction == 'v' else 0), col + (i if direction == 'h' else 0)
+        if not (0 <= r < rows and 0 <= c < cols):
+            return False
+        cell = grid[r][c]
+        if cell != '.' and cell != letter:
+            return False
+        if cell == '.':
+            adjacents = []
+            if direction == 'h':
+                if r > 0: 
+                    adjacents.append(grid[r-1][c])
+                if r < rows - 1: 
+                    adjacents.append(grid[r+1][c])
+            else:
+                if c > 0: 
+                    adjacents.append(grid[r][c-1])
+                if c < cols - 1: 
+                    adjacents.append(grid[r][c+1])
+            if any(a != '.' for a in adjacents):
                 return False
-            if (i == 0 and col > 0 and grid[row][col-1] != '.') or \
-               (i == len(word)-1 and col+i+1 < len(grid[0]) and grid[row][col+i+1] != '.'):
-                return False
-            if grid[row][col+i] == '.':
-                if (row > 0 and grid[row-1][col+i] != '.') or (row < len(grid)-1 and grid[row+1][col+i] != '.'):
-                    return False
-    else: 
-        for i in range(len(word)):
-            cell = grid[row+i][col]
-            if cell != '.' and cell != word[i]:
-                return False
-            if (i == 0 and row > 0 and grid[row-1][col] != '.') or \
-               (i == len(word)-1 and row+i+1 < len(grid) and grid[row+i+1][col] != '.'):
-                return False
-            if grid[row+i][col] == '.':
-                if (col > 0 and grid[row+i][col-1] != '.') or (col < len(grid[0])-1 and grid[row+i][col+1] != '.'):
-                    return False
+
+    pre_r, pre_c = row - (direction == 'v'), col - (direction == 'h')
+    post_r, post_c = row + (direction == 'v') * len(word), col + (direction == 'h') * len(word)
+    if 0 <= pre_r < rows and 0 <= pre_c < cols and grid[pre_r][pre_c] != '.':
+        return False
+    if 0 <= post_r < rows and 0 <= post_c < cols and grid[post_r][post_c] != '.':
+        return False
+
     return True
 
 def place_word(word, grid):
-    '''
-    Attempts to place a word on the grid, first trying intersections then random positions.
-    
-    ==========
-    Parameters:
-    ==========
-    word: str 
-        Word to be placed
-    grid: list 
-        Current state of the game grid
-    '''
-    
     intersections = find_intersections(word, grid)
     random.shuffle(intersections)
-    
-    for row, col, direction in intersections:
-        if is_valid_placement(word, row, col, direction, grid):
-            for i, letter in enumerate(word):
-                grid[row + (i if direction == 'v' else 0)][col + (i if direction == 'h' else 0)] = letter
-            return True, (row, col, direction)
-    
-    for _ in range(100):
-        direction = random.choice(['h', 'v'])
-        max_row = len(grid) - (len(word) if direction == 'v' else 0)
-        max_col = len(grid[0]) - (len(word) if direction == 'h' else 0)
-        row, col = random.randint(0, max_row-1), random.randint(0, max_col-1)
 
+    for row, col, direction in intersections:
         if is_valid_placement(word, row, col, direction, grid):
             place_word_on_grid(word, row, col, direction, grid)
             return True, (row, col, direction)
-        else:
-            return False, None
-        
-    
+
     return False, None
 
-def place_word_on_grid(word, row, col, direction, grid):
-    '''
-    Places a word on the grid at the specified position and direction.
-    
-    ==========
-    Parameters:
-    ==========
-    word: str 
-        Word to be placed
-    row: int
-        Starting row position
-    col: int
-        Starting column position
-    direction: str
-        'h' for horizontal or 'v' for vertical placement
-    grid: list
-        Grid to place the word on
-    '''
-    
-    for i, letter in enumerate(word):
-        if direction == 'h':
-            grid[row][col + i] = letter
-        else: 
-            grid[row + i][col] = letter
-
-
 def generate_word_grid():
-    '''
-    Generates a complete word grid for the game with at least 20 placed words.
-    '''
-
     main_word, valid_words = get_main_and_valid_words("word_dictionary.txt")
 
     while True:
@@ -202,92 +99,56 @@ def generate_word_grid():
         non_placed_words = []
         place_main_diagonal(main_word, grid)
 
-        placed_count = 0
         for word in sorted(valid_words, key=len, reverse=True):
             word = word.upper()
             success, placement = place_word(word, grid)
             if success:
-                placed_words.append((word, (placement[0], placement[1]), placement[2]))
-                placed_count += 1
+                placed_words.append((word, placement[:2], placement[2]))
             else:
-                non_placed_words.append(word.upper())
+                non_placed_words.append(word)
 
-        if placed_count >= 20:
+        if len(placed_words) - 1 >= 20 and main_has_adjacent_letter(grid):
             return grid, placed_words, non_placed_words
+        else:
+            generate_word_grid()
+        
+def main_has_adjacent_letter(grid):
+    coords = [(2 + i*2, 7 + i*2) for i in range(6)]
+    for r, c in coords:
+        has_neighbor = False
+        for dr, dc in [(-1,0), (1,0), (0,-1), (0,1)]:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]) and grid[nr][nc] != '.':
+                has_neighbor = True
+                break
+        if not has_neighbor:
+            return False
+    return True
 
 def generate_positions_dict(placed_words):
-    '''
-    Creates a dictionary mapping words to their positions on the grid.
-    
-    ==========
-    Parameters:
-    ==========
-    placed_words: list 
-        List of (word, coords, direction) tuples for placed words
-    '''
-    
     positions = {}
     for word, coords, direction in placed_words:
-        if coords == (2,7):
+        if coords == (2, 7):
             r, c = coords
-            positions[word] = [(r+(i*2), c+(i*2)) for i in range(6)]
-
+            positions[word] = [(r + i*2, c + i*2) for i in range(6)]
         elif direction == 'h':
-            row, col = coords
-            positions[word] = [(row, col + i) for i in range(len(word))]
-
+            positions[word] = [(coords[0], coords[1] + i) for i in range(len(word))]
         elif direction == 'v':
-            row, col = coords
-            positions[word] = [(row + i, col) for i in range(len(word))]
-    
+            positions[word] = [(coords[0] + i, coords[1]) for i in range(len(word))]
     return positions
 
 def convert_grid_to_display(grid):
-    '''
-    Converts the internal grid representation to a display format.
-    
-    ==========
-    Parameters:
-    ==========
-    grid: list
-        The internal game grid
-    '''
-    
-    display_grid = []
-    
-    for row in grid:
-        display_row = []
-        for cell in row:
-            if cell == '.':
-                display_row.append('.')
-            else:
-                display_row.append('#')
-        display_grid.append(display_row)
-        
-    return display_grid
+    return [['#' if cell != '.' else '.' for cell in row] for row in grid]
 
 def reveal_word(display_grid, word, positions):
-    '''
-    Reveals a specific word on the display grid.
-    
-    ==========
-    Parameters:
-    ==========
-    display_grid: list
-        Current display state of the grid
-    word: str
-        Word to reveal
-    positions: dict
-        Dictionary mapping words to their positions
-    '''
-    
     if word in positions:
-        for i, (row, col) in enumerate(positions[word]):
-            display_grid[row][col] = word[i]
+        for i, (r, c) in enumerate(positions[word]):
+            display_grid[r][c] = word[i]
     return display_grid
 
+
 if __name__ == '__main__':
-    grid, placed_words = generate_word_grid()
+    grid, placed_words, non = generate_word_grid()
 
     print("\nGrid:")
     for row in grid:
@@ -295,4 +156,4 @@ if __name__ == '__main__':
 
     print("\nPlaced Words (Total: {}):".format(len(placed_words)))
     for word, coords, direction in placed_words:
-        print(f"{word}: {'diagonal' if direction == 'diagonal' else f'{direction} at {coords}'}")   
+        print(f"{word}: {'diagonal' if direction == 'd' else f'{direction} at {coords}' }")

@@ -80,47 +80,51 @@ def test_generate_word_grid():
     #Checks unplaced words
     assert isinstance(non_placed_words, list)
     assert all(isinstance(word, str) for word in non_placed_words)
+import pytest
+from grid_generator import generate_word_grid, generate_positions_dict
 
 def test_word_placement():
-    '''
-    Tests that words are placed correctly on the grid.
-    '''
-    grid_data, placed_words, _ = generate_word_grid()
+    grid, placed_words, _ = generate_word_grid()
+    positions = generate_positions_dict(placed_words)
 
     used_positions = {}
-    
+
     for word, coords, direction in placed_words:
-        row, col = coords
-        
-        #If words fits in grid
+        word = word.upper()
         if direction == 'h':
-            assert col + len(word) <= 25, f"Word '{word}' exceeds grid bounds"
+            row, col = coords
+            for i in range(len(word)):
+                r, c = row, col + i
+                letter = word[i]
+                if (r, c) in used_positions:
+                    assert used_positions[(r, c)] == letter, (
+                        f"Conflict at {r, c}: '{used_positions[(r, c)]}' vs '{letter}' in word '{word}'"
+                    )
+                else:
+                    used_positions[(r, c)] = letter
+
         elif direction == 'v':
-            assert row + len(word) <= 15, f"Word '{word}' exceeds grid bounds."
-        else:  #DIAGONAL
-            if coords == (2, 7): 
-                assert row + (len(word) - 1) * 2 <= 15 and col + (len(word) - 1) * 2 <= 25, \
-                    f"Word '{word}' exceeds grid bounds"
-            else:
-                assert row + len(word) <= 15 and col + len(word) <= 25, \
-                    f"Word '{word}' exceeds grid bounds"
-        
-        #Get word pos
-        word_positions = []
-        if direction == 'h':
-            word_positions = [(row, col + i) for i in range(len(word))]
-        elif direction == 'v':
-            word_positions = [(row + i, col) for i in range(len(word))]
-        else:  #DIAG
-            if coords == (2, 7):  # Special case for main word
-                word_positions = [(row + i * 2, col + i * 2) for i in range(len(word))]
-            else:
-                word_positions = [(row + i, col + i) for i in range(len(word))]
-        
-        #For Overlaps
-        for pos in word_positions:
-            if pos in used_positions:
-                existing_word = used_positions[pos]
-                assert word[pos[0] - row] == existing_word[pos[0] - row], \
-                    f"Position {pos} is used by multiple words without valid intersection"
-            used_positions[pos] = word
+            row, col = coords
+            for i in range(len(word)):
+                r, c = row + i, col
+                letter = word[i]
+                if (r, c) in used_positions:
+                    assert used_positions[(r, c)] == letter, (
+                        f"Conflict at {r, c}: '{used_positions[(r, c)]}' vs '{letter}' in word '{word}'"
+                    )
+                else:
+                    used_positions[(r, c)] = letter
+
+        elif direction == 'd' and coords == (2, 7):
+            for i in range(len(word)):
+                r, c = 2 + i * 2, 7 + i * 2
+                letter = word[i]
+                if (r, c) in used_positions:
+                    assert used_positions[(r, c)] == letter, (
+                        f"Conflict at {r, c}: '{used_positions[(r, c)]}' vs '{letter}' in word '{word}' (main diagonal)"
+                    )
+                else:
+                    used_positions[(r, c)] = letter
+
+        else:
+            raise AssertionError(f"Invalid direction '{direction}' or unexpected diagonal at {coords} for word '{word}'")

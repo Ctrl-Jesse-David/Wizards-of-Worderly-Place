@@ -6,10 +6,10 @@ def create_sample_game():
     Creates sample game instance for testing
     '''
     letters = ['C', 'A', 'T', 'D', 'O', 'G']
-    grid = [['.', '.', '.'], ['.', '.', '.'], ['.', '.', '.']]
+    incomplete_grid = [['.', '.', '.'], ['.', '.', '.'], ['.', '.', '.']]
     positions = {"CAT": [(0,0), (0,1), (0,2)], "DOG": [(1,0), (1,1), (1,2)]}
     non_placed_words = ["ACT", "TAG"]
-    return WordscapesGame(letters, grid, positions, non_placed_words)
+    return WordscapesGame(letters, incomplete_grid, positions, non_placed_words)
 
 def test_game_initialization():
     '''

@@ -18,7 +18,7 @@ class WordscapesGame:
     word guessing, scoring, grid updates, and game state tracking.
     '''
 
-    def __init__(self, letters, grid, positions, non_placed_words):
+    def __init__(self, letters, incomplete_grid, positions, non_placed_words, complete_grid):
         '''
         Initialize a new WordscapesGame instance.
         
@@ -35,14 +35,15 @@ class WordscapesGame:
 
         self.letters = letters
         self.words = set(positions.keys())
-        self.grid = GameGrid(grid, positions)
+        self.grid = GameGrid(incomplete_grid, complete_grid, positions)
         self.positions = positions
         self.non_placed_words = non_placed_words
+        self.complete_grid = complete_grid
         self.found_words = set()
-        self.lives = 5
+        self.lives = int(len(positions)*0.4) # 40% ??
         self.points = 0
         self.last_guess = None
-        self.hints_remaining = 3 #Tentative
+        self.hints_remaining = int(len(positions)*0.2) # tentative na 30% lang ng num of words (or ibase ba natin sa num of letters sa grid)
         
     def shuffle_letters(self):
         '''
@@ -142,9 +143,33 @@ class WordscapesGame:
             self.the_guess(guess)
             
         clear_screen()
-        self.grid.display_grid(nickname)
+        if len(self.found_words) == len(self.words):
+            self.grid.display_grid(nickname)
+        else:
+            self.grid.display_complete_grid(nickname)
         self.end_game()
         return
+
+    def end_game(self):
+        '''
+        Displays the end game results.
+        
+        Shows all possible words, words found by the player, final score,
+        and a victory or game over message depending on results.
+        '''
+
+        print('-'*75)
+        self.print_wrapped_words("WORDS", self.words)
+        self.print_wrapped_words("FOUND WORDS", self.found_words) if self.found_words else print("FOUND WORDS: None")
+        print(f"SCORE: {self.points}")
+        print('-'*75)
+
+        if len(self.found_words) == len(self.words):
+            cprint('Congratulations! You guessed all the words.'.center(75), color="green", attrs=["bold"])
+            print('-'*75)
+        else:
+            cprint('Game Over!'.center(75), "red", attrs=["bold"])
+            print('-'*75)
 
     def cur_state(self):
         '''
@@ -222,23 +247,4 @@ class WordscapesGame:
             print(line.rstrip(', '))
  
 
-    def end_game(self):
-        '''
-        Displays the end game results.
-        
-        Shows all possible words, words found by the player, final score,
-        and a victory or game over message depending on results.
-        '''
-
-        print('-'*75)
-        self.print_wrapped_words("WORDS", self.words)
-        self.print_wrapped_words("FOUND WORDS", self.found_words) if self.found_words else print("FOUND WORDS: None")
-        print(f"SCORE: {self.points}")
-        print('-'*75)
-
-        if len(self.found_words) == len(self.words):
-            cprint('Congratulations! You guessed all the words.'.center(75), color="green", attrs=["bold"])
-            print('-'*75)
-        else:
-            cprint('Game Over!'.center(75), "red", attrs=["bold"])
-            print('-'*75)
+    

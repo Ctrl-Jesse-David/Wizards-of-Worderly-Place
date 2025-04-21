@@ -61,30 +61,38 @@ def test_start_game_invalid_option():
         raise e
     else:
         builtins.input = original_input
+from options import display_leaderboard
+from unittest.mock import patch
+import builtins
+import io
+import os
 
 def test_display_leaderboard():
     temp_path = create_temp_leaderboard()
-    
+
+    with open(temp_path, "a") as f:
+        f.write("Alice: 300\n")
+        f.write("Bob: 250\n")
+
+    real_open = builtins.open  # Save real open
+
+    def mocked_open(file, mode='r', *args, **kwargs):
+        if file == "leaderboard.txt":
+            return real_open(temp_path, mode, *args, **kwargs)
+        return real_open(file, mode, *args, **kwargs)
+
     try:
-        original_open = builtins.open
-        original_input = builtins.input
-        
-        try:
-            builtins.open = lambda *args, **kwargs: original_open(temp_path, *args, **kwargs)
-            builtins.input = lambda _: ''
+        with patch("builtins.open", new=mocked_open), \
+             patch("builtins.input", return_value=""), \
+             patch("builtins.print") as mock_print:
+            
             display_leaderboard()
-        except Exception as e:
-            builtins.open = original_open
-            builtins.input = original_input
-            raise e
-        else:
-            builtins.open = original_open
-            builtins.input = original_input
-    except Exception as e:
+            output_lines = [call.args[0] for call in mock_print.call_args_list]
+            assert any("1. Alice - 300" in line for line in output_lines)
+            assert any("2. Bob - 250" in line for line in output_lines)
+    finally:
         os.unlink(temp_path)
-        raise e
-    else:
-        os.unlink(temp_path)
+
 
 def test_display_instructions():
     original_input = builtins.input

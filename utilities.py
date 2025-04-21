@@ -27,8 +27,9 @@ def update_leaderboard(name, score):
         file.write(f"{name}: {score}\n")
 
 class GameGrid:
-    def __init__(self, grid, positions):
-        self.grid = grid
+    def __init__(self, incomplete_grid, complete_grid, positions):
+        self.incomplete_grid = incomplete_grid
+        self.complete_grid = complete_grid
         self.positions = positions
                          
     def display_grid(self, nickname):
@@ -36,7 +37,15 @@ class GameGrid:
         display_header(
             title=f"🧙 Welcome to Wizards of Worderly Place!, {nickname} 🧙",
             color="blue")
-        for row in self.grid:
+        for row in self.incomplete_grid:
+            print('  '.join(row))
+
+    def display_complete_grid(self, nickname):
+        clear_screen()
+        display_header(
+            title=f"🧙 Welcome to Wizards of Worderly Place!, {nickname} 🧙",
+            color="blue")
+        for row in self.complete_grid:
             print('  '.join(row))
 
     def update_grid(self, word):
