@@ -1,4 +1,4 @@
-import random
+import random, sys
 from utilities import is_valid
 
 def get_main_and_valid_words(file_path):
@@ -7,7 +7,8 @@ def get_main_and_valid_words(file_path):
             with open(file_path) as f:
                 return [line.strip() for line in f]
         except FileNotFoundError:
-            return None
+            print(f"Error: Dictionary file '{file_path}' not found!")
+            sys.exit(1)
 
     words = read_words()
     six_letter_words = [w for w in words if len(w) == 6]
@@ -90,8 +91,8 @@ def place_word(word, grid):
 
     return False, None
 
-def generate_word_grid():
-    main_word, valid_words = get_main_and_valid_words("word_dictionary.txt")
+def generate_word_grid(dictionary_file):
+    main_word, valid_words = get_main_and_valid_words(dictionary_file)
 
     while True:
         grid = [['.' for _ in range(25)] for _ in range(15)]
@@ -109,8 +110,7 @@ def generate_word_grid():
 
         if len(placed_words) - 1 >= 20 and main_has_adjacent_letter(grid):
             return grid, placed_words, non_placed_words
-        else:
-            generate_word_grid()
+        continue
         
 def main_has_adjacent_letter(grid):
     coords = [(2 + i*2, 7 + i*2) for i in range(6)]
