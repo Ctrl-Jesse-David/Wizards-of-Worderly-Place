@@ -37,9 +37,11 @@ def start_game(letters, incomplete_grid, positions, name, non_placed_words, comp
         copy.deepcopy(incomplete_grid),
         copy.deepcopy(positions),
         copy.deepcopy(non_placed_words),
-        copy.deepcopy(complete_grid)
+        copy.deepcopy(complete_grid),
+        copy.deepcopy(name)
     )
-    game.play(name)
+    retry_option = game.play(name)
+    return retry_option
 
 def display_instructions():
     '''

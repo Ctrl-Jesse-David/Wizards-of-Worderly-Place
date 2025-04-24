@@ -103,7 +103,7 @@ class WordscapesGame:
         for word, positions in self.positions.items():
             if (row, col) in positions:
                 letter_index = positions.index((row, col))
-                self.grid.grid[row][col] = word[letter_index]
+                self.grid.incomplete_grid[row][col] = word[letter_index]
                 break
                 
         self.hints_remaining -= 1
@@ -141,7 +141,10 @@ class WordscapesGame:
             
             elif guess in ['EXIT', 'E']: 
                 update_leaderboard(self.name, self.points)
+                self.grid.display_complete_grid(nickname)
                 while True:
+                    self.grid.display_complete_grid(nickname)
+                    self.end_game()
                     retry_option = input("🔄 Would you like to play again? " 
                                     + colored("[y/n]", "blue", attrs=["bold"]) + ": ")\
                                     .lower().strip()
@@ -151,6 +154,7 @@ class WordscapesGame:
                     else:
                         cprint("Invalid response!", "red", attrs=["bold"])
                         time.sleep(0.1)
+                        clear_screen()
 
             self.the_guess(guess)
             

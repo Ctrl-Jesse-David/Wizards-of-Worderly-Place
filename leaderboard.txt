@@ -10,3 +10,12 @@ e: 0
 asd: 0
 asd: 0
 asd: 0
+ada: 0
+asd: 0
+asd: 0
+sad: 0
+asd: 0
+asd: 0
+asda: 0
+asda: 0
+dasd: 7

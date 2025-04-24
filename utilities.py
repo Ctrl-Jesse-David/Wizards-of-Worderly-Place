@@ -51,7 +51,7 @@ class GameGrid:
     def update_grid(self, word):
         if word in self.positions:
             for idx, (row, col) in enumerate(self.positions[word]):
-                self.grid[row][col] = word[idx]
+                self.incomplete_grid[row][col] = word[idx]
             return True
         return False
 

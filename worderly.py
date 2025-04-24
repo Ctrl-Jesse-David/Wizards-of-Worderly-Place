@@ -70,7 +70,10 @@ def handle_game_session(dictionary_file):
 
     nickname = get_player_nickname()
     clear_screen()
-    
+    '''
+    tanggalin while loop
+    straight run start game
+    '''
     while True:
         letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file)
         retry_option = start_game(letters, incomplete_grid, positions, nickname, non_placed_words, complete_grid)
@@ -84,7 +87,7 @@ def handle_game_session(dictionary_file):
             cprint("Restarting the game...", "yellow", attrs=["bold"])
             time.sleep(0.6)
             continue
-        else:
+        else: # dapat wala a to kasi caught na yang conditional sa WordscapesGame.play()
             cprint("Invalid option. Returning to main menu...", "red", attrs=["bold"])
             time.sleep(0.5)
             clear_screen()
