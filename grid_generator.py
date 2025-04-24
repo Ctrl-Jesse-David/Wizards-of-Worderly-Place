@@ -148,7 +148,7 @@ def reveal_word(display_grid, word, positions):
 
 
 if __name__ == '__main__':
-    grid, placed_words, non = generate_word_grid()
+    grid, placed_words, non = generate_word_grid('corncob-lowercase.txt')
 
     print("\nGrid:")
     for row in grid:
@@ -156,4 +156,4 @@ if __name__ == '__main__':
 
     print("\nPlaced Words (Total: {}):".format(len(placed_words)))
     for word, coords, direction in placed_words:
-        print(f"{word}: {'diagonal' if direction == 'd' else f'{direction} at {coords}' }")
+        print(word, coords, direction)

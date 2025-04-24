@@ -32,26 +32,14 @@ def start_game(letters, incomplete_grid, positions, name, non_placed_words, comp
     '''
 
     # For creating a new grid
-    while True:
-        game = WordscapesGame(
-            list(letters),
-            copy.deepcopy(incomplete_grid),
-            copy.deepcopy(positions),
-            copy.deepcopy(non_placed_words),
-            copy.deepcopy(complete_grid)
-        )
-        game.play(name)
-        update_leaderboard(name, game.points)
-
-        retry_option = input("🔄 Would you like to play again? " 
-                        + colored("[y/n]", "blue", attrs=["bold"]) + ": ")\
-                        .lower().strip()
-        if retry_option in ['y', 'n']:
-            time.sleep(0.25)
-            return retry_option
-        else:
-            cprint("Invalid response!", "red", attrs=["bold"])
-            time.sleep(0.1)
+    game = WordscapesGame(
+        list(letters),
+        copy.deepcopy(incomplete_grid),
+        copy.deepcopy(positions),
+        copy.deepcopy(non_placed_words),
+        copy.deepcopy(complete_grid)
+    )
+    game.play(name)
 
 def display_instructions():
     '''

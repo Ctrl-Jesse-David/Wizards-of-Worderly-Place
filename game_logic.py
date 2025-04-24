@@ -1,6 +1,7 @@
 import time, random
 from utilities import clear_screen, is_valid, GameGrid
-from termcolor import cprint
+from termcolor import cprint, colored
+from utilities import update_leaderboard
 
 '''
 Game Logic
@@ -18,7 +19,7 @@ class WordscapesGame:
     word guessing, scoring, grid updates, and game state tracking.
     '''
 
-    def __init__(self, letters, incomplete_grid, positions, non_placed_words, complete_grid):
+    def __init__(self, letters, incomplete_grid, positions, non_placed_words, complete_grid, name):
         '''
         Initialize a new WordscapesGame instance.
         
@@ -39,6 +40,7 @@ class WordscapesGame:
         self.positions = positions
         self.non_placed_words = non_placed_words
         self.complete_grid = complete_grid
+        self.name = name
         self.found_words = set()
         self.lives = int(len(positions)*0.4) # 40% ??
         self.points = 0
@@ -138,7 +140,17 @@ class WordscapesGame:
                 continue
             
             elif guess in ['EXIT', 'E']: 
-                break
+                update_leaderboard(self.name, self.points)
+                while True:
+                    retry_option = input("🔄 Would you like to play again? " 
+                                    + colored("[y/n]", "blue", attrs=["bold"]) + ": ")\
+                                    .lower().strip()
+                    if retry_option in ['y', 'n']:
+                        time.sleep(0.25)
+                        return retry_option
+                    else:
+                        cprint("Invalid response!", "red", attrs=["bold"])
+                        time.sleep(0.1)
 
             self.the_guess(guess)
             
