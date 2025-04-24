@@ -78,18 +78,24 @@ def handle_game_session(dictionary_file):
         letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file)
         retry_option = start_game(letters, incomplete_grid, positions, nickname, non_placed_words, complete_grid)
 
-        if retry_option.lower() == 'n':
+        if retry_option:
+            if retry_option.lower() == 'n':
+                cprint("Returning to main menu...", "yellow", attrs=["bold"])
+                time.sleep(0.5)
+                clear_screen()
+                break
+            elif retry_option.lower() == 'y':
+                cprint("Restarting the game...", "yellow", attrs=["bold"])
+                time.sleep(0.6)
+                continue
+            else: # dapat wala a to kasi caught na yang conditional sa WordscapesGame.play()
+                cprint("Invalid option. Returning to main menu...", "red", attrs=["bold"])
+                time.sleep(0.5)
+                clear_screen()
+                break
+        else:
             cprint("Returning to main menu...", "yellow", attrs=["bold"])
-            time.sleep(0.5)
-            clear_screen()
-            break
-        elif retry_option.lower() == 'y':
-            cprint("Restarting the game...", "yellow", attrs=["bold"])
-            time.sleep(0.6)
-            continue
-        else: # dapat wala a to kasi caught na yang conditional sa WordscapesGame.play()
-            cprint("Invalid option. Returning to main menu...", "red", attrs=["bold"])
-            time.sleep(0.5)
+            time.sleep(23)
             clear_screen()
             break
 

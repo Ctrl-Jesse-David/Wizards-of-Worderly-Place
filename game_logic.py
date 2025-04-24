@@ -164,7 +164,7 @@ class WordscapesGame:
         else:
             self.grid.display_complete_grid(nickname)
         self.end_game()
-        return
+        return None
 
     def end_game(self):
         '''
@@ -227,27 +227,34 @@ class WordscapesGame:
                     self.points += self.calculate_points(guess, self.found_words)
                     self.found_words.add(guess)
                     cprint('Correct!', "green", attrs=["bold"])
+                    
 
                 elif guess in self.non_placed_words:
                     self.lives += 1
                     cprint('Word not found in the grid. Bonus life granted!', 'green', attrs=['bold'])
+                
+                else:
+                    self.lives -= 1
+                    cprint('Incorrect.', "red", attrs=["bold"])
+
+
 
             elif (guess in self.words or guess in self.non_placed_words) and guess in self.found_words:
                 cprint('Word has already been found.', "red", attrs=["bold"])
-            
+               
             
             else:
                 self.lives -= 1
                 cprint('Incorrect.', "red", attrs=["bold"])
+            
 
         else:
             cprint(f"Invalid word! Only {'-'.join(list(self.letters))} is allowed", "red", attrs=["bold"])
             self.lives -= 1
-            time.sleep(1)
-            return
 
-        time.sleep(0.35)       
+        time.sleep(1)
 
+        
     def print_wrapped_words(self, label, word_list, width=75):
         words = sorted(word_list)
         prefix = f"{label}: "
