@@ -1,6 +1,10 @@
-from display_manager import display_header, clear_screen, display_footer
+from display_manager import display_header, clear_screen, display_body, get_player_input, display_border, title_color_changer
 from termcolor import cprint, colored
+<<<<<<< HEAD
 from user_progress import current_user, get_user_stats, login_user, display_user_profile, display_shop
+=======
+from animations import mystical_intro
+>>>>>>> d256903fdc9c18863d5ec14beb92f7be069c8ab8
 
 '''
 Options
@@ -10,9 +14,8 @@ It manages game sessions, displays instructions, and maintains the leaderboard s
 '''
 
 def display_main_menu():
-    '''
-    Displays the main menu interface of the game.
     
+<<<<<<< HEAD
     This function presents a formatted menu showing the game title
     and available options including starting the game, viewing instructions,
     checking the leaderboard, and exiting the game.
@@ -42,8 +45,50 @@ def display_main_menu():
 
     for option in menu_options:
         print(option.center(75))
+=======
+    title = [
+        "",
+        title_color_changer("🧙 Wizards of Worderly Place! 🧙".upper()),
+        "" 
+    ]
 
-    display_footer("Please enter a choice and press Enter.")
+    subtitle = [
+        "=" * 75,
+        "Can you uncover all the hidden words?",
+        "Test your wits and master the art of wordplay!",
+        "-" * 75
+    ]
+>>>>>>> d256903fdc9c18863d5ec14beb92f7be069c8ab8
+
+    menu_options = [
+        "📖  " + colored("[S]", 'cyan', attrs=["bold"]) + "  Start Game   📖",
+        "📜  " + colored("[I]", 'green', attrs=["bold"]) + "  Instructions 📜",
+        "🏆  " + colored("[L]", 'yellow', attrs=["bold"]) + "  Leaderboards 🏆",
+        "🚪  " + colored("[E]", 'red', attrs=["bold"]) + "  Exit Game    🚪"
+    ]
+
+    footer = [
+        "-" * 75,
+        "", 
+        "Please enter a choice and press Enter.",
+        "" 
+    ]
+
+    clear_screen()
+    
+    display_border("on_white")
+
+    display_body(title, 'blue', 'on_white')
+    display_body(subtitle, 'white', 'on_white')
+    display_body(menu_options, 'white', 'on_white')
+    display_body(footer, 'white', 'on_white')
+
+    display_border("on_white")
+
+    print("\n")
+
+    choice = get_player_input()
+    return choice
 
 
 def display_instructions():
@@ -54,29 +99,34 @@ def display_instructions():
     including game rules and available power-ups/hints. 
     '''
 
-    display_header(
-        title="📜 GAME INSTRUCTIONS 📜",
-        color="light_red"
-    )
-
-    cprint("🕹️  How to Play:", "light_red", attrs=["bold"])
-    print("  Form words using the given letters to solve the puzzle.")
-    print("  Type the words and press Enter to submit your answer.")
-    print("-"*75)
-    
-    cprint("✨ Game Rules:", "light_red", attrs=["bold"])
-    print("  🏆 Find all possible words to complete the level.")
-    print("  🚫 Invalid words or repeated words will not be accepted.")
-    print("  💀 Choose your words wisely! You have limited lives.")
-    print("-"*75)
-    
-    cprint("🔮 Power-ups & Hints:", "light_red", attrs=["bold"])
-    print("  🪄 Shuffle - Rearranges the given letters.")
-    print("  🔍 Hint - Reveals one letter in a hidden word.") # maybe mag-add din tayo nito?
-    print("  🔵 Extra Life - Given if you find a valid word not in the grid") # ito yung sa plus life feature
-    print("-"*75)
-
-    input(colored("Press Enter to return to the main menu.", "light_red", attrs=["bold"]))
+    instructions = [
+    " ",
+    colored("📜 GAME INSTRUCTIONS 📜", attrs=["bold"]),
+    " ",
+    '='*75,
+    colored("🕹️  How to Play:", "light_red", attrs=["bold"]),
+    "  Form words using the given letters to solve the puzzle.",
+    "  Type the words and press Enter to submit your answer.",
+    "-" * 75,
+    colored("✨ Game Rules:", "light_red", attrs=["bold"]),
+    "  🏆 Find all possible words to complete the level.",
+    "  🚫 Invalid words or repeated words will not be accepted.",
+    "  💀 Choose your words wisely! You have limited lives.",
+    "-" * 75,
+    colored("🔮 Power-ups & Hints:", "light_red", attrs=["bold"]),
+    "  🪄 Shuffle - Rearranges the given letters.",
+    "  🔍 Hint - Reveals one letter in a hidden word.",
+    "  🔵 Extra Life - Given if you find a valid word not in the grid.",
+    "-" * 75,
+    " ",
+    colored("Press Enter to return to the main menu.", attrs=["bold"]),
+    " ",
+]
+    clear_screen()
+    display_border("on_red")
+    display_body(instructions, "white", "on_red")
+    display_border("on_red")
+    input()
     clear_screen()
 
 

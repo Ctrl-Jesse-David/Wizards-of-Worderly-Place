@@ -43,9 +43,10 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
 
     while True:
         login_user(nickname)
-        display_main_menu()
+        
+        # mystical_intro()
 
-        choice = get_player_input()
+        choice =  display_main_menu()
 
         if choice == "S":
             start_game_session(dictionary_file, nickname)
