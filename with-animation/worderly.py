@@ -4,7 +4,7 @@ from display_manager import clear_screen, get_player_input
 from game_master import start_game_session
 from menu_display import display_instructions, display_leaderboard, display_main_menu
 from animations import mystical_intro
-from user_progress import display_shop, display_user_profile, login_user, update_score
+from user_progress import display_shop, display_user_profile, login_user
 
 from display_manager import get_player_nickname
 

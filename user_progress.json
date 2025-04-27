@@ -1,10 +1,11 @@
 {
     "neil": {
-        "points": 12,
+        "points": 2,
         "hints_purchased": [
+            "basic_hint",
             "basic_hint"
         ],
-        "hints_available": 1,
+        "hints_available": 2,
         "highest_score": 22
     },
     "& \"C:/Users/Neil Crisostomo/AppData/Local/Programs/Python/Python311/python.exe\" e:/GITHUB/Wordscapes_Machine_Project/with-animation/worderly.py": {
@@ -14,6 +15,12 @@
         "highest_score": 0
     },
     "player": {
+        "points": 0,
+        "hints_purchased": [],
+        "hints_available": 0,
+        "highest_score": 0
+    },
+    "_Machine_Project/with-animation/worderly.py": {
         "points": 0,
         "hints_purchased": [],
         "hints_available": 0,

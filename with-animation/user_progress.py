@@ -5,6 +5,9 @@ from termcolor import cprint, colored
 
 current_user = None
 
+#Max Possible of Hints that can be bought
+MAX_PURCHASED_HINTS = 10
+
 def load_users():
     if os.path.exists("user_progress.json"):
         try:
@@ -72,11 +75,11 @@ def update_score(session_score):
     users = load_users()
     user = users[current_user]
     
-    # Update total magic points
+    #Update total magic points
     total = user.get('points', 0) + session_score
     user['points'] = total
 
-    # Update highest score to reflect peak total points
+    #Update highest score to reflect peak total points
     if total > user.get('highest_score', 0):
         user['highest_score'] = total
         update_leaderboard(current_user, total)
@@ -94,7 +97,7 @@ def update_leaderboard(nickname, score):
     except FileNotFoundError:
         pass
     
-    # Check if user already exists in leaderboard
+    #Check if user already exists in leaderboard
     user_exists = False
     for i, (name, old_score) in enumerate(scores):
         if name == nickname:
@@ -103,39 +106,42 @@ def update_leaderboard(nickname, score):
                 scores[i][1] = str(score)
             break
     
-    # Add new user if not found
+    #Add new user if not found
     if not user_exists:
         scores.append([nickname, str(score)])
     
-    # Write updated scores
+    #Write updated scores
     with open("leaderboard.txt", "w") as file:
         for name, sc in scores:
             file.write(f"{name}: {sc}\n")
 
 
 def purchase_hint(hint_id, cost):
+    """
+    Purchase a hint (up to 10) by spending points.
+    """
     global current_user
     if not current_user:
         return False
     
     users = load_users()
     user = users[current_user]
-    
-    if "points" not in user:
-        user["points"] = 0
-    if "hints_purchased" not in user:
-        user["hints_purchased"] = 0
-    if "hints_available" not in user:
-        user["hints_available"] = 0
+
+    user.setdefault("points", 0)
+    user.setdefault("hints_purchased", [])
+    user.setdefault("hints_available", 0)
         
+    #Check purchase limit
+    if user["hints_available"] >= MAX_PURCHASED_HINTS:
+        cprint(f"Maximum of {MAX_PURCHASED_HINTS} hints reached!", "yellow")
+        return False
+    
+    #Check if enough points
     if user["points"] < cost:
         cprint(f"Not enough magic points! You have {user['points']} but the hint costs {cost}.", "red")
         return False
     
-    if user["hints_purchased"] >= 10:
-        cprint("Maximum Hints Reached!", "yellow")
-        return False
-    
+    #Deduct cost and give hint
     user["points"] -= cost
     user["hints_purchased"].append(hint_id)
     user["hints_available"] += 1
