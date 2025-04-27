@@ -1,7 +1,6 @@
 import random, copy, time
 from grid_constructor import generate_positions_dict, generate_word_grid
-from display_manager import clear_screen
-from display_manager import get_player_nickname
+from display_manager import clear_screen, get_player_nickname
 from game_engine import WordscapesGame
 from termcolor import cprint
 
@@ -43,7 +42,6 @@ def initialize_game(letters, incomplete_grid, positions, name, non_placed_words,
         Player's nickname for score tracking
     '''
 
-    # For creating a new grid
     game = WordscapesGame(
         list(letters),
         copy.deepcopy(incomplete_grid),

@@ -6,7 +6,7 @@ def clear_screen():
 
 def mystical_intro():
     width = 75
-    height = 12
+    height = 14
     phrase = "WELCOME TO WIZARDS OF WORDERLY PLACE"
     spaced_phrase = ' '.join(phrase)
 
