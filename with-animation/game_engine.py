@@ -1,10 +1,11 @@
-import random, time
-from grid_renderer import GameGrid
-from termcolor import cprint, colored
 from display_manager import clear_screen
 from file_operations import update_leaderboard
 from word_utils import is_valid
-
+import random, time
+from grid_renderer import GameGrid
+from user_progress import get_user_stats
+import user_progress
+from termcolor import colored, cprint
 
 '''
 Game Logic
@@ -48,8 +49,9 @@ class WordscapesGame:
         self.lives = int(len(positions)*0.4) # 40% ??
         self.points = 0
         self.last_guess = None
-        self.hints_remaining = int(len(positions)*0.2) # tentative na 30% lang ng num of words (or ibase ba natin sa num of letters sa grid)
-        
+        self.free_hints = 5
+        self.bought_hints = get_user_stats().get("hints_available", 0)
+    
     def shuffle_letters(self):
         '''
         Randomly reorders the available letters.
@@ -80,37 +82,44 @@ class WordscapesGame:
 
     def get_hint(self):
         '''
-        Reveals a random unrevealed letter in the grid.
+        Reveals a random unrevealed letter, using free hints first then purchased.
         '''
+        #Determine source
+        if self.free_hints > 0:
+            self.free_hints -= 1
+            source = "free"
+        else:
+            import user_progress
+            if self.bought_hints > 0 and user_progress.use_hint():
+                self.bought_hints -= 1
+                source = "purchased"
+            else:
+                cprint("No hints remaining!", "red", attrs=["bold"])
+                time.sleep(1)
+                return False
 
-        #No hints left
-        if self.hints_remaining <= 0:
-            cprint("No hints remaining!", "red", attrs=["bold"])
-            time.sleep(1)
-            return False
-            
-        #All unrevealed pos
-        all_positions = set(pos for word in self.words for pos in self.positions[word])
-        revealed_positions = set(pos for word in self.found_words for pos in self.positions[word])
+        #Gather hidden positions
+        all_positions = {pos for w in self.words for pos in self.positions[w]}
+        revealed_positions = {pos for w in self.found_words for pos in self.positions[w]}
         hidden_positions = list(all_positions - revealed_positions)
-        
+
         if not hidden_positions:
             cprint("No hidden letters to reveal!", "yellow", attrs=["bold"])
             time.sleep(1)
             return False
-            
-        #Reveal random pos
+
+        #Reveal letter
         row, col = random.choice(hidden_positions)
-        
-        #Finds the letter and updates grid
-        for word, positions in self.positions.items():
-            if (row, col) in positions:
-                letter_index = positions.index((row, col))
-                self.grid.incomplete_grid[row][col] = word[letter_index]
+        for word, poses in self.positions.items():
+            if (row, col) in poses:
+                idx = poses.index((row, col))
+                self.grid.incomplete_grid[row][col] = word[idx]
                 break
-                
-        self.hints_remaining -= 1
-        cprint(f"Hint used! {self.hints_remaining} hints remaining.", "green", attrs=["bold"])
+
+        cprint(
+            f"Hint used! ({source})  –  Free left: {self.free_hints}, Extra left: {self.bought_hints}",
+            "green", attrs=["bold"]
+        )
         time.sleep(1)
         return True
 
@@ -144,6 +153,7 @@ class WordscapesGame:
             
             elif guess in ['EXIT', 'E']: 
                 update_leaderboard(self.name, self.points)
+                user_progress.update_score(self.points)
                 self.grid.display_complete_grid(nickname)
                 while True:
                     self.grid.display_complete_grid(nickname)
@@ -167,6 +177,8 @@ class WordscapesGame:
         else:
             self.grid.display_complete_grid(nickname)
         self.end_game()
+        update_leaderboard(nickname, self.points)
+        user_progress.update_score(self.points)
         return None
 
     def end_game(self):
@@ -176,7 +188,7 @@ class WordscapesGame:
         Shows all possible words, words found by the player, final score,
         and a victory or game over message depending on results.
         '''
-
+        
         print('-'*75)
         self.print_wrapped_words("WORDS", self.words)
         self.print_wrapped_words("FOUND WORDS", self.found_words) if self.found_words else print("FOUND WORDS: None")
@@ -189,7 +201,7 @@ class WordscapesGame:
         else:
             cprint('Game Over!'.center(75), "red", attrs=["bold"])
             print('-'*75)
-
+    
     def cur_state(self):
         '''
         Displays the current game state information.
@@ -199,13 +211,13 @@ class WordscapesGame:
         '''
 
         print('-'*75)
-        print(f"🔠Available letters: {'-'.join(self.letters)}")
+        print(f"🔠 Available letters: {'-'.join(self.letters)}")
         print(f"❤️‍🔥 Lives: {self.lives}")
-        print(f"🌟 Score: {self.points}") 
-        print(f"💡 Hints remaining: {self.hints_remaining}")
+        print(f"🌟 Score: {self.points}")
+        print(f"💡 Hints – Free: {self.free_hints}, Extra: {self.bought_hints}")
         print(f"📖 Words found: {len(self.found_words)}/{len(self.words)}")
         print(f"📝 Last correct guess: {self.last_guess}")
-        print("🛠️ Commands: [shuffle|s] to shuffle letters, [hint|h] for a hint, [exit|e] to quit")
+        print("🛠️ Commands: [shuffle|s] to shuffle, [hint|h] for a hint, [exit|e] to quit")
         print('-'*75)
 
     def the_guess(self, guess):
@@ -272,7 +284,5 @@ class WordscapesGame:
         if line.strip():
             print(line.rstrip(', '))
  
-
-    
 
     

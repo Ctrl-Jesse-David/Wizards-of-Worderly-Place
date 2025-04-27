@@ -4,6 +4,7 @@ from display_manager import clear_screen
 from display_manager import get_player_nickname
 from game_engine import WordscapesGame
 from termcolor import cprint
+from user_progress import update_score
 
 
 def get_game_level(dictionary_file):
@@ -21,6 +22,7 @@ def get_game_level(dictionary_file):
     positions_dict = generate_positions_dict(placed_words)
 
     return letters, game_grid, positions_dict, non_placed_words, grid_data
+
 
 def initialize_game(letters, incomplete_grid, positions, name, non_placed_words, complete_grid):
     '''
@@ -52,24 +54,28 @@ def initialize_game(letters, incomplete_grid, positions, name, non_placed_words,
         copy.deepcopy(complete_grid),
         copy.deepcopy(name)
     )
+    #Play the game
     retry_option = game.play(name)
+
+    #updates total and highest score
+    update_score(game.points)
     return retry_option
 
-def start_game_session(dictionary_file): # create
+
+def start_game_session(dictionary_file, nickname): # create
     '''
     Manages a complete game session including nickname input,
     game initialization, and retry logic.
     '''
 
-    nickname = get_player_nickname()
     clear_screen()
-    '''
-    tanggalin while loop
-    straight run start game
-    '''
+    #Run games until user opts out
     while True:
         letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file)
-        retry_option = initialize_game(letters, incomplete_grid, positions, nickname, non_placed_words, complete_grid)
+        retry_option = initialize_game(
+            letters, incomplete_grid, positions,
+            nickname, non_placed_words, complete_grid
+        )
 
         if retry_option:
             if retry_option.lower() == 'n':
@@ -87,7 +93,6 @@ def start_game_session(dictionary_file): # create
                 break
         else:
             cprint("Returning to main menu...", "yellow", attrs=["bold"])
-            time.sleep(23)
+            time.sleep(0.5)
             clear_screen()
             break
-

@@ -4,6 +4,9 @@ from display_manager import clear_screen, get_player_input
 from game_master import start_game_session
 from menu_display import display_instructions, display_leaderboard, display_main_menu
 from animations import mystical_intro
+from user_progress import display_shop, display_user_profile, login_user, update_score
+
+from display_manager import get_player_nickname
 
 def main():
     if len(sys.argv) >= 3:
@@ -19,7 +22,6 @@ def main():
             main_game_loop(filename)
     else:
         main_game_loop()
-
 
 def main_game_loop(dictionary_file='corncob-lowercase.txt'):
     '''
@@ -37,17 +39,24 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
     - E: Exit the application
     '''
 
+    nickname = get_player_nickname()
+
     while True:
+        login_user(nickname)
         display_main_menu()
 
         choice = get_player_input()
 
         if choice == "S":
-            start_game_session(dictionary_file)
+            start_game_session(dictionary_file, nickname)
         elif choice == "I":
             display_instructions()
         elif choice == "L":
             display_leaderboard()
+        elif choice == "P":
+            display_user_profile()
+        elif choice == "M":
+            display_shop()  
         elif choice == "E":
             print("Exiting...")
             time.sleep(0.8)

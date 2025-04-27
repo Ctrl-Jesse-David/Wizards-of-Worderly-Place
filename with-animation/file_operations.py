@@ -21,8 +21,6 @@ def get_main_and_valid_words(file_path):
 
     return (main_word, valid_words) if len(valid_words) >= 20 else get_main_and_valid_words(file_path)
 
-
-
 def update_leaderboard(name, score):
     with open("leaderboard.txt", "a") as file:
         file.write(f"{name}: {score}\n")

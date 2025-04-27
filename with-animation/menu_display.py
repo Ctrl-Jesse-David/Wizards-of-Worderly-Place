@@ -1,6 +1,6 @@
 from display_manager import display_header, clear_screen, display_footer
 from termcolor import cprint, colored
-
+from user_progress import current_user, get_user_stats, login_user, display_user_profile, display_shop
 
 '''
 Options
@@ -26,13 +26,22 @@ def display_main_menu():
     print("Test your wits and master the art of wordplay!".center(75))
     print("-" * 75)
 
+    if current_user:
+        stats = get_user_stats()
+        print(f"Logged in as: {stats['nickname']} | Points: {stats['points']} | Hints: {stats['hints_available']}".center(75))
+        print("-" * 75)
+
     menu_options = [
     " " * 11 + "📖  " + colored("[S]", "light_blue", attrs=["bold"]) + "  Start Game   📖",
     " " * 11 + "📜  " + colored("[I]", "light_blue", attrs=["bold"]) + "  Instructions 📜",
     " " * 11 + "🏆  " + colored("[L]", "light_blue", attrs=["bold"]) + "  Leaderboards 🏆",
+    " " * 11 + "🧙  " + colored("[P]", "light_blue", attrs=["bold"]) + "  Profile      🧙",
+    " " * 11 + "🛒  " + colored("[M]", "light_blue", attrs=["bold"]) + "  Magic Shop   🛒",
     " " * 11 + "🚪  " + colored("[E]", "light_blue", attrs=["bold"]) + "  Exit Game    🚪"
     ]
 
+    for option in menu_options:
+        print(option.center(75))
 
     display_footer("Please enter a choice and press Enter.")
 
