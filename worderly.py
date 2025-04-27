@@ -91,7 +91,6 @@ def handle_game_session(dictionary_file):
             else: # dapat wala a to kasi caught na yang conditional sa WordscapesGame.play()
                 cprint("Invalid option. Returning to main menu...", "red", attrs=["bold"])
                 time.sleep(0.5)
-                clear_screen()
                 break
         else:
             cprint("Returning to main menu...", "yellow", attrs=["bold"])

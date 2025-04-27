@@ -30,6 +30,3 @@ wqe: 0
 rwe: 0
 asda: 0
 asda: 0
-sad: 3
-asdsad: 6
-asdasd: 12

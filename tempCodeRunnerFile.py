@@ -1,1 +1,1 @@
-n
+.center(width)
