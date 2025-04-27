@@ -1,6 +1,6 @@
 import os
 import json
-from display_manager import display_header, clear_screen, display_footer
+from display_manager import display_header
 from termcolor import cprint, colored
 
 current_user = None
