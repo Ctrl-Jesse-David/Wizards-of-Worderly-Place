@@ -1,10 +1,8 @@
-import os, random, time, sys
+import os, random, time, threading
 from termcolor import colored, cprint
 
-def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
 def mystical_intro():
+    from display_manager import display_row, display_border, clear_screen
     width = 75
     height = 14
     phrase = "WELCOME TO WIZARDS OF WORDERLY PLACE"
@@ -17,7 +15,6 @@ def mystical_intro():
         "light_magenta", "light_cyan"
     ]
 
-    # -- First: animated loading screen --
     bg_charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ "
     center_x = width // 2 - len(spaced_phrase) // 2
     center_y = height // 2
@@ -38,76 +35,51 @@ def mystical_intro():
                                                    random.choice(available_text_colors),
                                                    attrs=['bold'])
 
-        # Top border
-        cprint(' ' * (width + 2), 'white', 'on_white', end='')
-        print()
-
-        # Side borders + grid
+        display_border('on_white')
         for row in grid:
-            cprint(' ', 'white', 'on_white', end='')
-            print(''.join(row), end='')
-            cprint(' ', 'white', 'on_white')
-
-        # Bottom border
-        cprint(' ' * (width + 2), 'white', 'on_white', end='')
-        print()
+            line = ''.join(row)
+            display_row(line, 'white', 'on_white')
+        display_border('on_white')
 
         dots = '.' * ((frame % 4) + 1)
         print('\n' + ' ' * (width // 2 - 10) + f'Enchanting the Grid{dots}')
         time.sleep(0.08)
 
-    # -- Final centered color changing text with white border --
-    try:
-        import msvcrt
-        def key_pressed():
-            return msvcrt.kbhit()
-    except ImportError:
-        import termios, tty, select
-        def key_pressed():
-            dr, dw, de = select.select([sys.stdin], [], [], 0)
-            return dr != []
+    stop_animation = threading.Event()
 
-    while True:
-        clear_screen()
+    def animate():
+        while not stop_animation.is_set():
+            clear_screen()
 
-        # Top border
-        cprint(' ' * (width + 2), 'white', 'on_white', end='')
-        print()
+            display_border('on_white')
 
-        # Empty lines to center the phrase vertically
-        empty_lines_before = center_y
-        for _ in range(empty_lines_before):
-            cprint(' ', 'white', 'on_white', end='')
-            print(' ' * width, end='')
-            cprint(' ', 'white', 'on_white')
-            
-        # Line with phrase
-        cprint(' ', 'white', 'on_white', end='')
-        print(' ' * center_x, end='')  # manually align it
-        for ch in spaced_phrase:
-            print(colored(ch, random.choice(available_text_colors), attrs=['bold']), end='')
-        print(' ' * (width - center_x - len(spaced_phrase)), end='')  # fill remaining space
-        cprint(' ', 'white', 'on_white')
+            empty_lines_before = center_y
+            for _ in range(empty_lines_before):
+                display_row(' ' * 75, 'white', 'on_white')
 
+            colorful_title = ''.join(
+                colored(ch, random.choice(available_text_colors), attrs=['bold']) for ch in spaced_phrase
+            )
+            display_row(colorful_title, 'white', 'on_white')
 
-        # Empty lines after
-        for _ in range(height - empty_lines_before - 1):
-            cprint(' ', 'white', 'on_white', end='')
-            print(' ' * width, end='')
-            cprint(' ', 'white', 'on_white')
+            for _ in range(height - empty_lines_before - 1):
+                display_row(' ' * 75, 'white', 'on_white')
 
-        # Bottom border
-        cprint(' ' * (width + 2), 'white', 'on_white', end='')
-        print()
+            display_border('on_white')
 
-        # "Press any key"
-        print('\n' + ' ' * (width // 2 - 13) + "Press any key to begin...")
+            print('\n' + ' ' * (width // 2 - 13) + "Press Enter to begin...")
 
-        time.sleep(0.08)
+            time.sleep(0.08)
 
-        if key_pressed():
-            sys.stdin.read(1)
-            break
+    animation_thread = threading.Thread(target=animate)
+    animation_thread.start()
+
+    input()
+
+    stop_animation.set()
+    animation_thread.join()
+
+    return
 
 if __name__ == "__main__":
     mystical_intro()

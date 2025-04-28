@@ -1,0 +1,83 @@
+
+user_progress.py:
+- pag nag-input ng 1 or 2 invalid choice lumalabas
+
+    while True:
+        clear_screen()
+        display_border("on_magenta")
+        display_body(shop_lines, "white", "on_magenta")
+        display_border("on_magenta")
+        print('')
+        
+        choice = input(colored("👉 Your choice: ", attrs=["bold"]))
+        
+        if choice in [1, 2]:
+            break
+
+        elif choice.lower() in ['e', 'exit']:
+            return
+    
+        clear_screen()
+        display_border("on_red")
+        display_body(shop_lines, "white", "on_red")
+        display_border("on_red")
+        print('')
+        cprint('Invalid Choice', "red", attrs=["bold"])
+        time.sleep(0.15)
+
+------------------------------------------------------------
+
+user_progress.py:
+- nagwewelcome back siya every exit ko sa mga options sa menu eh dapat
+every start ng log in lang
+
+
+def login_user(nickname):
+    """
+    Log in using existing nickname or create new profile
+    """
+    global current_user
+    users = load_users()
+    
+    if nickname not in users:
+        users[nickname] = {
+            "points": 0,
+            "hints_purchased": [],
+            "hints_available": 0,
+            "highest_score": 0
+        }
+        save_users(users)
+        cprint(f"Welcome, {nickname}! New wizard profile created.", "cyan")
+    else:
+        cprint(f"Welcome back, {nickname}! Your magical journey continues...", "cyan")
+        
+    current_user = nickname
+    return True
+
+------------------------------------------------------------
+
+grid_constructor.py
+
+- word out of grid
+
+------------------------------------------------------------
+
+user_progress.py, game_master.py
+- not a bug pero wala pang border
+
+
+------------------------------------------------------------
+
+animations.py
+- need ng loading animation and exit animation
+
+
+------------------------------------------------------------
+
+test folder
+- wala pang pytest sa grid checker
+
+------------------------------------------------------------
+
+game_engine.py
+- wala pa yung advanced hint fcns

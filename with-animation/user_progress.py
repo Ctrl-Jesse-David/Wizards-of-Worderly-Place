@@ -1,7 +1,7 @@
 import os
-import json
-from display_manager import display_header
+import json, time
 from termcolor import cprint, colored
+from display_manager import display_body, display_border, clear_screen
 
 current_user = None
 
@@ -42,7 +42,6 @@ def login_user(nickname):
         cprint(f"Welcome, {nickname}! New wizard profile created.", "cyan")
     else:
         cprint(f"Welcome back, {nickname}! Your magical journey continues...", "cyan")
-        
     current_user = nickname
     return True
 
@@ -156,7 +155,6 @@ def logout_user():
         return True
     return False
 
-
 def display_user_profile():
     global current_user
     
@@ -166,17 +164,28 @@ def display_user_profile():
         
     stats = get_user_stats()
     
-    display_header(
-        title=f"🧙 {stats['nickname']}'s Wizard Profile 🧙",
-        color="cyan"
-    )
+    profile_lines = [
+        "",
+        colored(f"🧙 {stats['nickname']}'s Wizard Profile 🧙", attrs=["bold"]),
+        "",
+        '═'*75,
+        "",
+        colored(f"✨ Magic Points: {stats['points']}", "white"),
+        colored(f"🔮 Available Hints: {stats['hints_available']}"),
+        colored(f"🏆 Highest Score: {stats['highest_score']}"),
+        "",
+        '─'*75,
+        "",
+        colored("Press Enter to return to the main menu", attrs=["bold"]),
+        ""
+    ]
     
-    print(f"✨ Magic Points: {stats['points']}")
-    print(f"🔮 Available Hints: {stats['hints_available']}")
-    print(f"🏆 Highest Score: {stats['highest_score']}")
-    print("-"*75)
-    
-    input(colored("Press Enter to return to the main menu.", "cyan", attrs=["bold"]))
+    clear_screen()
+    display_border("on_blue")
+    display_body(profile_lines, "white", "on_blue")
+    display_border("on_blue")
+    print("")
+    input()
 
 
 def display_shop():
@@ -188,30 +197,60 @@ def display_shop():
         
     stats = get_user_stats()
     
-    display_header(
-        title="✨ MAGICAL SHOP ✨",
-        color="light_magenta"
-    )
-    
-    print(f"Your Magic Points: {stats['points']}")
-    print("-"*75)
+    shop_lines = [
+        "",
+        colored("🛒 MAGICAL SHOP 🛒", attrs=["bold"]),
+        "",
+        colored('═'*75),
+        "",
+        colored(f"💰 Your Magic Points 💰: {stats['points']}"),
+        "",
+        colored('─'*75),
+        ""
+    ]
     
     shop_items = [
-        {"id": "basic_hint", "name": "Basic Hint", "cost": 10, "description": "Reveals one letter in a hidden word"},
-        {"id": "advanced_hint", "name": "Advanced Hint", "cost": 25, "description": "Reveals a full hidden word"},
+        {"id": "basic_hint", "name": "Basic Hint", "cost": 10, "description": "🔍 Reveals one letter in a hidden word"},
+        {"id": "advanced_hint", "name": "Advanced Hint", "cost": 25, "description": "📜 Reveals a full hidden word"},
     ]
     
     for i, item in enumerate(shop_items, 1):
-        print(f"{i}. {item['name']} - {item['cost']} points")
-        print(f"   {item['description']}")
-        print()
+        shop_lines.append(colored(f"{i}. {item['name']} - {item['cost']} points", "white"))
+        shop_lines.append(colored(f"   {item['description']}", "white"))
+        shop_lines.append("")
     
-    print("-"*75)
+    shop_lines.extend([
+        '-'*75,
+        "",
+        colored("Enter item number to purchase | [e|exit] to exit", attrs=["bold"]),
+        ""
+    ])
     
-    choice = input(colored("Enter item number to purchase | [e|exit] to exit: ", "light_magenta"))
+    while True:
+        clear_screen()
+        display_border("on_magenta")
+        display_body(shop_lines, "white", "on_magenta")
+        display_border("on_magenta")
+        print('')
+        
+        choice = input(colored("👉 Your choice: ", attrs=["bold"]))
+
+        if choice in [1, 2]:
+            break
+
+        elif choice.lower() in ['e', 'exit']:
+            return
     
-    if choice.lower() in ['e', 'exit']:
-        return
+        clear_screen()
+        display_border("on_red")
+        display_body(shop_lines, "white", "on_red")
+        display_border("on_red")
+        print('')
+        cprint('Invalid Choice', "red", attrs=["bold"])
+        time.sleep(0.25)
+    
+
+    
         
     try:
         item_index = int(choice) - 1

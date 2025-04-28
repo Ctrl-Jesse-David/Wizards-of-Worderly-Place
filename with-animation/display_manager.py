@@ -4,6 +4,7 @@ import os, random
 import re
 
 def get_player_nickname():
+    clear_screen()
     nickname = input("👤 Enter your nickname: ").strip()
     if nickname:
         return nickname
@@ -14,14 +15,15 @@ def display_header(title, color):
     print("="*75)
     cprint(title.center(75), color, attrs=["bold"])
     print("="*75)
-
+    
 ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
-
 def visible_length(text):
     clean_text = ansi_escape.sub('', text)
     length = 0
     for char in clean_text:
-        if char in "🧙📖📜🏆🚪👉🕹️✨🏆🚫💀🔮🪄🔍🔵":
+        if char in ["🕹", "✨", "🪄"]:
+            length += 1
+        elif ord(char) > 0xffff:
             length += 2
         else:
             length += 1
@@ -29,11 +31,18 @@ def visible_length(text):
 
 def smart_center(text, width):
     vis_len = visible_length(text)
-    total_padding = max(width - vis_len, 0)
+    total_padding = width - vis_len
     left_padding = total_padding // 2
     right_padding = total_padding - left_padding
-    return ' ' * left_padding + text + ' ' * right_padding
-
+    
+    clean_text = ansi_escape.sub('', text)
+    
+    if "🕹" in clean_text:
+        left_padding += 1
+    elif "✨" in clean_text:
+        left_padding -= 1
+    
+    return (' ' * max(left_padding, 0)) + text + (' ' * max(right_padding, 0))
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -50,7 +59,7 @@ def display_body(lines, text_color, bg_color):
         display_row(line, text_color, bg_color)
 
 def get_player_input():
-    return input(colored("👉 Your choice: ", "cyan", attrs=["bold"])).strip().upper()
+    return input(colored("👉 Your choice: ", "white", attrs=["bold"])).strip().upper()
 
 def title_color_changer(text):
     available_text_colors = [

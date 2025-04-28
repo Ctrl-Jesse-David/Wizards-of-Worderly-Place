@@ -39,12 +39,12 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
     - E: Exit the application
     '''
 
-    nickname = get_player_nickname()
+    mystical_intro()
 
+    nickname = get_player_nickname()
+    
     while True:
         login_user(nickname)
-        
-        # mystical_intro()
 
         choice =  display_main_menu()
 

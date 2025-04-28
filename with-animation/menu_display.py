@@ -25,16 +25,13 @@ def display_main_menu():
     ]
 
     menu_options = [
-    " " * 11 + "📖  " + colored("[S]", 'cyan', attrs=["bold"]) + "  Start Game   📖",
-    " " * 11 + "📜  " + colored("[I]", 'green', attrs=["bold"]) + "  Instructions 📜",
-    " " * 11 + "🏆  " + colored("[L]", "light_blue", attrs=["bold"]) + "  Leaderboards 🏆",
-    " " * 11 + "🧙  " + colored("[P]", "light_blue", attrs=["bold"]) + "  Profile      🧙",
-    " " * 11 + "🛒  " + colored("[M]", "light_blue", attrs=["bold"]) + "  Magic Shop   🛒",
-    " " * 11 + "🚪  " + colored("[E]", 'red', attrs=["bold"]) + "  Exit Game    🚪"
+    "📖  " + colored("[S]", 'cyan', attrs=["bold"]) + "  Start Game   📖",
+    "📜  " + colored("[I]", 'green', attrs=["bold"]) + "  Instructions 📜",
+    "🏆  " + colored("[L]", "yellow", attrs=["bold"]) + "  Leaderboards 🏆",
+    "🧙  " + colored("[P]", "light_blue", attrs=["bold"]) + "  Profile      🧙",
+    "🛒  " + colored("[M]", "magenta", attrs=["bold"]) + "  Magic Shop   🛒",
+    "🚪  " + colored("[E]", 'red', attrs=["bold"]) + "  Exit Game    🚪"
     ]
-
-    for option in menu_options:
-        print(option.center(75))
 
     footer = [
         "-" * 75,
@@ -73,7 +70,7 @@ def display_instructions():
     colored("📜 GAME INSTRUCTIONS 📜", attrs=["bold"]),
     " ",
     '='*75,
-    colored("🕹️  How to Play:", "light_red", attrs=["bold"]),
+    colored("🕹️ How to Play:", "light_red", attrs=["bold"]),
     "  Form words using the given letters to solve the puzzle.",
     "  Type the words and press Enter to submit your answer.",
     "-" * 75,
@@ -83,7 +80,7 @@ def display_instructions():
     "  💀 Choose your words wisely! You have limited lives.",
     "-" * 75,
     colored("🔮 Power-ups & Hints:", "light_red", attrs=["bold"]),
-    "  🪄 Shuffle - Rearranges the given letters.",
+    "  🪄  Shuffle - Rearranges the given letters.",
     "  🔍 Hint - Reveals one letter in a hidden word.",
     "  🔵 Extra Life - Given if you find a valid word not in the grid.",
     "-" * 75,
@@ -95,37 +92,72 @@ def display_instructions():
     display_border("on_red")
     display_body(instructions, "white", "on_red")
     display_border("on_red")
+    print("")
     input()
     clear_screen()
-
-
 def display_leaderboard():
     '''
-    Displays the top 8 player scores from the leaderboard.
-
-    This function reads player scores from 'leaderboard.txt', sorts them
-    in descending order, and displays the top scores.
+    Displays the top 8 player scores from the leaderboard with left-aligned text.
     '''
-
-    display_header(
-        title="🏆 LEADERBOARD 🏆",
-        color="yellow"
-    )
     try:
         with open("leaderboard.txt", "r") as file:
             scores = sorted((line.strip().split(": ") for line in file), 
-                            key=lambda x: int(x[1]), reverse=True)[:8]
+                        key=lambda x: int(x[1]), reverse=True)[:8]
+        
+        leaderboard_lines = [
+            " ",
+            colored("🏆 LEADERBOARD 🏆", attrs=["bold"]),
+            " ",
+            colored('═'*75, "yellow"),
+            " "  # Empty line before scores
+        ]
+        
         if scores:
+            # Find longest name for consistent padding
+            max_name_len = max(len(name) for name, _ in scores)
+            
             for rank, (name, score) in enumerate(scores, start=1):
-                print(f"{rank}. {name} - {score}")
+                # Left-align names and scores with consistent padding
+                entry = f"{rank}. {name.ljust(max_name_len)} - {score}"
+                leaderboard_lines.append(colored(entry, "white"))
         else:
-            print("No scores yet! Play to be the first on the leaderboard!")
-
+            leaderboard_lines.append(colored("No scores yet! Play to be the first on the leaderboard!", "white"))
+        
+        leaderboard_lines.extend([
+            " ",  # Empty line after scores
+            colored('─'*75, "yellow"),
+            " ",
+            colored("Press Enter to return to the main menu.", attrs=["bold"]),
+            " "
+        ])
+        
+        clear_screen()
+        display_border("on_yellow")
+        display_body(leaderboard_lines, "yellow", "on_yellow")
+        display_border("on_yellow")
+        print("")
+        input()
+        
     except FileNotFoundError:
-        print("No leaderboard found. Play the game to create one!")
+        error_lines = [
+            " ",
+            colored("🏆 LEADERBOARD 🏆", "yellow", attrs=["bold"]),
+            " ",
+            colored('═'*75, "yellow"),
+            colored("No leaderboard found.", "white"),
+            colored("Play the game to create one!", "white"),
+            colored('─'*75, "yellow"),
+            " ",
+            colored("Press Enter to return to the main menu.", attrs=["bold"]),
+            " "
+        ]
+        clear_screen()
+        display_border("on_yellow")
+        display_body(error_lines, "yellow", "on_yellow")
+        display_border("on_yellow")
+        
+        input()
 
-    print("-"*75)
-    input(colored("Press Enter to return to the main menu.", 'yellow', attrs=["bold"]))
 
 if __name__ == '__main__':
-    display_main_menu()
+    display_leaderboard()
