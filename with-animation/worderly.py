@@ -1,6 +1,6 @@
 import sys, os, time
-from termcolor import colored, cprint
-from display_manager import clear_screen, get_player_input
+from termcolor import cprint
+from display_manager import clear_screen
 from game_master import start_game_session
 from menu_display import display_instructions, display_leaderboard, display_main_menu
 from animations import mystical_intro

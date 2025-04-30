@@ -1,4 +1,4 @@
-from display_manager import clear_screen
+from display_manager import clear_screen, display_border, display_body, ansi_escape
 from file_operations import update_leaderboard
 from word_utils import is_valid
 import random, time
@@ -46,18 +46,21 @@ class WordscapesGame:
         self.complete_grid = complete_grid
         self.name = name
         self.found_words = set()
-        self.lives = int(len(positions)*0.4) # 40% ??
+        self.lives = int(len(self.words) * .4)
         self.points = 0
         self.last_guess = None
         self.free_hints = 5
         self.bought_hints = get_user_stats().get("hints_available", 0)
     
-    def shuffle_letters(self):
+    def shuffle_letters(self, nickname):
         '''
         Randomly reorders the available letters.
         '''
-
+        clear_screen()
+        self.grid.display_grid(nickname, "white", "on_cyan")
+        self.cur_state("white", "on_cyan")
         random.shuffle(self.letters)
+        time.sleep(0.35)
     
     def calculate_points(self, guess, found_words):
         '''
@@ -80,11 +83,12 @@ class WordscapesGame:
             set(coordinate for word in found_words 
                 for coordinate in self.positions[word]))
 
-    def get_hint(self):
+    def get_hint(self, nickname):
         '''
         Reveals a random unrevealed letter, using free hints first then purchased.
         '''
         #Determine source
+
         if self.free_hints > 0:
             self.free_hints -= 1
             source = "free"
@@ -94,8 +98,11 @@ class WordscapesGame:
                 self.bought_hints -= 1
                 source = "purchased"
             else:
+                clear_screen()
+                self.grid.display_grid(nickname, "white", "on_red")
+                self.cur_state("white", "on_red")
                 cprint("No hints remaining!", "red", attrs=["bold"])
-                time.sleep(1)
+                time.sleep(0.5)
                 return False
 
         #Gather hidden positions
@@ -104,8 +111,11 @@ class WordscapesGame:
         hidden_positions = list(all_positions - revealed_positions)
 
         if not hidden_positions:
+            clear_screen()
+            self.grid.display_grid(nickname, "white", "on_yellow")
+            self.cur_state("white", "on_yellow")
             cprint("No hidden letters to reveal!", "yellow", attrs=["bold"])
-            time.sleep(1)
+            time.sleep(0.5)
             return False
 
         #Reveal letter
@@ -115,13 +125,32 @@ class WordscapesGame:
                 idx = poses.index((row, col))
                 self.grid.incomplete_grid[row][col] = word[idx]
                 break
-
+        
+        clear_screen()
+        self.grid.display_grid(nickname, "white", "on_blue")
+        self.cur_state("white", "on_blue")
         cprint(
             f"Hint used! ({source})  –  Free left: {self.free_hints}, Extra left: {self.bought_hints}",
-            "green", attrs=["bold"]
+            "blue", attrs=["bold"]
         )
-        time.sleep(1)
+        time.sleep(0.5)
         return True
+    
+    def get_retry_option(self, nickname, on_color):
+        while True:
+            self.grid.display_complete_grid(nickname, "white", on_color)
+            self.end_game(on_color)
+            print("")
+            retry_option = input(colored("🔄 Would you like to play again?", attrs=["underline"]) 
+                                            + colored(" [y/n]", attrs=["bold"]) + ": ")\
+                                            .lower().strip()
+            if retry_option in ['y', 'n']:
+                return retry_option
+            else:
+                print('')
+                cprint("Invalid response!", "red", attrs=["bold"])
+                time.sleep(0.5)
+                clear_screen()
 
     def play(self, nickname):
         '''
@@ -140,87 +169,90 @@ class WordscapesGame:
         while self.found_words != self.words and self.lives > 0:
             self.grid.display_grid(nickname)
             self.cur_state()
-
-            guess = input('Guess a word: ').upper()
+            
+            guess = input(colored("👉 Your Output: ", attrs=["bold"])).strip().upper()
 
             if guess in ['SHUFFLE', 'S']:
-                self.shuffle_letters()
+                self.shuffle_letters(nickname)
                 continue
             
             elif guess in ['HINT', 'H']:
-                self.get_hint()
+                self.get_hint(nickname)
                 continue
             
             elif guess in ['EXIT', 'E']: 
                 update_leaderboard(self.name, self.points)
                 user_progress.update_score(self.points)
                 self.grid.display_complete_grid(nickname)
-                while True:
-                    self.grid.display_complete_grid(nickname)
-                    self.end_game()
-                    retry_option = input("🔄 Would you like to play again? " 
-                                    + colored("[y/n]", "blue", attrs=["bold"]) + ": ")\
-                                    .lower().strip()
-                    if retry_option in ['y', 'n']:
-                        time.sleep(0.25)
-                        return retry_option
-                    else:
-                        cprint("Invalid response!", "red", attrs=["bold"])
-                        time.sleep(0.1)
-                        clear_screen()
+                return self.get_retry_option(nickname, "on_red")
 
-            self.the_guess(guess)
+            self.the_guess(guess, nickname)
             
         clear_screen()
-        if len(self.found_words) == len(self.words):
-            self.grid.display_grid(nickname)
-        else:
-            self.grid.display_complete_grid(nickname)
-        self.end_game()
-        update_leaderboard(nickname, self.points)
-        user_progress.update_score(self.points)
-        return None
 
-    def end_game(self):
+        # Determine the final outcome
+        if len(self.found_words) == len(self.words):
+            update_leaderboard(self.name, self.points)
+            user_progress.update_score(self.points)
+            return self.get_retry_option(nickname, "on_green")
+            
+
+        elif self.lives <= 0:
+            return self.get_retry_option(nickname, "on_red")
+
+        else:  # This covers if they exited early (EXIT/E)
+            return self.get_retry_option(nickname, "on_red")
+
+
+    def end_game(self, on_color):
         '''
         Displays the end game results.
-        
-        Shows all possible words, words found by the player, final score,
-        and a victory or game over message depending on results.
         '''
-        
-        print('-'*75)
-        self.print_wrapped_words("WORDS", self.words)
-        self.print_wrapped_words("FOUND WORDS", self.found_words) if self.found_words else print("FOUND WORDS: None")
-        print(f"SCORE: {self.points}")
-        print('-'*75)
+        info = ['-'*75,
+                '',
+        *self.get_wrapped_words(colored("WORDS", attrs=["bold"]), self.words)]
 
-        if len(self.found_words) == len(self.words):
-            cprint('Congratulations! You guessed all the words.'.center(75), color="green", attrs=["bold"])
-            print('-'*75)
+        if self.found_words:
+            info += self.get_wrapped_words(colored("FOUND WORDS", attrs=["bold"]), self.found_words)
         else:
-            cprint('Game Over!'.center(75), "red", attrs=["bold"])
-            print('-'*75)
+            info.append(f"{colored("FOUND WORDS", attrs=["bold"])}: None")
+            
+        info += [""]
+        info += [f"{colored('SCORE', attrs=["bold"])}: {self.points}", '', '-'*75]
+
+        display_body(info, "white", on_color)
+        
+        if len(self.found_words) == len(self.words):
+            display_body([colored('Congratulations! You guessed all the words.', color="green", attrs=["bold"]), ''], "white", on_color)
+        else:
+            display_body(['',colored('Game Over!', "red", attrs=["bold"]), ''], "white", on_color)
+        display_border(on_color)
+
     
-    def cur_state(self):
+    def cur_state(self, color="white", on_color="on_white"):
         '''
         Displays the current game state information.
         
         Shows available letters, remaining lives, current score,
         words found, last correct guess, and available commands to the player.
         '''
+        info = [
+            '='*75,
+            "",
+            f"🔠 {colored('Available letters:', attrs=['bold'])} {'-'.join(self.letters)}",
+            f"🌱 {colored('Lives:', attrs=['bold'])} {self.lives}",
+            f"🌟 {colored('Score:', attrs=['bold'])} {self.points}",
+            f"💡 {colored('Hints – Free:', attrs=['bold'])} {self.free_hints}, Extra: {self.bought_hints}",
+            f"📖 {colored('Words found:', attrs=['bold'])} {len(self.found_words)}/{len(self.words)}",
+            f"📝 {colored('Last correct guess:', attrs=['bold'])} {self.last_guess}",
+            f"🎮 {colored('Commands:', attrs=['bold'])} [shuffle|s], [hint|h], [exit|e]",
+            ""
+        ]
+        display_body(info, color, on_color)
+        display_border(on_color)
+        print("")
 
-        print('-'*75)
-        print(f"🔠 Available letters: {'-'.join(self.letters)}")
-        print(f"❤️‍🔥 Lives: {self.lives}")
-        print(f"🌟 Score: {self.points}")
-        print(f"💡 Hints – Free: {self.free_hints}, Extra: {self.bought_hints}")
-        print(f"📖 Words found: {len(self.found_words)}/{len(self.words)}")
-        print(f"📝 Last correct guess: {self.last_guess}")
-        print("🛠️ Commands: [shuffle|s] to shuffle, [hint|h] for a hint, [exit|e] to quit")
-        print('-'*75)
-
-    def the_guess(self, guess):
+    def the_guess(self, guess, nickname):
         '''
         Processes a player's word guess.
         
@@ -241,48 +273,80 @@ class WordscapesGame:
                     self.last_guess = guess
                     self.points += self.calculate_points(guess, self.found_words)
                     self.found_words.add(guess)
+                    clear_screen()
+                    self.grid.display_grid(nickname, "white", "on_green")
+                    self.cur_state("white", "on_green")
                     cprint('Correct!', "green", attrs=["bold"])
+                    
                     
 
                 elif guess in self.non_placed_words:
                     self.lives += 1
+                    clear_screen()
+                    self.grid.display_grid(nickname, "white", "on_yellow")
+                    self.cur_state("white", "on_yellow")
                     cprint('Word not found in the grid. Bonus life granted!', 'green', attrs=['bold'])
-                
+                    
+
                 else:
                     self.lives -= 1
+                    clear_screen()
+                    self.grid.display_grid(nickname, "white", "on_red")
+                    self.cur_state("white", "on_red")
                     cprint('Incorrect.', "red", attrs=["bold"])
+                    
 
 
 
             elif (guess in self.words or guess in self.non_placed_words) and guess in self.found_words:
+                clear_screen()
+                self.grid.display_grid(nickname, "white", "on_magenta")
+                self.cur_state("white", "on_magenta")
                 cprint('Word has already been found.', "red", attrs=["bold"])
+                
                
             
             else:
                 self.lives -= 1
+                clear_screen()
+                self.grid.display_grid(nickname, "white", "on_red")
+                self.cur_state("white", "on_red")
                 cprint('Incorrect.', "red", attrs=["bold"])
+                
             
 
         else:
+            clear_screen()
+            self.grid.display_grid(nickname, "white", "on_red")
+            self.cur_state("white", "on_red")
             cprint(f"Invalid word! Only {'-'.join(list(self.letters))} is allowed", "red", attrs=["bold"])
             self.lives -= 1
+            
 
-        time.sleep(1)
+        time.sleep(0.5)
 
-        
-    def print_wrapped_words(self, label, word_list, width=75):
+    def get_wrapped_words(self, label, word_list, width=73):
         words = sorted(word_list)
+        prefix_visible_len = len(ansi_escape.sub('', f"{label}: "))
         prefix = f"{label}: "
+        lines = []
         line = prefix
         for word in words:
             word_str = f"{word}, "
-            if len(line) + len(word_str.rstrip()) > width:
-                print(line.rstrip(', '))
-                line = " " * len(prefix) + word_str
+            if len(ansi_escape.sub('', line)) + len(word_str.rstrip()) > width:
+                lines.append(line.rstrip(', '))
+                line = " " * prefix_visible_len + word_str
             else:
                 line += word_str
         if line.strip():
-            print(line.rstrip(', '))
- 
+            lines.append(line.rstrip(', '))
 
-    
+        max_length = max(len(ansi_escape.sub('', l)) for l in lines)
+
+        padded_lines = []
+        for l in lines:
+            visible_len = len(ansi_escape.sub('', l))
+            padding = max_length - visible_len
+            padded_lines.append(l + ' ' * padding)
+        
+        return padded_lines

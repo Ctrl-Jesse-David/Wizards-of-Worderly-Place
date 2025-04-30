@@ -62,12 +62,6 @@ grid_constructor.py
 
 ------------------------------------------------------------
 
-user_progress.py, game_master.py
-- not a bug pero wala pang border
-
-
-------------------------------------------------------------
-
 animations.py
 - need ng loading animation and exit animation
 
@@ -81,3 +75,18 @@ test folder
 
 game_engine.py
 - wala pa yung advanced hint fcns
+
+
+------------------------------------------------------------
+
+display_manager.py
+- get_player_nickname
+
+
+
+------------------------------------------------------------
+
+game_engine.py
+
+- make the welcome to wizads of worderly place rainbow and username just white or 
+    other way around

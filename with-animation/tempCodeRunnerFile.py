@@ -1,16 +1,13 @@
 from termcolor import colored, cprint
 from animations import mystical_intro
 import os, random
-import re, time
+import re
 
 
 '''
 Lagan ng new account if hindi pa existing, 
 and make the enter yur username rainbow
 '''
-
-    
-
 def get_player_nickname():
     nickname_display = [
         "",
@@ -92,6 +89,16 @@ def title_color_changer(text):
         stack.append(colored(i, random.choice(available_text_colors), attrs=["bold"]))
     return " ".join(stack)
 
+
+
+# def convert_grid_to_display(grid):
+#     return [['#' if cell != '.' else '.' for cell in row] for row in grid]
+
+# def reveal_word(display_grid, word, positions):
+#     if word in positions:
+#         for i, (r, c) in enumerate(positions[word]):
+#             display_grid[r][c] = word[i]
+#     return display_grid
 
 def display_header(title, color):
     clear_screen()

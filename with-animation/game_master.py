@@ -77,20 +77,23 @@ def start_game_session(dictionary_file, nickname): # create
 
         if retry_option:
             if retry_option.lower() == 'n':
+                print("")
                 cprint("Returning to main menu...", "yellow", attrs=["bold"])
-                time.sleep(0.5)
+                time.sleep(1)
                 clear_screen()
                 break
             elif retry_option.lower() == 'y':
+                print("")
                 cprint("Restarting the game...", "yellow", attrs=["bold"])
-                time.sleep(0.6)
+                time.sleep(1)
                 continue
             else: # dapat wala a to kasi caught na yang conditional sa WordscapesGame.play()
                 cprint("Invalid option. Returning to main menu...", "red", attrs=["bold"])
-                time.sleep(0.5)
+                time.sleep(1)
                 break
         else:
+            print("")
             cprint("Returning to main menu...", "yellow", attrs=["bold"])
-            time.sleep(0.5)
+            time.sleep(1)
             clear_screen()
             break
