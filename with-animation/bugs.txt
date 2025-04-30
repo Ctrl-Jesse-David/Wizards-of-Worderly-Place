@@ -80,8 +80,8 @@ game_engine.py
 ------------------------------------------------------------
 
 display_manager.py
-- get_player_nickname
-
+- get_player_nickname: dapat may nakalagay na create new account if usernmae not in list,
+tapos pag nakalaro na and may acc na, proceed agad sa menu
 
 
 ------------------------------------------------------------

@@ -1,1 +1,1 @@
-.center(width)
+Returning to main
