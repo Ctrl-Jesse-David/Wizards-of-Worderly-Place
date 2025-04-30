@@ -210,22 +210,22 @@ class WordscapesGame:
         '''
         info = ['-'*75,
                 '',
-        *self.get_wrapped_words(colored("WORDS", attrs=["bold"]), self.words)]
+        *self.get_wrapped_words(colored('WORDS', attrs=['bold']), self.words)]
 
         if self.found_words:
-            info += self.get_wrapped_words(colored("FOUND WORDS", attrs=["bold"]), self.found_words)
+            info += self.get_wrapped_words(colored('FOUND WORDS', attrs=['bold']), self.found_words)
         else:
-            info.append(f"{colored("FOUND WORDS", attrs=["bold"])}: None")
+            info.append(f"{colored('FOUND WORDS', attrs=['bold'])}: None")
             
         info += [""]
-        info += [f"{colored('SCORE', attrs=["bold"])}: {self.points}", '', '-'*75]
+        info += [f"{colored('SCORE', attrs=['bold'])}: {self.points}", '', '-'*75]
 
         display_body(info, "white", on_color)
         
         if len(self.found_words) == len(self.words):
             display_body([colored('Congratulations! You guessed all the words.', color="green", attrs=["bold"]), ''], "white", on_color)
         else:
-            display_body(['',colored('Game Over!', "red", attrs=["bold"]), ''], "white", on_color)
+            display_body(['',colored('Game Over!', 'red', attrs=['bold']), ''], "white", on_color)
         display_border(on_color)
 
     
