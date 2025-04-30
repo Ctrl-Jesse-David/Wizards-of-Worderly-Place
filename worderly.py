@@ -2,7 +2,7 @@ from termcolor import cprint, colored
 from options import start_game, display_instructions, display_leaderboard, display_header
 from utilities import clear_screen
 from grid_generator import generate_word_grid, generate_positions_dict
-import sys, time, random
+import sys, time, random, os
 
 '''
 Worderly
@@ -37,8 +37,8 @@ def display_menu():
     print("=" * 75)
 
 
-def get_game_level(): 
-    grid_data, placed_words, non_placed_words = generate_word_grid()
+def get_game_level(dictionary_file): 
+    grid_data, placed_words, non_placed_words = generate_word_grid(dictionary_file)
     letters = list(placed_words[0][0])
     random.shuffle(letters)
 
@@ -57,18 +57,12 @@ def get_player_nickname():
     '''
     Prompts for and validates player nickname.
     '''
+    nickname = input("👤 Enter your nickname: ").strip()
+    if nickname:
+        return nickname
+    return 'player'
 
-    while True:
-        nickname = input("👤 Enter your nickname: ").strip()
-        if nickname:
-            return nickname
-        
-        cprint("Input your name!", "red", attrs=["bold"])
-        time.sleep(0.3)
-        clear_screen()
-        display_menu()
-
-def handle_game_session():
+def handle_game_session(dictionary_file):
     '''
     Manages a complete game session including nickname input,
     game initialization, and retry logic.
@@ -76,27 +70,35 @@ def handle_game_session():
 
     nickname = get_player_nickname()
     clear_screen()
-    
+    '''
+    tanggalin while loop
+    straight run start game
+    '''
     while True:
-        letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level()
+        letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file)
         retry_option = start_game(letters, incomplete_grid, positions, nickname, non_placed_words, complete_grid)
 
-        if retry_option.lower() == 'n':
-            cprint("Returning to main menu...", "yellow", attrs=["bold"])
-            time.sleep(0.5)
-            clear_screen()
-            break
-        elif retry_option.lower() == 'y':
-            cprint("Restarting the game...", "yellow", attrs=["bold"])
-            time.sleep(0.6)
-            continue
+        if retry_option:
+            if retry_option.lower() == 'n':
+                cprint("Returning to main menu...", "yellow", attrs=["bold"])
+                time.sleep(0.5)
+                clear_screen()
+                break
+            elif retry_option.lower() == 'y':
+                cprint("Restarting the game...", "yellow", attrs=["bold"])
+                time.sleep(0.6)
+                continue
+            else: # dapat wala a to kasi caught na yang conditional sa WordscapesGame.play()
+                cprint("Invalid option. Returning to main menu...", "red", attrs=["bold"])
+                time.sleep(0.5)
+                break
         else:
-            cprint("Invalid option. Returning to main menu...", "red", attrs=["bold"])
-            time.sleep(0.5)
+            cprint("Returning to main menu...", "yellow", attrs=["bold"])
+            time.sleep(23)
             clear_screen()
             break
 
-def main_menu():
+def main_menu(dictionary_file='corncob-lowercase.txt'):
     '''
     Manages the main menu flow and user interaction.
     
@@ -118,7 +120,7 @@ def main_menu():
         choice = input(colored("Select an option: ", "light_blue", attrs=["bold"])).strip().upper()
 
         if choice == "S":
-            handle_game_session()
+            handle_game_session(dictionary_file)
         elif choice == "I":
             display_instructions()
         elif choice == "L":
@@ -135,9 +137,29 @@ def main_menu():
             time.sleep(0.35)
             clear_screen()
 
+def main():
+    if len(sys.argv) >= 3:
+        raise IndexError('Provide only one filename.')
+    
+    elif len(sys.argv) == 2:
+        filename = sys.argv[1]
+
+        if not os.path.isfile(filename):
+            raise FileNotFoundError('File does not exist.')
+        
+        else:
+            main_menu(filename)
+    else:
+        main_menu()
+        print('Test')
+
 if __name__ == "__main__":
     '''
     Entry point of the program.
     '''
+    try:
+        main()
 
-    main_menu()
+    except Exception as e:
+        print(f"Error: {str(e)}", file=sys.stderr)
+        sys.exit(1)

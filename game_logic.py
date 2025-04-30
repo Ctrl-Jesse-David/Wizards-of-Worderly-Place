@@ -1,6 +1,7 @@
 import time, random
 from utilities import clear_screen, is_valid, GameGrid
-from termcolor import cprint
+from termcolor import cprint, colored
+from utilities import update_leaderboard
 
 '''
 Game Logic
@@ -18,7 +19,7 @@ class WordscapesGame:
     word guessing, scoring, grid updates, and game state tracking.
     '''
 
-    def __init__(self, letters, incomplete_grid, positions, non_placed_words, complete_grid):
+    def __init__(self, letters, incomplete_grid, positions, non_placed_words, complete_grid, name):
         '''
         Initialize a new WordscapesGame instance.
         
@@ -39,6 +40,7 @@ class WordscapesGame:
         self.positions = positions
         self.non_placed_words = non_placed_words
         self.complete_grid = complete_grid
+        self.name = name
         self.found_words = set()
         self.lives = int(len(positions)*0.4) # 40% ??
         self.points = 0
@@ -101,7 +103,7 @@ class WordscapesGame:
         for word, positions in self.positions.items():
             if (row, col) in positions:
                 letter_index = positions.index((row, col))
-                self.grid.grid[row][col] = word[letter_index]
+                self.grid.incomplete_grid[row][col] = word[letter_index]
                 break
                 
         self.hints_remaining -= 1
@@ -138,7 +140,21 @@ class WordscapesGame:
                 continue
             
             elif guess in ['EXIT', 'E']: 
-                break
+                update_leaderboard(self.name, self.points)
+                self.grid.display_complete_grid(nickname)
+                while True:
+                    self.grid.display_complete_grid(nickname)
+                    self.end_game()
+                    retry_option = input("🔄 Would you like to play again? " 
+                                    + colored("[y/n]", "blue", attrs=["bold"]) + ": ")\
+                                    .lower().strip()
+                    if retry_option in ['y', 'n']:
+                        time.sleep(0.25)
+                        return retry_option
+                    else:
+                        cprint("Invalid response!", "red", attrs=["bold"])
+                        time.sleep(0.1)
+                        clear_screen()
 
             self.the_guess(guess)
             
@@ -148,7 +164,7 @@ class WordscapesGame:
         else:
             self.grid.display_complete_grid(nickname)
         self.end_game()
-        return
+        return None
 
     def end_game(self):
         '''
@@ -211,27 +227,34 @@ class WordscapesGame:
                     self.points += self.calculate_points(guess, self.found_words)
                     self.found_words.add(guess)
                     cprint('Correct!', "green", attrs=["bold"])
+                    
 
                 elif guess in self.non_placed_words:
                     self.lives += 1
                     cprint('Word not found in the grid. Bonus life granted!', 'green', attrs=['bold'])
+                
+                else:
+                    self.lives -= 1
+                    cprint('Incorrect.', "red", attrs=["bold"])
+
+
 
             elif (guess in self.words or guess in self.non_placed_words) and guess in self.found_words:
                 cprint('Word has already been found.', "red", attrs=["bold"])
-            
+               
             
             else:
                 self.lives -= 1
                 cprint('Incorrect.', "red", attrs=["bold"])
+            
 
         else:
             cprint(f"Invalid word! Only {'-'.join(list(self.letters))} is allowed", "red", attrs=["bold"])
             self.lives -= 1
-            time.sleep(1)
-            return
 
-        time.sleep(0.35)       
+        time.sleep(1)
 
+        
     def print_wrapped_words(self, label, word_list, width=75):
         words = sorted(word_list)
         prefix = f"{label}: "

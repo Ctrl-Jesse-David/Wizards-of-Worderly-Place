@@ -1,24 +1,5 @@
-import random, sys
-from utilities import is_valid
-
-def get_main_and_valid_words(file_path):
-    def read_words():
-        try:
-            with open(file_path) as f:
-                return [line.strip() for line in f]
-        except FileNotFoundError:
-            print(f"Error: Dictionary file '{file_path}' not found!")
-            sys.exit(1)
-
-    words = read_words()
-    six_letter_words = [w for w in words if len(w) == 6]
-    if not six_letter_words:
-        return None
-
-    main_word = random.choice(six_letter_words)
-    valid_words = [w for w in words if 3 <= len(w) <= 6 and w != main_word and is_valid(w, main_word)]
-
-    return (main_word, valid_words) if len(valid_words) >= 20 else get_main_and_valid_words(file_path)
+import random
+from file_operations import get_main_and_valid_words
 
 def place_main_diagonal(word, grid):
     for i, letter in enumerate(word.upper()):
@@ -137,14 +118,6 @@ def generate_positions_dict(placed_words):
             positions[word] = [(coords[0] + i, coords[1]) for i in range(len(word))]
     return positions
 
-def convert_grid_to_display(grid):
-    return [['#' if cell != '.' else '.' for cell in row] for row in grid]
-
-def reveal_word(display_grid, word, positions):
-    if word in positions:
-        for i, (r, c) in enumerate(positions[word]):
-            display_grid[r][c] = word[i]
-    return display_grid
 
 
 if __name__ == '__main__':
