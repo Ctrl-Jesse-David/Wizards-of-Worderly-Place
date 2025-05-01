@@ -1,7 +1,7 @@
 import os
 import json, time
 from termcolor import cprint, colored
-from display_manager import display_body, display_border, clear_screen
+from display_manager import display_body, display_border, clear_screen, welcome_display
 
 current_user = None
 
@@ -31,6 +31,8 @@ def login_user(nickname):
     global current_user
     users = load_users()
     
+
+    # lagyan ng better 
     if nickname not in users:
         users[nickname] = {
             "points": 0,
@@ -39,9 +41,15 @@ def login_user(nickname):
             "highest_score": 0
         }
         save_users(users)
-        cprint(f"Welcome, {nickname}! New wizard profile created.", "cyan")
+        clear_screen()
+        welcome_display(f"Welcome, {nickname}! New wizard profile created.", nickname, 'on_white')
+        print('')
+        time.sleep(0.9)
     else:
-        cprint(f"Welcome back, {nickname}! Your magical journey continues...", "cyan")
+        clear_screen()
+        welcome_display(f"Welcome back, {nickname}! Your magical journey continues...", nickname, 'on_white')
+        print('')
+        time.sleep(0.9)
     current_user = nickname
     return True
 

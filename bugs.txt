@@ -1,0 +1,56 @@
+
+user_progress.py:
+- pag nag-input ng 1 or 2 invalid choice lumalabas
+
+    while True:
+        clear_screen()
+        display_border("on_magenta")
+        display_body(shop_lines, "white", "on_magenta")
+        display_border("on_magenta")
+        print('')
+        
+        choice = input(colored("👉 Your choice: ", attrs=["bold"]))
+        
+        if choice in [1, 2]:
+            break
+
+        elif choice.lower() in ['e', 'exit']:
+            return
+    
+        clear_screen()
+        display_border("on_red")
+        display_body(shop_lines, "white", "on_red")
+        display_border("on_red")
+        print('')
+        cprint('Invalid Choice', "red", attrs=["bold"])
+        time.sleep(0.15)
+
+------------------------------------------------------------
+
+animations.py
+- need ng loading animation and exit animation
+
+
+------------------------------------------------------------
+
+test folder
+- wala pang pytest sa grid constructor
+
+------------------------------------------------------------
+
+game_engine.py
+- wala pa yung advanced hint fcns
+
+------------------------------------------------------------
+
+game_engine.py
+
+- make the welcome to wizads of worderly place rainbow and username just white or 
+    other way around
+
+
+------------------------------------------------------------
+
+display_menu.py
+
+gawing red yung border pag mali yung  nalagay na input

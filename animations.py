@@ -1,6 +1,11 @@
 import os, random, time, threading
 from termcolor import colored, cprint
 
+# animations.py
+import threading
+import random
+from termcolor import colored
+
 def mystical_intro():
     from display_manager import display_row, display_border, clear_screen
     width = 75

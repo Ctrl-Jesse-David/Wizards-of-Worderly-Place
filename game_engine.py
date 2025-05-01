@@ -46,6 +46,7 @@ class WordscapesGame:
         self.complete_grid = complete_grid
         self.name = name
         self.found_words = set()
+        self.found_non_placed_words = set()
         self.lives = int(len(self.words) * .4)
         self.points = 0
         self.last_guess = None
@@ -217,8 +218,7 @@ class WordscapesGame:
         else:
             info.append(f"{colored('FOUND WORDS', attrs=['bold'])}: None")
             
-        info += [""]
-        info += [f"{colored('SCORE', attrs=['bold'])}: {self.points}", '', '-'*75]
+        info += ["",f"{colored('SCORE', attrs=['bold'])}: {self.points}", '', '-'*75]
 
         display_body(info, "white", on_color)
         
@@ -267,11 +267,10 @@ class WordscapesGame:
         '''
 
         if is_valid(guess, ''.join(self.letters)):
-            if guess not in self.found_words:
+            if guess not in self.found_words and guess not in self.found_non_placed_words:
                 if guess in self.words:
                     self.grid.update_grid(guess)
                     self.last_guess = guess
-                    self.points += self.calculate_points(guess, self.found_words)
                     self.found_words.add(guess)
                     clear_screen()
                     self.grid.display_grid(nickname, "white", "on_green")
@@ -282,10 +281,11 @@ class WordscapesGame:
 
                 elif guess in self.non_placed_words:
                     self.lives += 1
+                    self.found_non_placed_words.add(guess)
                     clear_screen()
                     self.grid.display_grid(nickname, "white", "on_yellow")
                     self.cur_state("white", "on_yellow")
-                    cprint('Word not found in the grid. Bonus life granted!', 'green', attrs=['bold'])
+                    cprint('Word not found in the grid. Bonus life granted!', 'yellow', attrs=['bold'])
                     
 
                 else:
@@ -298,11 +298,11 @@ class WordscapesGame:
 
 
 
-            elif (guess in self.words or guess in self.non_placed_words) and guess in self.found_words:
+            elif (guess in self.words and guess in self.found_words) or (guess in self.non_placed_words and self.found_non_placed_words):
                 clear_screen()
                 self.grid.display_grid(nickname, "white", "on_magenta")
                 self.cur_state("white", "on_magenta")
-                cprint('Word has already been found.', "red", attrs=["bold"])
+                cprint('Word has already been found.', "magenta", attrs=["bold"])
                 
                
             

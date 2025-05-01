@@ -1,104 +1,28 @@
-from termcolor import cprint, colored
-from options import start_game, display_instructions, display_leaderboard, display_header
-from utilities import clear_screen
-from grid_generator import generate_word_grid, generate_positions_dict
-import sys, time, random, os
+import sys, os, time
+from termcolor import cprint
+from display_manager import clear_screen
+from game_master import start_game_session
+from menu_display import display_instructions, display_leaderboard, display_main_menu
+from animations import mystical_intro
+from user_progress import display_shop, display_user_profile, login_user
+from word_utils import get_player_nickname, get_player_input
 
-'''
-Worderly
-
-This module serves as the main entry point for the Wizards of Worderly Place game,
-handling the main menu system and game flow control.
-'''
-def display_menu():
-    '''
-    Displays the main menu interface of the game.
+def main():
+    if len(sys.argv) >= 3:
+        raise IndexError('Provide only one filename.')
     
-    This function presents a formatted menu showing the game title
-    and available options including starting the game, viewing instructions,
-    checking the leaderboard, and exiting the game.
-    '''
+    elif len(sys.argv) == 2:
+        filename = sys.argv[1]
 
-    display_header(
-            title="🧙 Welcome to Wizards of Worderly Place! 🧙",
-            color="light_blue"
-        )
-    print("Can you uncover all the hidden words?".center(75))
-    print("Test your wits and master the art of wordplay!".center(75))
-    print("-" * 75)
-
-    print((" "*11 + "📖  " + colored("[S]", "light_blue", attrs=["bold"]) + "  Start Game   📖").center(75))
-    print((" "*11 + "📜  " + colored("[I]", "light_blue", attrs=["bold"]) + "  Instructions 📜").center(75))
-    print((" "*11 + "🏆  " + colored("[L]", "light_blue", attrs=["bold"]) + "  Leaderboards 🏆").center(75))
-    print((" "*11 + "🚪  " + colored("[E]", "light_blue", attrs=["bold"]) + "  Exit Game    🚪").center(75))
-
-    print("-" * 75)
-    print("Please enter a choice and press Enter.".center(75))
-    print("=" * 75)
-
-
-def get_game_level(dictionary_file): 
-    grid_data, placed_words, non_placed_words = generate_word_grid(dictionary_file)
-    letters = list(placed_words[0][0])
-    random.shuffle(letters)
-
-    game_grid = []
-    for row in grid_data:
-        game_row = []
-        for cell in row:
-            game_row.append(cell if cell == '.' else '#')
-        game_grid.append(game_row)
-    
-    positions_dict = generate_positions_dict(placed_words)
-
-    return letters, game_grid, positions_dict, non_placed_words, grid_data
-
-def get_player_nickname():
-    '''
-    Prompts for and validates player nickname.
-    '''
-    nickname = input("👤 Enter your nickname: ").strip()
-    if nickname:
-        return nickname
-    return 'player'
-
-def handle_game_session(dictionary_file):
-    '''
-    Manages a complete game session including nickname input,
-    game initialization, and retry logic.
-    '''
-
-    nickname = get_player_nickname()
-    clear_screen()
-    '''
-    tanggalin while loop
-    straight run start game
-    '''
-    while True:
-        letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file)
-        retry_option = start_game(letters, incomplete_grid, positions, nickname, non_placed_words, complete_grid)
-
-        if retry_option:
-            if retry_option.lower() == 'n':
-                cprint("Returning to main menu...", "yellow", attrs=["bold"])
-                time.sleep(0.5)
-                clear_screen()
-                break
-            elif retry_option.lower() == 'y':
-                cprint("Restarting the game...", "yellow", attrs=["bold"])
-                time.sleep(0.6)
-                continue
-            else: # dapat wala a to kasi caught na yang conditional sa WordscapesGame.play()
-                cprint("Invalid option. Returning to main menu...", "red", attrs=["bold"])
-                time.sleep(0.5)
-                break
+        if not os.path.isfile(filename):
+            raise FileNotFoundError('File does not exist.')
+        
         else:
-            cprint("Returning to main menu...", "yellow", attrs=["bold"])
-            time.sleep(23)
-            clear_screen()
-            break
+            main_game_loop(filename)
+    else:
+        main_game_loop()
 
-def main_menu(dictionary_file='corncob-lowercase.txt'):
+def main_game_loop(dictionary_file='corncob-lowercase.txt'):
     '''
     Manages the main menu flow and user interaction.
     
@@ -113,45 +37,40 @@ def main_menu(dictionary_file='corncob-lowercase.txt'):
     - L: Display leaderboard
     - E: Exit the application
     '''
+
+    mystical_intro()
+
+    nickname = get_player_nickname()
+    login_user(nickname)
     
     while True:
-        display_menu()
 
-        choice = input(colored("Select an option: ", "light_blue", attrs=["bold"])).strip().upper()
+        display_main_menu()
+        choice = get_player_input()
 
         if choice == "S":
-            handle_game_session(dictionary_file)
+            start_game_session(dictionary_file, nickname)
         elif choice == "I":
             display_instructions()
         elif choice == "L":
             display_leaderboard()
+        elif choice == "P":
+            display_user_profile()
+        elif choice == "M":
+            display_shop()  
         elif choice == "E":
-            print("Exiting...") # gagawa ako ng animation stuff pero ito muna for the meantime
+            print("Exiting...")
             time.sleep(0.8)
 
             cprint("Thanks for playing!\n", 'red', attrs = ["bold"])
             sys.exit()
 
         else:
+            display_main_menu(text_bg='on_red')
             print("Invalid Choice. Please try again!")
             time.sleep(0.35)
             clear_screen()
 
-def main():
-    if len(sys.argv) >= 3:
-        raise IndexError('Provide only one filename.')
-    
-    elif len(sys.argv) == 2:
-        filename = sys.argv[1]
-
-        if not os.path.isfile(filename):
-            raise FileNotFoundError('File does not exist.')
-        
-        else:
-            main_menu(filename)
-    else:
-        main_menu()
-        print('Test')
 
 if __name__ == "__main__":
     '''

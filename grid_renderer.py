@@ -1,5 +1,6 @@
-from display_manager import display_header, clear_screen, display_border, display_body, display_top
-
+from display_manager import title_color_changer, clear_screen, display_border, display_body, display_top
+from termcolor import colored
+import random
 class GameGrid:
     def __init__(self, incomplete_grid, complete_grid, positions):
         self.incomplete_grid = incomplete_grid
@@ -8,8 +9,8 @@ class GameGrid:
                          
     def display_grid(self, nickname, color="white", on_color="on_white"):
         clear_screen()
-    
-        grid_top = display_top(f"🧙 Welcome to Wizards of Worderly Place!, {nickname} 🧙")
+        nickname = title_color_changer(nickname)
+        grid_top = display_top(f"🧙 {colored('Welcome to Wizards of Worderly Place!', attrs=['bold'])}, {nickname} 🧙")
         grid_top.append("="*75)
         display_border(on_color)
         display_body(grid_top, color, on_color)
@@ -20,8 +21,8 @@ class GameGrid:
 
     def display_complete_grid(self, nickname, color="white", on_color="on_white"):
         clear_screen()
-    
-        grid_top = display_top(f"🧙 Welcome to Wizards of Worderly Place!, {nickname} 🧙")
+        nickname = title_color_changer(nickname)
+        grid_top = display_top(f"🧙 {colored('Welcome to Wizards of Worderly Place!', attrs=['bold'])}, {nickname} 🧙")
         grid_top.append("="*75)
         display_border(on_color)
         display_body(grid_top, color, on_color)
@@ -32,7 +33,9 @@ class GameGrid:
 
     def update_grid(self, word):
         if word in self.positions:
+            color_choices = ["red", "green", "yellow", "blue", "magenta", "cyan", "white"]
+            color = random.choice(color_choices)
             for idx, (row, col) in enumerate(self.positions[word]):
-                self.incomplete_grid[row][col] = word[idx]
+                self.incomplete_grid[row][col] = colored(word[idx], color, attrs=["bold"])
             return True
         return False

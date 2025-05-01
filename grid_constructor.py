@@ -1,24 +1,6 @@
-import random, sys
-from utilities import is_valid
-
-def get_main_and_valid_words(file_path):
-    def read_words():
-        try:
-            with open(file_path) as f:
-                return [line.strip() for line in f]
-        except FileNotFoundError:
-            print(f"Error: Dictionary file '{file_path}' not found!")
-            sys.exit(1)
-
-    words = read_words()
-    six_letter_words = [w for w in words if len(w) == 6]
-    if not six_letter_words:
-        return None
-
-    main_word = random.choice(six_letter_words)
-    valid_words = [w for w in words if 3 <= len(w) <= 6 and w != main_word and is_valid(w, main_word)]
-
-    return (main_word, valid_words) if len(valid_words) >= 20 else get_main_and_valid_words(file_path)
+import random
+from file_operations import get_main_and_valid_words
+from termcolor import colored
 
 def place_main_diagonal(word, grid):
     for i, letter in enumerate(word.upper()):
@@ -90,16 +72,15 @@ def place_word(word, grid):
             return True, (row, col, direction)
 
     return False, None
-
 def generate_word_grid(dictionary_file):
     main_word, valid_words = get_main_and_valid_words(dictionary_file)
+    color_choices = ["red", "green", "yellow", "blue", "magenta", "cyan"]
 
     while True:
         grid = [['.' for _ in range(25)] for _ in range(15)]
         placed_words = [(main_word.upper(), (2, 7), 'd')]
         non_placed_words = []
         place_main_diagonal(main_word, grid)
-
         for word in sorted(valid_words, key=len, reverse=True):
             word = word.upper()
             success, placement = place_word(word, grid)
@@ -109,8 +90,17 @@ def generate_word_grid(dictionary_file):
                 non_placed_words.append(word)
 
         if len(placed_words) - 1 >= 20 and main_has_adjacent_letter(grid):
-            return grid, placed_words, non_placed_words
-        continue
+            colored_grid = [['.' for _ in range(25)] for _ in range(15)]
+            place_main_diagonal(main_word, colored_grid)
+            
+            for word, (row, col), direction in placed_words[1:]:  # Skip main diagonal
+                color = random.choice(color_choices)
+                for i, letter in enumerate(word):
+                    r = row + (i if direction == 'v' else 0)
+                    c = col + (i if direction == 'h' else 0)
+                    colored_grid[r][c] = colored(letter, color, attrs=["bold"])
+            
+            return colored_grid, placed_words, non_placed_words
         
 def main_has_adjacent_letter(grid):
     coords = [(2 + i*2, 7 + i*2) for i in range(6)]
@@ -128,23 +118,15 @@ def main_has_adjacent_letter(grid):
 def generate_positions_dict(placed_words):
     positions = {}
     for word, coords, direction in placed_words:
-        if coords == (2, 7):
-            r, c = coords
+        r, c = coords
+        if direction == 'd':
             positions[word] = [(r + i*2, c + i*2) for i in range(6)]
         elif direction == 'h':
-            positions[word] = [(coords[0], coords[1] + i) for i in range(len(word))]
+            positions[word] = [(r, c + i) for i in range(len(word))]
         elif direction == 'v':
-            positions[word] = [(coords[0] + i, coords[1]) for i in range(len(word))]
+            positions[word] = [(r + i, c) for i in range(len(word))]
     return positions
 
-def convert_grid_to_display(grid):
-    return [['#' if cell != '.' else '.' for cell in row] for row in grid]
-
-def reveal_word(display_grid, word, positions):
-    if word in positions:
-        for i, (r, c) in enumerate(positions[word]):
-            display_grid[r][c] = word[i]
-    return display_grid
 
 
 if __name__ == '__main__':

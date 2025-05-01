@@ -1,6 +1,7 @@
-from display_manager import display_header, clear_screen, display_body, get_player_input, display_border, title_color_changer
+from display_manager import display_header, clear_screen, display_body, display_border, title_color_changer
 from termcolor import cprint, colored
 from animations import mystical_intro
+from word_utils import get_player_input
 
 '''
 Options
@@ -9,7 +10,7 @@ This module handles the game's menu options and player interactions for Wizards 
 It manages game sessions, displays instructions, and maintains the leaderboard system.
 '''
 
-def display_main_menu():
+def display_main_menu(text_color="white", text_bg="on_white"):
     
     title = [
         "",
@@ -42,19 +43,16 @@ def display_main_menu():
 
     clear_screen()
     
-    display_border("on_white")
+    display_border(text_bg)
 
-    display_body(title, 'blue', 'on_white')
-    display_body(subtitle, 'white', 'on_white')
-    display_body(menu_options, 'white', 'on_white')
-    display_body(footer, 'white', 'on_white')
+    display_body(title, text_color, text_bg)
+    display_body(subtitle, text_color, text_bg)
+    display_body(menu_options, text_color, text_bg)
+    display_body(footer, text_color, text_bg)
 
-    display_border("on_white")
+    display_border(text_bg)
 
     print("\n")
-
-    choice = get_player_input()
-    return choice
 
 
 def display_instructions():

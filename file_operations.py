@@ -24,3 +24,6 @@ def get_main_and_valid_words(file_path):
 def update_leaderboard(name, score):
     with open("leaderboard.txt", "a") as file:
         file.write(f"{name}: {score}\n")
+
+if __name__ == "__main__":
+    print(get_main_and_valid_words('corncob-lowercase.txt'))

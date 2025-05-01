@@ -1,6 +1,6 @@
 import random, copy, time
 from grid_constructor import generate_positions_dict, generate_word_grid
-from display_manager import clear_screen, get_player_nickname
+from display_manager import clear_screen
 from game_engine import WordscapesGame
 from termcolor import cprint
 from user_progress import update_score

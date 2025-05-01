@@ -1,2 +1,0 @@
-pytest==8.0.0
-termcolor==2.4.0 
