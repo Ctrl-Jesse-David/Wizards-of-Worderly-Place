@@ -252,5 +252,14 @@
         ],
         "hints_available": 0,
         "highest_score": 16
+    },
+    "HI": {
+        "points": 120,
+        "hints_purchased": [
+            "advanced_hint",
+            "basic_hint"
+        ],
+        "hints_available": 0,
+        "highest_score": 155
     }
 }

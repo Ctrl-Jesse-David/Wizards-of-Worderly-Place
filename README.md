@@ -21,7 +21,7 @@ A magical word puzzle game where players uncover hidden words in a grid using av
 3. **Scoring**
 
    - Points are awarded for each correct letter that was unrevealed
-   - Points are also rewarded for revealing valid words that are not in the grid
+   - Extra Lives are also rewarded for revealing valid words that are not in the grid
    - Your total score is saved to your profile
 
 4. **Shop System**
