@@ -28,7 +28,7 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
     Manages the main menu flow and user interaction.
     
     This function implements the main control loop for the game menu,
-    handling user input and directing program flow to the appropriate
+    handling user input and directing program flow to the appropriate   
     functions based on user selection. It continues running until the
     player chooses to exit the game.
     
