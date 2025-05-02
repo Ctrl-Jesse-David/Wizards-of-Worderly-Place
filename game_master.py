@@ -69,7 +69,7 @@ def start_game_session(dictionary_file, nickname): # create
     clear_screen()
     #Run games until user opts out
     while True:
-        mystical_loading('FORGING SPELLS!', 'FORGING COMPLETE!', 'green' "on_green")
+        mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "green", "on_green")
         letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file)
         retry_option = initialize_game(
             letters, incomplete_grid, positions,
@@ -78,19 +78,12 @@ def start_game_session(dictionary_file, nickname): # create
 
         if retry_option:
             if retry_option.lower() == 'n':
-                print("")
-                cprint("Returning to main menu...", "yellow", attrs=["bold"])
-                time.sleep(1)
-                clear_screen()
+                mystical_loading('CLOSING THE PORTAL...', '' , "magenta", "on_magenta")
                 break
             elif retry_option.lower() == 'y':
-                print("")
-                cprint("Restarting the game...", "yellow", attrs=["bold"])
-                time.sleep(1)
                 continue
             else: # dapat wala a to kasi caught na yang conditional sa WordscapesGame.play()
-                cprint("Invalid option. Returning to main menu...", "red", attrs=["bold"])
-                time.sleep(1)
+                mystical_loading('CLOSING THE PORTAL...', '' , "magenta", "on_magenta")
                 break
         else:
             print("")
@@ -98,3 +91,4 @@ def start_game_session(dictionary_file, nickname): # create
             time.sleep(1)
             clear_screen()
             break
+

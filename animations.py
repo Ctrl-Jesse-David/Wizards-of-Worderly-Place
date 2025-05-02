@@ -107,49 +107,18 @@ def mystical_loading(message, final_message, color, bg_color):
         display_body(lines)
         display_border()
         time.sleep(0.07)
-    final_message =  colored(' '.join(i for i in final_message), color, attrs=['bold'])
-    clear_screen()
-    display_border(bg_color)
-    display_body(['', '', '', final_message, '', '', '',], color, bg_color)
-    display_border(bg_color)
-    print('')
-    time.sleep(0.8)
-
-
-def mystical_exit():
-    from display_manager import display_row, display_border, clear_screen
-    width = 75
-    height = 10
-    phrase = "FAREWELL, SPELLCASTER!"
-    spaced_phrase = ' '.join(phrase)
-    colors = ["light_red", "light_magenta", "light_blue", "white"]
-
-    for frame in range(15):
+    
+    if not final_message:
+        return
+    else:
+        final_message =  colored(' '.join(i for i in final_message), color, attrs=['bold'])
         clear_screen()
-        display_border('on_white')
-
-        for _ in range((height - 2) // 2):
-            display_row(' ' * width, 'white', 'on_white')
-
-        fade_len = int(len(spaced_phrase) * (frame / 15))
-        faded = ''.join(
-            colored(spaced_phrase[i], random.choice(colors), attrs=['bold'])
-            if i < fade_len else ' '
-            for i in range(len(spaced_phrase))
-        )
-
-        display_row(faded.center(width), 'white', 'on_white')
-
-        for _ in range((height - 2) // 2):
-            display_row(' ' * width, 'white', 'on_white')
-
-        display_border('on_white')
-        time.sleep(0.1)
-
-    cprint
-    time.sleep(0.5)
-    clear_screen()
+        display_border(bg_color)
+        display_body(['', '', '', final_message, '', '', '',], color, bg_color)
+        display_border(bg_color)
+        print('')
+        time.sleep(0.8)
 
 
 if __name__ == "__main__":
-    mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "on_green")
+    mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "green", "on_green")

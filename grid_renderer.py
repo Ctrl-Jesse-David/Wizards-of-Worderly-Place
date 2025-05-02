@@ -33,9 +33,7 @@ class GameGrid:
 
     def update_grid(self, word):
         if word in self.positions:
-            color_choices = ["red", "green", "yellow", "blue", "magenta", "cyan", "white"]
-            color = random.choice(color_choices)
             for idx, (row, col) in enumerate(self.positions[word]):
-                self.incomplete_grid[row][col] = colored(word[idx], color, attrs=["bold"])
+                self.incomplete_grid[row][col] = colored(word[idx], "green", attrs=["bold"])
             return True
         return False
