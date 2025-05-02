@@ -106,6 +106,7 @@ def mystical_loading(message, final_message, color, bg_color):
         display_border()
         display_body(lines)
         display_border()
+        print('')
         time.sleep(0.07)
     
     if not final_message:

@@ -27,12 +27,6 @@ user_progress.py:
 
 ------------------------------------------------------------
 
-animations.py
-- need ng loading animation and exit animation
-
-
-------------------------------------------------------------
-
 test folder
 - wala pang pytest sa grid constructor
 
@@ -40,3 +34,16 @@ test folder
 
 game_engine.py
 - wala pa yung advanced hint fcns
+
+------------------------------------------------------------
+
+game_engine.py
+- scoring di gumagana
+
+------------------------------------------------------------
+
+game_engine.py
+- colored sana yung hints, also since per letter yung calculation ng points
+kunware nag-exit sila tapos may hint na floating lang (like di natapos sagutan yung word)
+kasama dapat sa points yun right
+

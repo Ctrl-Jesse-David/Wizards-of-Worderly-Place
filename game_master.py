@@ -2,7 +2,7 @@ import random, copy, time
 from grid_constructor import generate_positions_dict, generate_word_grid
 from display_manager import clear_screen
 from game_engine import WordscapesGame
-from termcolor import cprint
+from termcolor import cprint, colored
 from user_progress import update_score
 from animations import mystical_loading
 
@@ -15,7 +15,7 @@ def get_game_level(dictionary_file):
     for row in grid_data:
         game_row = []
         for cell in row:
-            game_row.append(cell if cell == '.' else '#')
+            game_row.append(colored(cell, "dark_grey") if cell == colored('.', 'dark_grey') else colored('#', attrs=["bold"]))
         game_grid.append(game_row)
     
     positions_dict = generate_positions_dict(placed_words)

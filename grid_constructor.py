@@ -77,7 +77,7 @@ def generate_word_grid(dictionary_file):
     main_word, valid_words = get_main_and_valid_words(dictionary_file)
 
     while True:
-        grid = [['.' for _ in range(25)] for _ in range(15)]
+        grid = [[('.') for _ in range(25)] for _ in range(15)]
         placed_words = [(main_word.upper(), (2, 7), 'd')]
         non_placed_words = []
         place_main_diagonal(main_word, grid)
@@ -90,10 +90,13 @@ def generate_word_grid(dictionary_file):
                 non_placed_words.append(word)
 
         if len(placed_words) - 1 >= 20 and main_has_adjacent_letter(grid):
-            return grid, placed_words, non_placed_words
+            return color_dots_in_grid(grid), placed_words, non_placed_words
         else:
             continue
 
+def color_dots_in_grid(grid):
+    return [[colored(char, 'dark_grey') if char == '.' else char for char in row]
+        for row in grid]
         
 def main_has_adjacent_letter(grid):
     coords = [(2 + i*2, 7 + i*2) for i in range(6)]
