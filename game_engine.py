@@ -124,7 +124,7 @@ class WordscapesGame:
         for word, poses in self.positions.items():
             if (row, col) in poses:
                 idx = poses.index((row, col))
-                self.grid.incomplete_grid[row][col] = word[idx]
+                self.grid.incomplete_grid[row][col] = colored(word[idx], "blue", attrs=["bold"])
                 break
         
         clear_screen()
@@ -275,12 +275,14 @@ class WordscapesGame:
                     self.grid.update_grid(guess)
                     self.last_guess = guess
                     self.found_words.add(guess)
+                    points_earned = self.calculate_points(guess, self.found_words - {guess})
+                    self.points += points_earned
                     clear_screen()
                     self.grid.display_grid(nickname, "white", "on_green")
                     self.cur_state("white", "on_green")
                     cprint('Correct!', "green", attrs=["bold"])
                     
-                    
+
 
                 elif guess in self.non_placed_words:
                     self.lives += 1

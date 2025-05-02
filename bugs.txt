@@ -1,29 +1,7 @@
 
 user_progress.py:
 - pag nag-input ng 1 or 2 invalid choice lumalabas
-
-    while True:
-        clear_screen()
-        display_border("on_magenta")
-        display_body(shop_lines, "white", "on_magenta")
-        display_border("on_magenta")
-        print('')
-        
-        choice = input(colored("👉 Your choice: ", attrs=["bold"]))
-        
-        if choice in [1, 2]:
-            break
-
-        elif choice.lower() in ['e', 'exit']:
-            return
-    
-        clear_screen()
-        display_border("on_red")
-        display_body(shop_lines, "white", "on_red")
-        display_border("on_red")
-        print('')
-        cprint('Invalid Choice', "red", attrs=["bold"])
-        time.sleep(0.15)
+    --FIXED--------
 
 ------------------------------------------------------------
 
@@ -33,12 +11,15 @@ test folder
 ------------------------------------------------------------
 
 game_engine.py
-- wala pa yung advanced hint fcns
+- wala pa yung advanced hint fcns 
+    #We dropping this fr
 
 ------------------------------------------------------------
 
-game_engine.py
+game_engine.py 
 - scoring di gumagana
+    -Natanggal ata ung self.points += sa previous ng the_guess
+    ----FIXED----------
 
 ------------------------------------------------------------
 
@@ -46,4 +27,7 @@ game_engine.py
 - colored sana yung hints, also since per letter yung calculation ng points
 kunware nag-exit sila tapos may hint na floating lang (like di natapos sagutan yung word)
 kasama dapat sa points yun right
+    ----------------------------------REPLY------------------------------------
+    - I don't think so? It was never guessed fully so dapat no points, no?
+    -Made the revealed thru hint letter BLUE
 

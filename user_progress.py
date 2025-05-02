@@ -239,32 +239,43 @@ def display_shop():
         
         choice = input(colored("👉 Your choice: ", attrs=["bold"]))
 
-        if choice in [1, 2]:
-            break
-
-        elif choice.lower() in ['e', 'exit']:
+        if choice.lower() in ['e', 'exit']:
             return
-    
-        clear_screen()
-        display_border("on_red")
-        display_body(shop_lines, "white", "on_red")
-        display_border("on_red")
-        print('')
-        cprint('Invalid Choice', "red", attrs=["bold"])
-        time.sleep(0.25)
-    
-
-    
-        
-    try:
-        item_index = int(choice) - 1
-        if 0 <= item_index < len(shop_items):
-            item = shop_items[item_index]
-            if purchase_hint(item["id"], item["cost"]):
-                cprint(f"You purchased {item['name']}!", "green")
-        else:
-            cprint("Invalid item number!", "red")
-    except ValueError:
-        cprint("Please enter a valid number.", "red")
+            
+        try:
+            choice_num = int(choice)
+            if 1 <= choice_num <= len(shop_items):
+                item = shop_items[choice_num - 1]
+                if purchase_hint(item["id"], item["cost"]):
+                    cprint(f"You purchased {item['name']}!", "green")
+                break
+            else:
+                raise ValueError()
+        except ValueError:
+            clear_screen()
+            display_border("on_red")
+            display_body(shop_lines, "white", "on_red")
+            display_border("on_red")
+            print('')
+            cprint('Invalid Choice', "red", attrs=["bold"])
+            time.sleep(0.25)
     
     input(colored("Press Enter to continue...", "light_magenta", attrs=["bold"]))
+
+def use_hint():
+    """
+    Use one of the purchased hints.
+    Returns True if a hint was successfully used, False otherwise.
+    """
+    global current_user
+    if not current_user:
+        return False
+    
+    users = load_users()
+    user = users[current_user]
+    
+    if user.get("hints_available", 0) > 0:
+        user["hints_available"] -= 1
+        save_users(users)
+        return True
+    return False

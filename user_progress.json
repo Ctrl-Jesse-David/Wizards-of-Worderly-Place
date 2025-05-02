@@ -244,5 +244,13 @@
         "hints_purchased": [],
         "hints_available": 0,
         "highest_score": 0
+    },
+    "NEIL": {
+        "points": 6,
+        "hints_purchased": [
+            "basic_hint"
+        ],
+        "hints_available": 0,
+        "highest_score": 16
     }
 }
