@@ -103,7 +103,7 @@ class WordscapesGame:
                 self.grid.display_grid(nickname, "white", "on_red")
                 self.cur_state("white", "on_red")
                 cprint("No hints remaining!", "red", attrs=["bold"])
-                time.sleep(0.5)
+                time.sleep(0.75)
                 return False
 
         #Gather hidden positions
@@ -116,7 +116,7 @@ class WordscapesGame:
             self.grid.display_grid(nickname, "white", "on_yellow")
             self.cur_state("white", "on_yellow")
             cprint("No hidden letters to reveal!", "yellow", attrs=["bold"])
-            time.sleep(0.5)
+            time.sleep(0.75)
             return False
 
         #Reveal letter
@@ -134,7 +134,7 @@ class WordscapesGame:
             f"Hint used! ({source})  –  Free left: {self.free_hints}, Extra left: {self.bought_hints}",
             "blue", attrs=["bold"]
         )
-        time.sleep(0.5)
+        time.sleep(0.75)
         return True
     
     def get_retry_option(self, nickname, on_color, state):
@@ -177,15 +177,15 @@ class WordscapesGame:
             
             guess = input(colored("👉 Your Output: ", attrs=["bold"])).strip().upper()
 
-            if guess in ['SHUFFLE', 'S']:
+            if guess in ['-SHUFFLE', '-S', 'S']:
                 self.shuffle_letters(nickname)
                 continue
             
-            elif guess in ['HINT', 'H']:
+            elif guess in ['-HINT', '-H', 'H']:
                 self.get_hint(nickname)
                 continue
             
-            elif guess in ['EXIT', 'E']: 
+            elif guess in ['-EXIT', '-E', 'E']: 
                 update_leaderboard(self.name, self.points)
                 user_progress.update_score(self.points)
                 return self.get_retry_option(nickname, "on_red", 'lost')
@@ -248,7 +248,7 @@ class WordscapesGame:
             f"💡 {colored('Hints – Free:', attrs=['bold'])} {self.free_hints}, Extra: {self.bought_hints}",
             f"📖 {colored('Words found:', attrs=['bold'])} {len(self.found_words)}/{len(self.words)}",
             f"📝 {colored('Last correct guess:', attrs=['bold'])} {self.last_guess}",
-            f"🎮 {colored('Commands:', attrs=['bold'])} [shuffle|s], [hint|h], [exit|e]",
+            f"🎮 {colored('Commands:', attrs=['bold'])} [-shuffle|-s], [-hint|-h], [-exit|-e]",
             ""
         ]
         display_body(info, color, on_color)
@@ -328,7 +328,7 @@ class WordscapesGame:
             self.lives -= 1
             
 
-        time.sleep(0.5)
+        time.sleep(0.75)
 
     def get_wrapped_words(self, label, word_list, width=73):
         words = sorted(word_list)
