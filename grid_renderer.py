@@ -1,6 +1,6 @@
 from display_manager import title_color_changer, clear_screen, display_border, display_body, display_top
 from termcolor import colored
-import random
+
 class GameGrid:
     def __init__(self, incomplete_grid, complete_grid, positions):
         self.incomplete_grid = incomplete_grid
@@ -26,9 +26,7 @@ class GameGrid:
         grid_top.append("="*75)
         display_border(on_color)
         display_body(grid_top, color, on_color)
-        joined_grid = []
-        for row in self.complete_grid:
-            joined_grid.append('  '.join(row))
+        joined_grid = self.grid_color_changer(color)
         display_body(joined_grid, color, on_color)
 
     def update_grid(self, word):
@@ -37,3 +35,12 @@ class GameGrid:
                 self.incomplete_grid[row][col] = colored(word[idx], "green", attrs=["bold"])
             return True
         return False
+    
+    def grid_color_changer(self, color):
+        joined_grid = []
+        for row in self.complete_grid:
+            line = [colored(i, color, attrs=["bold"]) if i.isalpha() else i for i in row]
+            joined_grid.append('  '.join(line))
+        return joined_grid
+
+        

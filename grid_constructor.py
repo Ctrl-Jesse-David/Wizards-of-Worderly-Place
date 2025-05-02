@@ -72,6 +72,7 @@ def place_word(word, grid):
             return True, (row, col, direction)
 
     return False, None
+
 def generate_word_grid(dictionary_file):
     main_word, valid_words = get_main_and_valid_words(dictionary_file)
 

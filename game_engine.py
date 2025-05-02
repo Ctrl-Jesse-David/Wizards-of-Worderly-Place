@@ -137,9 +137,13 @@ class WordscapesGame:
         time.sleep(0.5)
         return True
     
-    def get_retry_option(self, nickname, on_color):
+    def get_retry_option(self, nickname, on_color, state):
+        if state == "lost":
+            color = 'red'
+        else:
+            color = 'green'
         while True:
-            self.grid.display_complete_grid(nickname, "white", on_color)
+            self.grid.display_complete_grid(nickname, color, on_color)
             self.end_game(on_color)
             print("")
             retry_option = input(colored("🔄 Would you like to play again?", attrs=["underline"]) 
@@ -184,8 +188,7 @@ class WordscapesGame:
             elif guess in ['EXIT', 'E']: 
                 update_leaderboard(self.name, self.points)
                 user_progress.update_score(self.points)
-                self.grid.display_complete_grid(nickname)
-                return self.get_retry_option(nickname, "on_red")
+                return self.get_retry_option(nickname, "on_red", 'lost')
 
             self.the_guess(guess, nickname)
             
@@ -195,14 +198,14 @@ class WordscapesGame:
         if len(self.found_words) == len(self.words):
             update_leaderboard(self.name, self.points)
             user_progress.update_score(self.points)
-            return self.get_retry_option(nickname, "on_green")
+            return self.get_retry_option(nickname, "on_green", 'win')
             
 
         elif self.lives <= 0:
-            return self.get_retry_option(nickname, "on_red")
+            return self.get_retry_option(nickname, "on_red", 'lost')
 
         else:  # This covers if they exited early (EXIT/E)
-            return self.get_retry_option(nickname, "on_red")
+            return self.get_retry_option(nickname, "on_red", 'lost')
 
 
     def end_game(self, on_color):
