@@ -4,7 +4,7 @@ from display_manager import clear_screen
 from game_engine import WordscapesGame
 from termcolor import cprint
 from user_progress import update_score
-
+from animations import mystical_loading
 
 def get_game_level(dictionary_file):
     grid_data, placed_words, non_placed_words = generate_word_grid(dictionary_file)
@@ -69,6 +69,7 @@ def start_game_session(dictionary_file, nickname): # create
     clear_screen()
     #Run games until user opts out
     while True:
+        mystical_loading('FORGING SPELLS!', 'FORGING COMPLETE!', 'green' "on_green")
         letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file)
         retry_option = initialize_game(
             letters, incomplete_grid, positions,

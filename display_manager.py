@@ -78,7 +78,7 @@ def welcome_display(message, nickname, on_color):
         ''
     ]
 
-    base_text = "🔮 Summoning Arcane Forces"
+    base_text = colored("   🔮 Summoning Arcane Forces", attrs=['bold'])
 
     for frame in range(14):
         clear_screen()

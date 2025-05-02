@@ -50,7 +50,6 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
         choice = get_player_input()
 
         if choice == "S":
-            mystical_loading('FORGING SPELLS!', 'FORGING COMPLETE!', "on_green")
             start_game_session(dictionary_file, nickname)
         elif choice == "I":
             display_instructions()
@@ -61,11 +60,7 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
         elif choice == "M":
             display_shop()  
         elif choice == "E":
-            print("Exiting...")
-            time.sleep(0.8)
-
-            cprint("Thanks for playing!\n", 'red', attrs = ["bold"])
-            mystical_loading('FORGING SPELLS!', colored("Thanks for playing!\n", 'red', attrs = ["bold"]), "on_green")
+            mystical_loading('CLOSING THE PORTAL...', 'SAFE TRAVELS, SORCERER!', "red", 'on_red')
             sys.exit()
 
         else:

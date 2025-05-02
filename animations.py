@@ -73,7 +73,7 @@ def mystical_intro():
     stop_animation.set()
     animation_thread.join()
 
-def mystical_loading(message, final_message, bg_color):
+def mystical_loading(message, final_message, color, bg_color):
     message = ' '.join(i for i in message)
     width = 75
     height = 7
@@ -107,10 +107,10 @@ def mystical_loading(message, final_message, bg_color):
         display_body(lines)
         display_border()
         time.sleep(0.07)
-    final_message =  colored(' '.join(i for i in final_message), 'green', attrs=['bold'])
+    final_message =  colored(' '.join(i for i in final_message), color, attrs=['bold'])
     clear_screen()
     display_border(bg_color)
-    display_body(['', '', '', final_message, '', '', '',], 'green', bg_color)
+    display_body(['', '', '', final_message, '', '', '',], color, bg_color)
     display_border(bg_color)
     print('')
     time.sleep(0.8)
