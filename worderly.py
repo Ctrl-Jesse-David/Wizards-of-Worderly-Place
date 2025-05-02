@@ -3,9 +3,10 @@ from termcolor import cprint
 from display_manager import clear_screen
 from game_master import start_game_session
 from menu_display import display_instructions, display_leaderboard, display_main_menu
-from animations import mystical_intro
+from animations import mystical_intro, mystical_loading
 from user_progress import display_shop, display_user_profile, login_user
 from word_utils import get_player_nickname, get_player_input
+from termcolor import colored
 
 def main():
     if len(sys.argv) >= 3:
@@ -49,6 +50,7 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
         choice = get_player_input()
 
         if choice == "S":
+            mystical_loading('FORGING SPELLS!', 'FORGING COMPLETE!', "on_green")
             start_game_session(dictionary_file, nickname)
         elif choice == "I":
             display_instructions()
@@ -63,6 +65,7 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
             time.sleep(0.8)
 
             cprint("Thanks for playing!\n", 'red', attrs = ["bold"])
+            mystical_loading('FORGING SPELLS!', colored("Thanks for playing!\n", 'red', attrs = ["bold"]), "on_green")
             sys.exit()
 
         else:

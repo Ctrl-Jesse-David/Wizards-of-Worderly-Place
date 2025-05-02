@@ -43,13 +43,9 @@ def login_user(nickname):
         save_users(users)
         clear_screen()
         welcome_display(f"Welcome, {nickname}! New wizard profile created.", nickname, 'on_white')
-        print('')
-        time.sleep(0.9)
     else:
         clear_screen()
         welcome_display(f"Welcome back, {nickname}! Your magical journey continues...", nickname, 'on_white')
-        print('')
-        time.sleep(0.9)
     current_user = nickname
     return True
 

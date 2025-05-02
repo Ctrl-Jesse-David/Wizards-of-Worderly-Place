@@ -40,15 +40,15 @@ def smart_center(text, width):
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def display_border(background_color):
+def display_border(background_color="on_white"):
     cprint(' ' * 77, on_color=background_color)
 
-def display_row(text, text_color, background_color):
+def display_row(text, text_color="white", background_color="on_white"):
     cprint(' ', text_color, background_color, end='')
     print(smart_center(text, 75), end='')
     cprint(' ', text_color, background_color)
 
-def display_body(lines, text_color, bg_color):
+def display_body(lines, text_color="white", bg_color="on_white"):
     for line in lines:
         display_row(line, text_color, bg_color)
 
@@ -90,6 +90,5 @@ def welcome_display(message, nickname, on_color):
         animated_line = base_text + dots
 
         print('\n' * 2 + (animated_line).center(77))
-        if frame < 14:
-            time.sleep(0.08)
+        time.sleep(0.08)
 

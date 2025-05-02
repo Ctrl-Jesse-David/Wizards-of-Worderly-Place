@@ -1,13 +1,9 @@
-import os, random, time, threading
+import random, time, threading
 from termcolor import colored, cprint
-
-# animations.py
-import threading
-import random
-from termcolor import colored
+from display_manager import display_body, display_border, clear_screen, title_color_changer
 
 def mystical_intro():
-    from display_manager import display_row, display_border, clear_screen
+    from display_manager import display_body, display_border, clear_screen, title_color_changer
     width = 75
     height = 14
     phrase = "WELCOME TO WIZARDS OF WORDERLY PLACE"
@@ -40,11 +36,10 @@ def mystical_intro():
                                                    random.choice(available_text_colors),
                                                    attrs=['bold'])
 
-        display_border('on_white')
-        for row in grid:
-            line = ''.join(row)
-            display_row(line, 'white', 'on_white')
-        display_border('on_white')
+        lines = [''.join(row) for row in grid]
+        display_border()
+        display_body(lines)
+        display_border()
 
         dots = '.' * ((frame % 4) + 1)
         print('\n' + ' ' * (width // 2 - 10) + f'Enchanting the Grid{dots}')
@@ -55,25 +50,19 @@ def mystical_intro():
     def animate():
         while not stop_animation.is_set():
             clear_screen()
+            display_border()
 
-            display_border('on_white')
-
-            empty_lines_before = center_y
-            for _ in range(empty_lines_before):
-                display_row(' ' * 75, 'white', 'on_white')
-
+            lines = [' ' * width for _ in range(center_y)]
             colorful_title = ''.join(
                 colored(ch, random.choice(available_text_colors), attrs=['bold']) for ch in spaced_phrase
             )
-            display_row(colorful_title, 'white', 'on_white')
+            lines.append(colorful_title)
+            lines.extend([' ' * width for _ in range(height - center_y - 1)])
 
-            for _ in range(height - empty_lines_before - 1):
-                display_row(' ' * 75, 'white', 'on_white')
-
-            display_border('on_white')
+            display_body(lines)
+            display_border()
 
             print('\n' + ' ' * (width // 2 - 13) + "Press Enter to begin...")
-
             time.sleep(0.08)
 
     animation_thread = threading.Thread(target=animate)
@@ -84,7 +73,83 @@ def mystical_intro():
     stop_animation.set()
     animation_thread.join()
 
-    return
+def mystical_loading(message, final_message, bg_color):
+    message = ' '.join(i for i in message)
+    width = 75
+    height = 7
+    bg_charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    available_text_colors = [
+        "red", "green", "yellow", "blue", "magenta", "cyan",
+        "light_red", "light_green", "light_yellow", "light_blue",
+        "light_magenta", "light_cyan"
+    ]
+    center_y = height // 2
+
+    for i in range(1, len(message) + 1):
+        current_message = message[:i]
+        center_x = width // 2 - len(current_message) // 2
+
+        clear_screen()
+        grid = [[' ' for _ in range(width)] for _ in range(height)]
+
+        for r in range(height):
+            for c in range(width):
+                if random.random() < 0.03:
+                    grid[r][c] = random.choice(bg_charset)
+
+        for j, char in enumerate(current_message):
+            if 0 <= center_x + j < width:
+                grid[center_y][center_x + j] = colored(char, random.choice(available_text_colors), attrs=['bold'])
+
+        lines = [''.join(row) for row in grid]
+
+        display_border()
+        display_body(lines)
+        display_border()
+        time.sleep(0.07)
+    final_message =  colored(' '.join(i for i in final_message), 'green', attrs=['bold'])
+    clear_screen()
+    display_border(bg_color)
+    display_body(['', '', '', final_message, '', '', '',], 'green', bg_color)
+    display_border(bg_color)
+    print('')
+    time.sleep(0.8)
+
+
+def mystical_exit():
+    from display_manager import display_row, display_border, clear_screen
+    width = 75
+    height = 10
+    phrase = "FAREWELL, SPELLCASTER!"
+    spaced_phrase = ' '.join(phrase)
+    colors = ["light_red", "light_magenta", "light_blue", "white"]
+
+    for frame in range(15):
+        clear_screen()
+        display_border('on_white')
+
+        for _ in range((height - 2) // 2):
+            display_row(' ' * width, 'white', 'on_white')
+
+        fade_len = int(len(spaced_phrase) * (frame / 15))
+        faded = ''.join(
+            colored(spaced_phrase[i], random.choice(colors), attrs=['bold'])
+            if i < fade_len else ' '
+            for i in range(len(spaced_phrase))
+        )
+
+        display_row(faded.center(width), 'white', 'on_white')
+
+        for _ in range((height - 2) // 2):
+            display_row(' ' * width, 'white', 'on_white')
+
+        display_border('on_white')
+        time.sleep(0.1)
+
+    cprint
+    time.sleep(0.5)
+    clear_screen()
+
 
 if __name__ == "__main__":
-    mystical_intro()
+    mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "on_green")
