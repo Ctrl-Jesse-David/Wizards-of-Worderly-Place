@@ -8,14 +8,20 @@ A magical word puzzle game where players uncover hidden words in a grid using av
 
    - Run 'python3 worderly.py` in your terminal
    - Enter your nickname when prompted
+
    <img width="551" alt="Image" src="https://github.com/user-attachments/assets/b8cbb0ff-bad2-4e89-811b-b5e7278d4c6f" />
+
    - Enter 'S' to initialize the grid and play the main game
+   
    <img width="543" alt="Image" src="https://github.com/user-attachments/assets/cb437b37-27d1-4ed7-810d-5a5898d081e1" />
+
      - Select a difficulty level (based on preferred word count in the grid)
+   
        <img width="551" alt="Image" src="https://github.com/user-attachments/assets/fafeba46-54cb-4f31-9718-107d5b0900b3" />
+
        - Play the game!
 
-2. **Game Controls**
+1. **Game Controls**
 
    - Guess the words that are hidden in the grid by using the available letters provided
 
@@ -26,13 +32,13 @@ A magical word puzzle game where players uncover hidden words in a grid using av
      - '-hint' or '-h': Get a hint (5 free hints per game)
      - '-exit' or '-e': End the current game
 
-3. **Scoring**
+2. **Scoring**
 
    - Points are awarded for each correct letter that was unrevealed
    - Extra Lives are rewarded for revealing valid words that are not in the grid
    - Your total score is saved to your profile
 
-4. **Shop System**
+3. **Shop System**
 
    - Earn points to purchase hints
      - Basic Hint (10 points): Reveals one letter
