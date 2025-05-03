@@ -94,22 +94,35 @@ def welcome_display(message, nickname, on_color):
 
 def ask_game_difficulty(on_color="on_white"):
     clear_screen()
+    max_visible_length = 17
+
     options = [
         '',
         colored("💡 Select a difficulty based on your preferred word count. 💡", attrs=["bold"]),
         '',
         '='*75,
         '',
-        f"{colored('🧙 [1] APPRENTICE', 'green', attrs=['bold'])} 20 - 25 words",
-        f"{colored('🔮 [2] MAGE', 'blue', attrs=['bold'])} 26 - 30 words",
-        f"{colored('🧝 [3] ARCHMAGE', 'magenta', attrs=['bold'])} 31+ words",
+        format_difficulty('🪄', 'APPRENTICE', ' [1]', 'green', '21 - 25 words', max_visible_length),
+        format_difficulty('🔮', 'MAGE', '[2]', 'blue', '26 - 30 words', max_visible_length),
+        format_difficulty('🧙', 'ARCHMAGE', '[3]', 'magenta', '31+ words     ', max_visible_length),
         '',
         '-'*75,
         '',
-        colored("Choose your difficulty level by number:", attrs=['bold']),
-        '']
+        colored(f"Select a difficulty level [{colored('Enter Number', 'cyan', attrs=['bold'])}] or "
+                f"[{colored('E', 'red', attrs=['bold'])}] to exit:", attrs=['bold']),
+        ''
+    ]
     
     display_border(on_color)
     display_body(options, 'white', on_color)
     display_border(on_color)
     print('')
+
+def format_difficulty(icon, label, tag, color, right_text, target_width):
+    raw_label = f"{icon} {tag} {label}"
+    vis_len = visible_length(raw_label)
+    padding = ' ' * (target_width - vis_len)
+    colored_label = colored(raw_label + padding, color, attrs=['bold'])
+    return f"{colored_label}: {right_text}"
+
+

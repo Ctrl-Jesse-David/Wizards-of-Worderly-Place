@@ -149,13 +149,13 @@ class WordscapesGame:
             self.grid.display_grid(nickname, color, on_color)
             self.end_game(on_color)
             print("")
+            
+            cprint('🔄 Would you like to play again, exit, or view cheatsheet?', attrs=['bold'])
+            print('')
             retry_option = input(
-                f"{colored("🔄 Would you like to play again or see the cheatsheet", attrs=["bold"])} " +
-                "[" +
-                colored("y", "green", attrs=["bold"]) + "/" +
-                colored("n", "red", attrs=["bold"]) + "/" +
-                colored("c", "cyan", attrs=["bold"]) +
-                "]: "
+                f"👉 [{colored('Y', 'green', attrs=['bold'])}] {colored('Play', 'green', attrs=['bold'])} / "
+                f"[{colored('N', 'red', attrs=['bold'])}] {colored('Exit', 'red', attrs=['bold'])} / "
+                f"[{colored('C', 'cyan', attrs=['bold'])}] {colored('Cheatsheet', 'cyan', attrs=['bold'])}: "
             ).lower().strip()
             print('')
 

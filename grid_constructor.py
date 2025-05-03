@@ -100,15 +100,10 @@ def color_dots_in_grid(grid):
 def main_has_adjacent_letter(grid):
     coords = [(2 + i*2, 7 + i*2) for i in range(6)]
     for r, c in coords:
-        has_neighbor = False
-        for dr, dc in [(-1,0), (1,0), (0,-1), (0,1)]:
-            nr, nc = r + dr, c + dc
-            if 0 <= nr < len(grid) and 0 <= nc < len(grid[0]) and grid[nr][nc] != '.':
-                has_neighbor = True
-                break
-        if not has_neighbor:
-            return False
-    return True
+        if any(grid[dr + r][dc + c] != '.' for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]):
+            return True
+    return False
+
 
 def generate_positions_dict(placed_words):
     positions = {}

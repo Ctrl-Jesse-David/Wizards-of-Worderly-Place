@@ -71,7 +71,7 @@ def start_game_session(dictionary_file, nickname):
         while True:
             ask_game_difficulty()
             difficulty = get_player_input().lower()
-            if difficulty not in ['1', '2', '3', 'mage', 'apprentice','archmage']:
+            if difficulty not in ['1', '2', '3', 'mage', 'apprentice','archmage', 'e', 'exit']:
                 ask_game_difficulty('on_red')
                 cprint("🚫 Invalid response!", "red", attrs=["bold"])
                 print('')
@@ -79,14 +79,16 @@ def start_game_session(dictionary_file, nickname):
             else:
                 break
         if difficulty in ['1', 'mage']:
-            min = 20
+            min = 21
             max = 25
         elif difficulty in ['2', 'apprentice']:
             min = 26
             max = 30
-        else:
+        elif difficulty in ['3', 'archmage']:
             min = 31
             max = float('inf')
+        elif difficulty in ['e', 'exit']:
+            break
 
         mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "green", "on_green")
         letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file, min, max)
@@ -105,9 +107,6 @@ def start_game_session(dictionary_file, nickname):
                 mystical_loading('CLOSING THE PORTAL...', '' , "magenta", "on_magenta")
                 break
         else:
-            print("")
-            cprint("Returning to main menu...", "yellow", attrs=["bold"])
-            time.sleep(1)
-            clear_screen()
+            mystical_loading('CLOSING THE PORTAL...', '' , "magenta", "on_magenta")
             break
 
