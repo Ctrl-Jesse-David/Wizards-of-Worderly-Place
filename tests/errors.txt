@@ -1,3 +1,0 @@
-FAILED tests/test_grid_generator.py::test_word_placement - AssertionError: Position (8, 13) is used by multiple words without valid intersection
-FAILED tests/test_options.py::test_display_leaderboard - TypeError: 'str' object cannot be interpreted as an integer
-FAILED tests/test_utilities.py::test_update_leaderboard - TypeError: 'str' object cannot be interpreted as an integer

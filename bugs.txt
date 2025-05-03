@@ -1,17 +1,6 @@
 test folder
 - wala pang pytest sa grid constructor
 
-
-------------------------------------------------------------
-
-menu_display.py
-
-- Leaderboard Spacing error* ata not sure if intentional yon
-    ----------------------------------FIXED------------------------------------
-        - oks na
-
-spacing error din sa game difficulty
-
 ------------------------------------------------------------
 
 grid_renderer.py
