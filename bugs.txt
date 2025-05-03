@@ -1,11 +1,6 @@
 test folder
 - wala pang pytest sa grid constructor
 
-------------------------------------------------------------
-
-game_engine.py
-- wala pa yung advanced hint fcns 
-    #We dropping this fr
 
 ------------------------------------------------------------
 

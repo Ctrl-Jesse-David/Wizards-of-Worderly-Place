@@ -214,7 +214,6 @@ def display_shop():
     
     shop_items = [
         {"id": "basic_hint", "name": "Basic Hint", "cost": 10, "description": "🔍 Reveals one letter in a hidden word"},
-        {"id": "advanced_hint", "name": "Advanced Hint", "cost": 25, "description": "📜 Reveals a full hidden word"},
     ]
     
     for i, item in enumerate(shop_items, 1):

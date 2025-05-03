@@ -50,6 +50,7 @@ class WordscapesGame:
         self.last_guess = None
         self.free_hints = 5
         self.bought_hints = get_user_stats().get("hints_available", 0)
+        self.revealed_letters = set()
     
     def shuffle_letters(self, nickname):
         '''
@@ -87,7 +88,6 @@ class WordscapesGame:
         Reveals a random unrevealed letter, using free hints first then purchased.
         '''
         #Determine source
-
         if self.free_hints > 0:
             self.free_hints -= 1
             source = "free"
@@ -107,6 +107,7 @@ class WordscapesGame:
         #Gather hidden positions
         all_positions = {pos for w in self.words for pos in self.positions[w]}
         revealed_positions = {pos for w in self.found_words for pos in self.positions[w]}
+        revealed_positions.update(self.revealed_letters)
         hidden_positions = list(all_positions - revealed_positions)
 
         if not hidden_positions:
@@ -119,6 +120,7 @@ class WordscapesGame:
 
         #Reveal letter
         row, col = random.choice(hidden_positions)
+        self.revealed_letters.add((row, col)) 
         for word, poses in self.positions.items():
             if (row, col) in poses:
                 idx = poses.index((row, col))
