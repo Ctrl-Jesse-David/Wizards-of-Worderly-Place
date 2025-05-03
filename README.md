@@ -6,7 +6,7 @@ A magical word puzzle game where players uncover hidden words in a grid using av
 
 1. **Starting the Game**
 
-   - Run 'python3 worderly.py` in your terminal
+   - Run 'python3 worderly.py' in your terminal
    - Enter your nickname when prompted
    <img width="551" alt="Image" src="https://github.com/user-attachments/assets/b8cbb0ff-bad2-4e89-811b-b5e7278d4c6f" />
 
@@ -20,6 +20,7 @@ A magical word puzzle game where players uncover hidden words in a grid using av
        <img width="540" alt="Image" src="https://github.com/user-attachments/assets/b6211224-8ed7-46c1-aad8-43ba0c21bbaa" />
 
 1. **Game Controls**
+
 <img width="522" alt="Image" src="https://github.com/user-attachments/assets/b01dbd10-8917-432e-9d46-5bebdd80acf0" />
 
    - Guess the words that are hidden in the grid by using the available letters provided
@@ -31,13 +32,13 @@ A magical word puzzle game where players uncover hidden words in a grid using av
      - '-hint' or '-h': Get a hint (5 free hints per game)
      - '-exit' or '-e': End the current game
 
-2. **Scoring**
+3. **Scoring**
 
    - Points are awarded for each correct letter that was unrevealed
    - Extra Lives are rewarded for revealing valid words that are not in the grid
    - Your total score is saved to your profile
 
-3. **Shop System**
+4. **Shop System**
 
    - Earn points to purchase hints
      - Basic Hint (10 points): Reveals one letter
