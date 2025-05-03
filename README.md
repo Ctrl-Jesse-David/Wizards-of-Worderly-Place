@@ -8,6 +8,7 @@ A magical word puzzle game where players uncover hidden words in a grid using av
 
    - Run 'python3 worderly.py` in your terminal
    - Enter your nickname when prompted
+   - <img width="551" alt="Image" src="https://github.com/user-attachments/assets/b8cbb0ff-bad2-4e89-811b-b5e7278d4c6f" />
    - Enter 'S' to initialize the grid and play the main game
      - Select a difficulty level (based on preferred word count in the grid)
        - Play the game!
