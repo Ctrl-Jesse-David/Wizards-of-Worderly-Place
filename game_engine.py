@@ -1,6 +1,6 @@
 from display_manager import clear_screen, display_border, display_body, ansi_escape
 from file_operations import update_leaderboard
-from word_utils import is_valid
+from word_utils import is_valid, get_player_input
 import random, time
 from grid_renderer import GameGrid
 from user_progress import get_user_stats
@@ -190,7 +190,7 @@ class WordscapesGame:
             self.grid.display_grid(nickname)
             self.cur_state()
             
-            guess = input(colored("👉 Your Output: ", attrs=["bold"])).strip().upper()
+            guess = get_player_input()
 
             if guess in ['-SHUFFLE', '-S', 'S']:
                 self.shuffle_letters(nickname)

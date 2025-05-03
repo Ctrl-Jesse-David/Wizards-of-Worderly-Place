@@ -237,8 +237,7 @@ def display_shop():
         display_border("on_magenta")
         print('')
         
-        choice = input(colored("👉 Your choice: ", attrs=["bold"]))
-
+        choice = get_player_input()
         if choice.lower() in ['e', 'exit']:
             return
             
