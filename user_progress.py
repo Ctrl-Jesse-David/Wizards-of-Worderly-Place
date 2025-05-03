@@ -230,6 +230,8 @@ def display_shop():
     
     while True:
         clear_screen()
+        shop_lines[5] = colored(f"💰 Your Magic Points 💰: {get_user_stats()['points']}", "white")
+        
         display_border("on_magenta")
         display_body(shop_lines, "white", "on_magenta")
         display_border("on_magenta")
@@ -245,9 +247,12 @@ def display_shop():
                 item = shop_items[choice_num - 1]
                 if purchase_hint(item["id"], item["cost"]):
                     cprint(f"You purchased {item['name']}!", "green")
-                break
+                    time.sleep(0.75)
+                else:
+                    time.sleep(0.75)
             else:
                 raise ValueError()
+
         except ValueError:
             clear_screen()
             display_border("on_red")
@@ -255,9 +260,8 @@ def display_shop():
             display_border("on_red")
             print('')
             cprint('Invalid Choice', "red", attrs=["bold"])
-            time.sleep(0.25)
-    
-    input(colored("Press Enter to continue...", "light_magenta", attrs=["bold"]))
+            time.sleep(0.75)
+            continue
 
 def use_hint():
     """

@@ -248,12 +248,25 @@
         "highest_score": 0
     },
     "NEIL": {
-        "points": 130,
+        "points": 0,
         "hints_purchased": [
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
             "basic_hint",
             "basic_hint"
         ],
-        "hints_available": 0,
+        "hints_available": 6,
         "highest_score": 130
     },
     "HI": {
