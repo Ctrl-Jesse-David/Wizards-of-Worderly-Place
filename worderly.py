@@ -8,6 +8,15 @@ from user_progress import display_shop, display_user_profile, login_user
 from word_utils import get_player_nickname, get_player_input
 
 def main():
+    '''
+    Entry point of the Wizards of Worderly Place game.
+    
+    This function handles command-line arguments and initializes the game:
+    - If no arguments are provided, starts the game with default dictionary
+    - If one argument is provided, validates it as a dictionary file
+    - Raises errors for invalid arguments or non-existent files
+    '''
+    
     if len(sys.argv) >= 3:
         raise IndexError('Provide only one filename.')
     
@@ -35,6 +44,8 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
     - S: Start a new game (prompts for the player's nickname)
     - I: Display game instructions
     - L: Display leaderboard
+    - P: Display user profile
+    - M: Display magical shop
     - E: Exit the application
     '''
 

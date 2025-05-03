@@ -246,11 +246,12 @@
         "highest_score": 0
     },
     "NEIL": {
-        "points": 14,
+        "points": 4,
         "hints_purchased": [
+            "basic_hint",
             "basic_hint"
         ],
-        "hints_available": 0,
+        "hints_available": 1,
         "highest_score": 16
     },
     "HI": {
@@ -335,6 +336,12 @@
         "highest_score": 0
     },
     "ADASD": {
+        "points": 0,
+        "hints_purchased": [],
+        "hints_available": 0,
+        "highest_score": 0
+    },
+    "JUAN": {
         "points": 0,
         "hints_purchased": [],
         "hints_available": 0,
