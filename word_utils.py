@@ -1,6 +1,6 @@
 import random
 from termcolor import colored
-from display_manager import display_body, display_border, clear_screen
+from display_manager import display_body, display_border, clear_screen, ansi_escape
 
 def is_valid(guess, letters):
     guess_cap = guess.upper()
@@ -28,3 +28,28 @@ def get_player_nickname():
 def get_player_input():
     return input(colored("👉 Your choice: ", "white", attrs=["bold"])).strip().upper()
 
+def get_wrapped_words(label, word_list, width=73):
+        words = sorted(word_list)
+        prefix_visible_len = len(ansi_escape.sub('', f"{label}: "))
+        prefix = f"{label}: "
+        lines = []
+        line = prefix
+        for word in words:
+            word_str = f"{word}, "
+            if len(ansi_escape.sub('', line)) + len(word_str.rstrip()) > width:
+                lines.append(line.rstrip(', '))
+                line = " " * prefix_visible_len + word_str
+            else:
+                line += word_str
+        if line.strip():
+            lines.append(line.rstrip(', '))
+
+        max_length = max(len(ansi_escape.sub('', l)) for l in lines)
+
+        padded_lines = []
+        for l in lines:
+            visible_len = len(ansi_escape.sub('', l))
+            padding = max_length - visible_len
+            padded_lines.append(l + ' ' * padding)
+        
+        return padded_lines

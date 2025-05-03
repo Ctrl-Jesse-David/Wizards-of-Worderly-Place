@@ -1,5 +1,5 @@
-from termcolor import colored, cprint
 import os, random, re, time
+from termcolor import colored, cprint
 from termcolor import colored
 
 def display_top(main_text):

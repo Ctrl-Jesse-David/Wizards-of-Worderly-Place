@@ -1,11 +1,10 @@
-import os
-import json, time
+import os, json, time
 from termcolor import cprint, colored
 from display_manager import display_body, display_border, clear_screen, welcome_display
+from word_utils import get_player_input
 
 current_user = None
 
-#Max Possible of Hints that can be bought
 MAX_PURCHASED_HINTS = 10
 
 def load_users():

@@ -1,10 +1,9 @@
 from display_manager import clear_screen, display_border, display_body, ansi_escape
 from file_operations import update_leaderboard
-from word_utils import is_valid, get_player_input
-import random, time
+from word_utils import is_valid, get_player_input, get_wrapped_words
 from grid_renderer import GameGrid
 from user_progress import get_user_stats
-import user_progress
+import user_progress, random, time
 from termcolor import colored, cprint
 
 '''
@@ -123,7 +122,10 @@ class WordscapesGame:
         for word, poses in self.positions.items():
             if (row, col) in poses:
                 idx = poses.index((row, col))
-                self.grid.incomplete_grid[row][col] = colored(word[idx], "magenta", attrs=["bold"])
+                if (row, col) in [(2 + i*2, 7 + i*2) for i in range(6)]:
+                    self.grid.incomplete_grid[row][col] = colored(word[idx], "blue", attrs=["bold"])
+                else:
+                    self.grid.incomplete_grid[row][col] = colored(word[idx], "magenta", attrs=["bold"])
                 break
         
         clear_screen()
@@ -153,6 +155,7 @@ class WordscapesGame:
                 colored("c", "cyan", attrs=["bold"]) +
                 "]: "
             ).lower().strip()
+            print('')
 
             if retry_option in ['y', 'n']:
                 return retry_option
@@ -209,7 +212,6 @@ class WordscapesGame:
             
         clear_screen()
 
-        # Determine the final outcome
         if len(self.found_words) == len(self.words):
             update_leaderboard(self.name, self.points)
             user_progress.update_score(self.points)
@@ -219,7 +221,7 @@ class WordscapesGame:
         elif self.lives <= 0:
             return self.get_retry_option(nickname, "on_red", 'lost')
 
-        else:  # This covers if they exited early (EXIT/E)
+        else:
             return self.get_retry_option(nickname, "on_red", 'lost')
 
     def end_game(self, on_color, state="none"):
@@ -235,7 +237,7 @@ class WordscapesGame:
             '',
             border,
             '',
-            *self.get_wrapped_words(colored('WORDS', attrs=['bold']), self.words),
+            *get_wrapped_words(colored('WORDS', attrs=['bold']), self.words),
             '',
             '='*75
         ]
@@ -306,7 +308,7 @@ class WordscapesGame:
                     clear_screen()
                     self.grid.display_grid(nickname, "white", "on_green")
                     self.cur_state("white", "on_green")
-                    cprint('Correct!', "green", attrs=["bold"])
+                    cprint('✅ Correct!', "green", attrs=["bold"])
                     
 
 
@@ -316,7 +318,7 @@ class WordscapesGame:
                     clear_screen()
                     self.grid.display_grid(nickname, "white", "on_yellow")
                     self.cur_state("white", "on_yellow")
-                    cprint('Word not found in the grid. Bonus life granted!', 'yellow', attrs=['bold'])
+                    cprint('🧠 Word not found in the grid. Bonus life granted!', 'yellow', attrs=['bold'])
                     
 
                 else:
@@ -324,7 +326,8 @@ class WordscapesGame:
                     clear_screen()
                     self.grid.display_grid(nickname, "white", "on_red")
                     self.cur_state("white", "on_red")
-                    cprint('Incorrect.', "red", attrs=["bold"])
+                    cprint('🚫 Incorrect.', "red", attrs=["bold"])
+                    
                     
 
 
@@ -333,7 +336,7 @@ class WordscapesGame:
                 clear_screen()
                 self.grid.display_grid(nickname, "white", "on_magenta")
                 self.cur_state("white", "on_magenta")
-                cprint('Word has already been found.', "magenta", attrs=["bold"])
+                cprint('🔁 Word has already been found.', "magenta", attrs=["bold"])
                 
                
             
@@ -342,7 +345,7 @@ class WordscapesGame:
                 clear_screen()
                 self.grid.display_grid(nickname, "white", "on_red")
                 self.cur_state("white", "on_red")
-                cprint('Incorrect.', "red", attrs=["bold"])
+                cprint('🚫 Incorrect.', "red", attrs=["bold"])
                 
             
 
@@ -350,34 +353,8 @@ class WordscapesGame:
             clear_screen()
             self.grid.display_grid(nickname, "white", "on_red")
             self.cur_state("white", "on_red")
-            cprint(f"🚫  word! Only {'-'.join(list(self.letters))} is allowed", "red", attrs=["bold"])
+            cprint(f"🚫 Invalid word! Only {'-'.join(list(self.letters))} is allowed", "red", attrs=["bold"])
             self.lives -= 1
             
-
+        print('')
         time.sleep(0.75)
-
-    def get_wrapped_words(self, label, word_list, width=73):
-        words = sorted(word_list)
-        prefix_visible_len = len(ansi_escape.sub('', f"{label}: "))
-        prefix = f"{label}: "
-        lines = []
-        line = prefix
-        for word in words:
-            word_str = f"{word}, "
-            if len(ansi_escape.sub('', line)) + len(word_str.rstrip()) > width:
-                lines.append(line.rstrip(', '))
-                line = " " * prefix_visible_len + word_str
-            else:
-                line += word_str
-        if line.strip():
-            lines.append(line.rstrip(', '))
-
-        max_length = max(len(ansi_escape.sub('', l)) for l in lines)
-
-        padded_lines = []
-        for l in lines:
-            visible_len = len(ansi_escape.sub('', l))
-            padding = max_length - visible_len
-            padded_lines.append(l + ' ' * padding)
-        
-        return padded_lines

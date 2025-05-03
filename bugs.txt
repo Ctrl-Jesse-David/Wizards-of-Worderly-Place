@@ -11,8 +11,11 @@ game_engine.py
 
 menu_display.py
 
-Leaderboard Spacing error* ata not sure if intentional yon
-spacing error din sa game difficult
+- Leaderboard Spacing error* ata not sure if intentional yon
+    ----------------------------------FIXED------------------------------------
+        - oks na
+
+spacing error din sa game difficulty
 
 ------------------------------------------------------------
 
@@ -33,3 +36,6 @@ game_engine.py
 
 
 ------------------------------------------------------------
+game_engine.py
+- if im not mistaken, kahit nahanap na or nareveal ung letters sa word, pag nag
+hint ka yun yung magpopop up

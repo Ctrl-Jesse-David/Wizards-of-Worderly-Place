@@ -73,7 +73,8 @@ def start_game_session(dictionary_file, nickname):
             difficulty = get_player_input().lower()
             if difficulty not in ['1', '2', '3', 'mage', 'apprentice','archmage']:
                 ask_game_difficulty('on_red')
-                cprint("Invalid response!", "red", attrs=["bold"])
+                cprint("🚫 Invalid response!", "red", attrs=["bold"])
+                print('')
                 time.sleep(0.5)
             else:
                 break

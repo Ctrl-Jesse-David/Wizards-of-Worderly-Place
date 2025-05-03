@@ -1,6 +1,5 @@
 from display_manager import title_color_changer, clear_screen, display_border, display_body, display_top
 from termcolor import colored
-import time
 
 class GameGrid:
     def __init__(self, incomplete_grid, complete_grid, positions):
