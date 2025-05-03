@@ -6,7 +6,6 @@ from menu_display import display_instructions, display_leaderboard, display_main
 from animations import mystical_intro, mystical_loading
 from user_progress import display_shop, display_user_profile, login_user
 from word_utils import get_player_nickname, get_player_input
-from termcolor import colored
 
 def main():
     if len(sys.argv) >= 3:
@@ -39,7 +38,7 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
     - E: Exit the application
     '''
 
-    mystical_intro()
+    # mystical_intro()
 
     nickname = get_player_nickname()
     login_user(nickname)

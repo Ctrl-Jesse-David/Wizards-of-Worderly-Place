@@ -146,11 +146,27 @@ class WordscapesGame:
             self.grid.display_grid(nickname, color, on_color)
             self.end_game(on_color)
             print("")
-            retry_option = input(colored("🔄 Would you like to play again?", attrs=["underline"]) 
-                                            + colored(" [y/n]", attrs=["bold"]) + ": ")\
-                                            .lower().strip()
+            retry_option = input(
+                f"{colored("🔄 Would you like to play again or see the cheatsheet", attrs=["bold"])} " +
+                "[" +
+                colored("y", "green", attrs=["bold"]) + "/" +
+                colored("n", "red", attrs=["bold"]) + "/" +
+                colored("c", "cyan", attrs=["bold"]) +
+                "]: "
+            ).lower().strip()
+
             if retry_option in ['y', 'n']:
                 return retry_option
+            
+            elif retry_option == 'c':
+                while True:
+                    self.grid.display_complete_grid(nickname,'white', 'on_cyan')
+                    self.end_game("on_cyan", 'cheat')
+                    print('')
+                    input()
+                    break
+                continue
+
             else:
                 print('')
                 cprint("Invalid response!", "red", attrs=["bold"])
@@ -207,7 +223,7 @@ class WordscapesGame:
         else:  # This covers if they exited early (EXIT/E)
             return self.get_retry_option(nickname, "on_red", 'lost')
 
-    def end_game(self, on_color):
+    def end_game(self, on_color, state="none"):
         """
         Displays the end game results.
         """
@@ -227,10 +243,14 @@ class WordscapesGame:
 
         display_body(info, "white", on_color)
 
-        if len(self.found_words) == len(self.words):
-            message = colored('🎉 Congratulations! You guessed all the words. 🎉', 'green', attrs=['bold'])
+        if state == "cheat":
+            message = colored(f"Press {colored('Enter', 'cyan')} to return...", attrs=['bold'])
+
         else:
-            message = colored('💀 Game Over! 💀', 'red', attrs=['bold'])
+            if len(self.found_words) == len(self.words):
+                message = colored('🎉 Congratulations! You guessed all the words. 🎉', 'green', attrs=['bold'])
+            else:
+                message = colored('💀 Game Over! 💀', 'red', attrs=['bold'])
 
         display_body(['', message, ''], "white", on_color)
         display_border(on_color)

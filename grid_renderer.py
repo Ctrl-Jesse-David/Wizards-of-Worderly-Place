@@ -1,5 +1,6 @@
 from display_manager import title_color_changer, clear_screen, display_border, display_body, display_top
 from termcolor import colored
+import time
 
 class GameGrid:
     def __init__(self, incomplete_grid, complete_grid, positions):
@@ -28,6 +29,16 @@ class GameGrid:
                     self.incomplete_grid[row][col] = colored(word[idx], "green", attrs=["bold"])
             return True
         return False
+
+    def display_complete_grid(self, nickname, color="white", on_color="on_white"):
+        clear_screen()
+        nickname = title_color_changer(nickname)
+        grid_top = display_top(f"🧙 {colored('Welcome to Wizards of Worderly Place!', attrs=['bold'])}, {nickname} 🧙")
+        grid_top.append("="*75)
+        display_border(on_color)
+        display_body(grid_top, color, on_color)
+        joined_grid = self.grid_color_changer('white')
+        display_body(joined_grid, color, on_color)
     
     def grid_color_changer(self, color):
         joined_grid = []

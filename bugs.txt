@@ -17,11 +17,14 @@ Leaderboard Spacing error* ata not sure if intentional yon
 
 grid_renderer.py
 - Colored Diagonal sa grid for easy distinction
+    ---------------------------------FIXED------------------------------------
+    - oks na
 
 ------------------------------------------------------------
 
 game_master.py
 - Cheatcodes?
+
 
 ------------------------------------------------------------
 

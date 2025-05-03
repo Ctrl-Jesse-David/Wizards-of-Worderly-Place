@@ -52,7 +52,7 @@ def initialize_game(letters, incomplete_grid, positions, name, non_placed_words,
         copy.deepcopy(complete_grid),
         copy.deepcopy(name)
     )
-    
+
     retry_option = game.play(name)
 
     update_score(game.points)
@@ -68,7 +68,7 @@ def start_game_session(dictionary_file, nickname): # create
     clear_screen()
     #Run games until user opts out
     while True:
-        mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "green", "on_green")
+        # mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "green", "on_green")
         letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file)
         retry_option = initialize_game(
             letters, incomplete_grid, positions,
