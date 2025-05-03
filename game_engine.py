@@ -143,7 +143,7 @@ class WordscapesGame:
         else:
             color = 'green'
         while True:
-            self.grid.display_complete_grid(nickname, color, on_color)
+            self.grid.display_grid(nickname, color, on_color)
             self.end_game(on_color)
             print("")
             retry_option = input(colored("🔄 Would you like to play again?", attrs=["underline"]) 
@@ -207,28 +207,32 @@ class WordscapesGame:
         else:  # This covers if they exited early (EXIT/E)
             return self.get_retry_option(nickname, "on_red", 'lost')
 
-
     def end_game(self, on_color):
-        '''
+        """
         Displays the end game results.
-        '''
-        info = ['-'*75,
-                '',
-        *self.get_wrapped_words(colored('WORDS', attrs=['bold']), self.words)]
+        """
 
-        if self.found_words:
-            info += self.get_wrapped_words(colored('FOUND WORDS', attrs=['bold']), self.found_words)
-        else:
-            info.append(f"{colored('FOUND WORDS', attrs=['bold'])}: None")
-            
-        info += ["",f"{colored('SCORE', attrs=['bold'])}: {self.points}", '', '-'*75]
+        border = '-'*75
+        info = [
+            border,
+            '',
+            f"🌟 {colored('SCORE:', attrs=['bold'])} {self.points}   🌱 {colored('LIVES:', attrs=['bold'])} {self.lives}   📝 {colored('LAST GUESS:', attrs=['bold'])} {self.last_guess}",
+            '',
+            border,
+            '',
+            *self.get_wrapped_words(colored('WORDS', attrs=['bold']), self.words),
+            '',
+            '='*75
+        ]
 
         display_body(info, "white", on_color)
-        
+
         if len(self.found_words) == len(self.words):
-            display_body([colored('Congratulations! You guessed all the words.', color="green", attrs=["bold"]), ''], "white", on_color)
+            message = colored('🎉 Congratulations! You guessed all the words. 🎉', 'green', attrs=['bold'])
         else:
-            display_body(['',colored('Game Over!', 'red', attrs=['bold']), ''], "white", on_color)
+            message = colored('💀 Game Over! 💀', 'red', attrs=['bold'])
+
+        display_body(['', message, ''], "white", on_color)
         display_border(on_color)
 
     
@@ -248,7 +252,10 @@ class WordscapesGame:
             f"💡 {colored('Hints – Free:', attrs=['bold'])} {self.free_hints}, Extra: {self.bought_hints}",
             f"📖 {colored('Words found:', attrs=['bold'])} {len(self.found_words)}/{len(self.words)}",
             f"📝 {colored('Last correct guess:', attrs=['bold'])} {self.last_guess}",
-            f"🎮 {colored('Commands:', attrs=['bold'])} [-shuffle|-s], [-hint|-h], [-exit|-e]",
+            f"🎮 {colored('Commands:', attrs=['bold'])} " \
+            f"[{colored('-shuffle', 'cyan', attrs=['bold'])}|{colored('-s', 'cyan', attrs=['bold'])}], " \
+            f"[{colored('-hint', 'blue', attrs=['bold'])}|{colored('-h', 'blue', attrs=['bold'])}], " \
+            f"[{colored('-exit', 'red', attrs=['bold'])}|{colored('-e', 'red', attrs=['bold'])}]",
             ""
         ]
         display_body(info, color, on_color)

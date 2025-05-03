@@ -9,17 +9,6 @@ game_engine.py
 
 ------------------------------------------------------------
 
-game_engine.py
-- colored sana yung hints, also since per letter yung calculation ng points
-kunware nag-exit sila tapos may hint na floating lang (like di natapos sagutan yung word)
-kasama dapat sa points yun right
-    ----------------------------------REPLY------------------------------------
-    - I don't think so? It was never guessed fully so dapat no points, no?
-    -Made the revealed thru hint letter BLUE
-
-
-------------------------------------------------------------
-
 menu_display.py
 
 Leaderboard Spacing error* ata not sure if intentional yon
@@ -27,35 +16,39 @@ Leaderboard Spacing error* ata not sure if intentional yon
 ------------------------------------------------------------
 
 grid_renderer.py
-
-Colored Diagonal sa grid for easy distinction
+- Colored Diagonal sa grid for easy distinction
 
 ------------------------------------------------------------
 
 game_master.py
-
-Cheatcodes?
+- Cheatcodes?
 
 ------------------------------------------------------------
 
 grid_renderer.py
 
 End of Game colored status for found words for easy distinction (kahit di na ung nasa grid, yung nasa info box below)
+    ----------------------------------FIXED------------------------------------
+    - oks na
 
 ------------------------------------------------------------
 
 game_master.py
-
-Difficulty levels based on no of words
+- Difficulty levels based on no of words
 
 ------------------------------------------------------------
 
 grid_renderer.py
-
-make # to colored box
+- make # to colored box
+    ----------------------------------REPLY------------------------------------
+        - NOPE
 
 ------------------------------------------------------------
 
 game_engine.py
+- change final state of grid, add final state of lives/last guessed word
+    ----------------------------------FIXED------------------------------------
+        - oks na PERO yung aligned by colon di pa so:
 
-change final state of grid, add final state of lives/last guessed word
+        game_engine.py
+        - align by colon (optional)

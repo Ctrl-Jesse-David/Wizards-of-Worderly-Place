@@ -82,7 +82,7 @@ def start_game_session(dictionary_file, nickname): # create
                 break
             elif retry_option.lower() == 'y':
                 continue
-            else: # dapat wala a to kasi caught na yang conditional sa WordscapesGame.play()
+            else:
                 mystical_loading('CLOSING THE PORTAL...', '' , "magenta", "on_magenta")
                 break
         else:

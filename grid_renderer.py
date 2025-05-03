@@ -19,16 +19,6 @@ class GameGrid:
             joined_grid.append('  '.join(row))
         display_body(joined_grid, color, on_color)
 
-    def display_complete_grid(self, nickname, color="white", on_color="on_white"):
-        clear_screen()
-        nickname = title_color_changer(nickname)
-        grid_top = display_top(f"🧙 {colored('Welcome to Wizards of Worderly Place!', attrs=['bold'])}, {nickname} 🧙")
-        grid_top.append("="*75)
-        display_border(on_color)
-        display_body(grid_top, color, on_color)
-        joined_grid = self.grid_color_changer(color)
-        display_body(joined_grid, color, on_color)
-
     def update_grid(self, word):
         if word in self.positions:
             for idx, (row, col) in enumerate(self.positions[word]):
