@@ -140,7 +140,8 @@ def purchase_hint(hint_id, cost):
     
     #Check if enough points
     if user["points"] < cost:
-        cprint(f"Not enough magic points! You have {user['points']} but the hint costs {cost}.", "red")
+        print('')
+        cprint(f"🚫 Not enough magic points! You have {user['points']} but the hint costs {cost}.", "red", attrs=["bold"])
         return False
     
     #Deduct cost and give hint
@@ -148,7 +149,8 @@ def purchase_hint(hint_id, cost):
     user["hints_purchased"].append(hint_id)
     user["hints_available"] += 1
     save_users(users)
-    cprint(f"✨ Hint purchased! You have {user['points']} magic points remaining.", "green")
+    print('')
+    cprint(f"✨ Hint purchased! You have {user['points']} magic points remaining.", "green", attrs=['bold'])
     return True
 
 def logout_user():
@@ -222,12 +224,15 @@ def display_shop():
         shop_lines.append("")
     
     shop_lines.extend([
-        '-'*75,
-        "",
-        colored("Enter item number to purchase | [e|exit] to exit", attrs=["bold"]),
-        ""
-    ])
-    
+    '-'*75,
+    "",
+    colored("Enter ", attrs=["bold"]) + colored("item number", "magenta") + \
+        colored(" to purchase | [", attrs=["bold"]) + colored("e", "red") + colored("|", attrs=["bold"]) + \
+            colored("exit", "red") + colored("] to exit", attrs=["bold"]),
+    ""
+])
+
+
     while True:
         clear_screen()
         shop_lines[5] = colored(f"💰 Your Magic Points 💰: {get_user_stats()['points']}", "white")
@@ -246,7 +251,7 @@ def display_shop():
             if 1 <= choice_num <= len(shop_items):
                 item = shop_items[choice_num - 1]
                 if purchase_hint(item["id"], item["cost"]):
-                    cprint(f"You purchased {item['name']}!", "green")
+                    cprint(f"You purchased {item['name']}!", "green", attrs=['bold'])
                     time.sleep(0.75)
                 else:
                     time.sleep(0.75)

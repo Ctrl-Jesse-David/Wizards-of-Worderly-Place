@@ -1,10 +1,16 @@
 {
     "DAVID": {
-        "points": 73,
+        "points": 13,
         "hints_purchased": [
-            "advanced_hint"
+            "advanced_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint"
         ],
-        "hints_available": 0,
+        "hints_available": 6,
         "highest_score": 73
     },
     "SDASD": {
@@ -405,6 +411,12 @@
         "highest_score": 0
     },
     "SADSAS": {
+        "points": 0,
+        "hints_purchased": [],
+        "hints_available": 0,
+        "highest_score": 0
+    },
+    "DSADSA": {
         "points": 0,
         "hints_purchased": [],
         "hints_available": 0,
