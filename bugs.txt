@@ -28,9 +28,6 @@ game_engine.py
 
         game_engine.py
         - align by colon (optional)
-
+ 
 
 ------------------------------------------------------------
-game_engine.py
-- if im not mistaken, kahit nahanap na or nareveal ung letters sa word, pag nag
-hint ka yun yung magpopop up
