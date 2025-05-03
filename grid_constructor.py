@@ -74,9 +74,8 @@ def place_word(word, grid):
     return False, None
 
 def generate_word_grid(dictionary_file, min, max):
-    main_word, valid_words = get_main_and_valid_words(dictionary_file)
-
     while True:
+        main_word, valid_words = get_main_and_valid_words(dictionary_file)
         grid = [[('.') for _ in range(25)] for _ in range(15)]
         placed_words = [(main_word.upper(), (2, 7), 'd')]
         non_placed_words = []
