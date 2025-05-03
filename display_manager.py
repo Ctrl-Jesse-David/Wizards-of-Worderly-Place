@@ -92,3 +92,24 @@ def welcome_display(message, nickname, on_color):
         print('\n' * 2 + (animated_line).center(77))
         time.sleep(0.08)
 
+def ask_game_difficulty(on_color="on_white"):
+    clear_screen()
+    options = [
+        '',
+        colored("💡 Select a difficulty based on your preferred word count. 💡", attrs=["bold"]),
+        '',
+        '='*75,
+        '',
+        f"{colored('🧙 [1] APPRENTICE', 'green', attrs=['bold'])} 20 - 25 words",
+        f"{colored('🔮 [2] MAGE', 'blue', attrs=['bold'])} 26 - 30 words",
+        f"{colored('🧝 [3] ARCHMAGE', 'magenta', attrs=['bold'])} 31+ words",
+        '',
+        '-'*75,
+        '',
+        colored("Choose your difficulty level by number:", attrs=['bold']),
+        '']
+    
+    display_border(on_color)
+    display_body(options, 'white', on_color)
+    display_border(on_color)
+    print('')

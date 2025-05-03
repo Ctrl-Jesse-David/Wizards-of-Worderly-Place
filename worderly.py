@@ -38,7 +38,7 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
     - E: Exit the application
     '''
 
-    # mystical_intro()
+    mystical_intro()
 
     nickname = get_player_nickname()
     login_user(nickname)
@@ -64,7 +64,7 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
 
         else:
             display_main_menu(text_bg='on_red')
-            cprint("Invalid Choice. Please try again!", 'red', attrs=["bold"])
+            cprint("🚫 Invalid Choice. Please try again!", 'red', attrs=["bold"])
             time.sleep(0.35)
             clear_screen()
 

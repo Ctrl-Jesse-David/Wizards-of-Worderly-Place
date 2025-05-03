@@ -1,13 +1,14 @@
 import random, copy, time
 from grid_constructor import generate_positions_dict, generate_word_grid
-from display_manager import clear_screen
+from display_manager import clear_screen, ask_game_difficulty
 from game_engine import WordscapesGame
 from termcolor import cprint, colored
 from user_progress import update_score
 from animations import mystical_loading
+from word_utils import get_player_input
 
-def get_game_level(dictionary_file):
-    grid_data, placed_words, non_placed_words = generate_word_grid(dictionary_file)
+def get_game_level(dictionary_file, min, max):
+    grid_data, placed_words, non_placed_words = generate_word_grid(dictionary_file, min, max)
     letters = list(placed_words[0][0])
     random.shuffle(letters)
 
@@ -59,17 +60,35 @@ def initialize_game(letters, incomplete_grid, positions, name, non_placed_words,
     return retry_option
 
 
-def start_game_session(dictionary_file, nickname): # create
+def start_game_session(dictionary_file, nickname):
     '''
     Manages a complete game session including nickname input,
     game initialization, and retry logic.
     '''
 
     clear_screen()
-    #Run games until user opts out
     while True:
-        # mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "green", "on_green")
-        letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file)
+        while True:
+            ask_game_difficulty()
+            difficulty = get_player_input().lower()
+            if difficulty not in ['1', '2', '3', 'mage', 'apprentice','archmage']:
+                ask_game_difficulty('on_red')
+                cprint("Invalid response!", "red", attrs=["bold"])
+                time.sleep(0.5)
+            else:
+                break
+        if difficulty in ['1', 'mage']:
+            min = 20
+            max = 25
+        elif difficulty in ['2', 'apprentice']:
+            min = 26
+            max = 30
+        else:
+            min = 31
+            max = float('inf')
+
+        mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "green", "on_green")
+        letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file, min, max)
         retry_option = initialize_game(
             letters, incomplete_grid, positions,
             nickname, non_placed_words, complete_grid

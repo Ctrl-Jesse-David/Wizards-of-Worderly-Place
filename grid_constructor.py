@@ -73,7 +73,7 @@ def place_word(word, grid):
 
     return False, None
 
-def generate_word_grid(dictionary_file):
+def generate_word_grid(dictionary_file, min, max):
     main_word, valid_words = get_main_and_valid_words(dictionary_file)
 
     while True:
@@ -89,7 +89,7 @@ def generate_word_grid(dictionary_file):
             else:
                 non_placed_words.append(word)
 
-        if len(placed_words) - 1 >= 20 and main_has_adjacent_letter(grid):
+        if min <= len(placed_words) <= max and main_has_adjacent_letter(grid):
             return color_dots_in_grid(grid), placed_words, non_placed_words
         else:
             continue

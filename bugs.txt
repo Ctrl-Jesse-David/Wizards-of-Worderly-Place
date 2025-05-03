@@ -12,6 +12,7 @@ game_engine.py
 menu_display.py
 
 Leaderboard Spacing error* ata not sure if intentional yon
+spacing error din sa game difficult
 
 ------------------------------------------------------------
 
@@ -24,7 +25,8 @@ grid_renderer.py
 
 game_master.py
 - Cheatcodes?
-
+    ---------------------------------FIXED------------------------------------
+    - oks na
 
 ------------------------------------------------------------
 
@@ -38,6 +40,8 @@ End of Game colored status for found words for easy distinction (kahit di na ung
 
 game_master.py
 - Difficulty levels based on no of words
+    ---------------------------------FIXED------------------------------------
+    - oks na
 
 ------------------------------------------------------------
 
@@ -51,7 +55,10 @@ grid_renderer.py
 game_engine.py
 - change final state of grid, add final state of lives/last guessed word
     ----------------------------------FIXED------------------------------------
-        - oks na PERO yung aligned by colon di pa so:
+        - oks na PERO yung aligned by colon di pa so [NEW BUG]:
 
         game_engine.py
         - align by colon (optional)
+
+
+------------------------------------------------------------

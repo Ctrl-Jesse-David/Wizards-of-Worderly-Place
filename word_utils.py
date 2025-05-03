@@ -18,7 +18,7 @@ def get_player_nickname():
     colorful_message = ' '.join(colored_chars)
     
     display_border('on_white')
-    display_body(['', colorful_message, ''], 'white', 'on_white') 
+    display_body(['', colorful_message, ''], 'white', 'on_white')
     display_border('on_white')
     
     nickname = input(colored("\n👉 Your username: ", "white", attrs=["bold"])).strip().upper()

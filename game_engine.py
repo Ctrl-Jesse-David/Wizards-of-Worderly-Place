@@ -14,7 +14,6 @@ This module implements the core game mechanics for Wizards of Worderly Place,
 including word validation, scoring, and game state management.
 '''
 
-# next time na ako mag-aadd ng termcolor edits katamad pa di naman required
 class WordscapesGame:
     '''
     Main game class that manages the Wordscapes puzzle game logic.
@@ -131,7 +130,7 @@ class WordscapesGame:
         self.grid.display_grid(nickname, "white", "on_magenta")
         self.cur_state("white", "on_magenta")
         cprint(
-            f"Hint used! ({source})  –  Free left: {self.free_hints}, Extra left: {self.bought_hints}",
+            f"Hint used! ({source})  -  Free left: {self.free_hints}, Extra left: {self.bought_hints}",
             "magenta", attrs=["bold"]
         )
         time.sleep(0.75)
@@ -169,7 +168,7 @@ class WordscapesGame:
 
             else:
                 print('')
-                cprint("Invalid response!", "red", attrs=["bold"])
+                cprint("🚫 Invalid response!", "red", attrs=["bold"])
                 time.sleep(0.5)
                 clear_screen()
 
@@ -269,10 +268,9 @@ class WordscapesGame:
             f"🔠 {colored('Available letters:', attrs=['bold'])} {'-'.join(self.letters)}",
             f"🌱 {colored('Lives:', attrs=['bold'])} {self.lives}",
             f"🌟 {colored('Score:', attrs=['bold'])} {self.points}",
-            f"💡 {colored('Hints – Free:', attrs=['bold'])} {self.free_hints}, Extra: {self.bought_hints}",
+            f"💡 {colored('Hints - Free:', attrs=['bold'])} {self.free_hints}, Extra: {self.bought_hints}",
             f"📖 {colored('Words found:', attrs=['bold'])} {len(self.found_words)}/{len(self.words)}",
             f"📝 {colored('Last correct guess:', attrs=['bold'])} {self.last_guess}",
-            f'{self.words}',
             f"🎮 {colored('Commands:', attrs=['bold'])} " \
             f"[{colored('-shuffle', 'cyan', attrs=['bold'])}|{colored('-s', 'cyan', attrs=['bold'])}], " \
             f"[{colored('-hint', 'magenta', attrs=['bold'])}|{colored('-h', 'magenta', attrs=['bold'])}], " \
@@ -352,7 +350,7 @@ class WordscapesGame:
             clear_screen()
             self.grid.display_grid(nickname, "white", "on_red")
             self.cur_state("white", "on_red")
-            cprint(f"Invalid word! Only {'-'.join(list(self.letters))} is allowed", "red", attrs=["bold"])
+            cprint(f"🚫  word! Only {'-'.join(list(self.letters))} is allowed", "red", attrs=["bold"])
             self.lives -= 1
             
 
