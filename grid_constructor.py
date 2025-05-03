@@ -128,10 +128,12 @@ def generate_positions_dict(placed_words):
 if __name__ == '__main__':
     grid, placed_words, non = generate_word_grid('corncob-lowercase.txt')
 
-    print("\nGrid:")
-    for row in grid:
-        print('  '.join(row))
+    print(placed_words)
 
-    print("\nPlaced Words (Total: {}):".format(len(placed_words)))
-    for word, coords, direction in placed_words:
-        print(word, coords, direction)
+    # print("\nGrid:")
+    # for row in grid:
+    #     print('  '.join(row))
+
+    # print("\nPlaced Words (Total: {}):".format(len(placed_words)))
+    # for word, coords, direction in placed_words:
+    #     print(word, coords, direction)

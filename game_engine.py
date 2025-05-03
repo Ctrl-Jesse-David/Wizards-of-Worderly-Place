@@ -124,15 +124,15 @@ class WordscapesGame:
         for word, poses in self.positions.items():
             if (row, col) in poses:
                 idx = poses.index((row, col))
-                self.grid.incomplete_grid[row][col] = colored(word[idx], "blue", attrs=["bold"])
+                self.grid.incomplete_grid[row][col] = colored(word[idx], "magenta", attrs=["bold"])
                 break
         
         clear_screen()
-        self.grid.display_grid(nickname, "white", "on_blue")
-        self.cur_state("white", "on_blue")
+        self.grid.display_grid(nickname, "white", "on_magenta")
+        self.cur_state("white", "on_magenta")
         cprint(
             f"Hint used! ({source})  –  Free left: {self.free_hints}, Extra left: {self.bought_hints}",
-            "blue", attrs=["bold"]
+            "magenta", attrs=["bold"]
         )
         time.sleep(0.75)
         return True
@@ -252,9 +252,10 @@ class WordscapesGame:
             f"💡 {colored('Hints – Free:', attrs=['bold'])} {self.free_hints}, Extra: {self.bought_hints}",
             f"📖 {colored('Words found:', attrs=['bold'])} {len(self.found_words)}/{len(self.words)}",
             f"📝 {colored('Last correct guess:', attrs=['bold'])} {self.last_guess}",
+            f'{self.words}',
             f"🎮 {colored('Commands:', attrs=['bold'])} " \
             f"[{colored('-shuffle', 'cyan', attrs=['bold'])}|{colored('-s', 'cyan', attrs=['bold'])}], " \
-            f"[{colored('-hint', 'blue', attrs=['bold'])}|{colored('-h', 'blue', attrs=['bold'])}], " \
+            f"[{colored('-hint', 'magenta', attrs=['bold'])}|{colored('-h', 'magenta', attrs=['bold'])}], " \
             f"[{colored('-exit', 'red', attrs=['bold'])}|{colored('-e', 'red', attrs=['bold'])}]",
             ""
         ]

@@ -52,10 +52,9 @@ def initialize_game(letters, incomplete_grid, positions, name, non_placed_words,
         copy.deepcopy(complete_grid),
         copy.deepcopy(name)
     )
-    #Play the game
+    
     retry_option = game.play(name)
 
-    #updates total and highest score
     update_score(game.points)
     return retry_option
 

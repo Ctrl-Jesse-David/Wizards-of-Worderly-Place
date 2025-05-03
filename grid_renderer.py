@@ -22,7 +22,10 @@ class GameGrid:
     def update_grid(self, word):
         if word in self.positions:
             for idx, (row, col) in enumerate(self.positions[word]):
-                self.incomplete_grid[row][col] = colored(word[idx], "green", attrs=["bold"])
+                if (self.positions[word] == [(2 + i*2, 7 + i*2) for i in range(6)]) or ((row, col) in [(2 + i*2, 7 + i*2) for i in range(6)]):
+                    self.incomplete_grid[row][col] = colored(word[idx], "blue", attrs=["bold"])
+                else:
+                    self.incomplete_grid[row][col] = colored(word[idx], "green", attrs=["bold"])
             return True
         return False
     
