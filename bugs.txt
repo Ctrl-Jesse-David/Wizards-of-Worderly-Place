@@ -1,10 +1,3 @@
-
-user_progress.py:
-- pag nag-input ng 1 or 2 invalid choice lumalabas
-    --FIXED--------
-
-------------------------------------------------------------
-
 test folder
 - wala pang pytest sa grid constructor
 
@@ -16,13 +9,6 @@ game_engine.py
 
 ------------------------------------------------------------
 
-game_engine.py 
-- scoring di gumagana
-    -Natanggal ata ung self.points += sa previous ng the_guess
-    ----FIXED----------
-
-------------------------------------------------------------
-
 game_engine.py
 - colored sana yung hints, also since per letter yung calculation ng points
 kunware nag-exit sila tapos may hint na floating lang (like di natapos sagutan yung word)
@@ -31,3 +17,45 @@ kasama dapat sa points yun right
     - I don't think so? It was never guessed fully so dapat no points, no?
     -Made the revealed thru hint letter BLUE
 
+
+------------------------------------------------------------
+
+menu_display.py
+
+Leaderboard Spacing error* ata not sure if intentional yon
+
+------------------------------------------------------------
+
+grid_renderer.py
+
+Colored Diagonal sa grid for easy distinction
+
+------------------------------------------------------------
+
+game_master.py
+
+Cheatcodes?
+
+------------------------------------------------------------
+
+grid_renderer.py
+
+End of Game colored status for found words for easy distinction (kahit di na ung nasa grid, yung nasa info box below)
+
+------------------------------------------------------------
+
+game_master.py
+
+Difficulty levels based on no of words
+
+------------------------------------------------------------
+
+grid_renderer.py
+
+make # to colored box
+
+------------------------------------------------------------
+
+game_engine.py
+
+change final state of grid, add final state of lives/last guessed word
