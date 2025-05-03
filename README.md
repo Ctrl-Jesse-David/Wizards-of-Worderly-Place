@@ -19,7 +19,7 @@ A magical word puzzle game where players uncover hidden words in a grid using av
        - Play the game!
        <img width="540" alt="Image" src="https://github.com/user-attachments/assets/b6211224-8ed7-46c1-aad8-43ba0c21bbaa" />
 
-1. **Game Controls**
+2. **Game Controls**
 
 <img width="522" alt="Image" src="https://github.com/user-attachments/assets/b01dbd10-8917-432e-9d46-5bebdd80acf0" />
 
