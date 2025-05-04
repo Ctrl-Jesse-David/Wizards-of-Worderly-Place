@@ -150,7 +150,7 @@ def purchase_hint(hint_id, cost):
     user["hints_available"] += 1
     save_users(users)
     print('')
-    cprint(f"✨ Hint purchased! You have {user['points']} magic points remaining.", "green", attrs=['bold'])
+    cprint(f"✨ Hint purchased! You have {user['points']} magic points remaining.", 'light_green', attrs=['bold'])
     return True
 
 def logout_user():
@@ -251,7 +251,7 @@ def display_shop():
             if 1 <= choice_num <= len(shop_items):
                 item = shop_items[choice_num - 1]
                 if purchase_hint(item["id"], item["cost"]):
-                    cprint(f"You purchased {item['name']}!", "green", attrs=['bold'])
+                    cprint(f"You purchased {item['name']}!", 'light_green', attrs=['bold'])
                     time.sleep(0.75)
                 else:
                     time.sleep(0.75)

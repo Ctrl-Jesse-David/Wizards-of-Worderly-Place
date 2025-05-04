@@ -25,7 +25,7 @@ class GameGrid:
                 if (self.positions[word] == [(2 + i*2, 7 + i*2) for i in range(6)]) or ((row, col) in [(2 + i*2, 7 + i*2) for i in range(6)]):
                     self.incomplete_grid[row][col] = colored(word[idx], 'light_blue', attrs=["bold"])
                 else:
-                    self.incomplete_grid[row][col] = colored(word[idx], "green", attrs=["bold"])
+                    self.incomplete_grid[row][col] = colored(word[idx], 'light_green', attrs=["bold"])
             return True
         return False
 

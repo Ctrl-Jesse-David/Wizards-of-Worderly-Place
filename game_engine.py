@@ -144,7 +144,7 @@ class WordscapesGame:
         if state == "lost":
             color = 'light_red'
         else:
-            color = 'green'
+            color = 'light_green'
         while True:
             self.grid.display_grid(nickname, color, on_color)
             self.end_game(on_color)
@@ -153,7 +153,7 @@ class WordscapesGame:
             cprint('🔄 Would you like to play again, exit, or view cheatsheet?', attrs=['bold'])
             print('')
             retry_option = input(
-                f"👉 [{colored('Y', 'green', attrs=['bold'])}] {colored('Play', 'green', attrs=['bold'])} / "
+                f"👉 [{colored('Y', 'light_green', attrs=['bold'])}] {colored('Play', 'light_green', attrs=['bold'])} / "
                 f"[{colored('N', 'red', attrs=['bold'])}] {colored('Exit', 'red', attrs=['bold'])} / "
                 f"[{colored('C', 'cyan', attrs=['bold'])}] {colored('Cheatsheet', 'cyan', attrs=['bold'])}: "
             ).lower().strip()
@@ -217,7 +217,7 @@ class WordscapesGame:
         if len(self.found_words) == len(self.words):
             update_leaderboard(self.name, self.points)
             user_progress.update_score(self.points)
-            return self.get_retry_option(nickname, "on_green", 'win')
+            return self.get_retry_option(nickname, 'on_light_green', 'win')
             
 
         elif self.lives <= 0:
@@ -251,7 +251,7 @@ class WordscapesGame:
 
         else:
             if len(self.found_words) == len(self.words):
-                message = colored('🎉 Congratulations! You guessed all the words. 🎉', 'green', attrs=['bold'])
+                message = colored('🎉 Congratulations! You guessed all the words. 🎉', 'light_green', attrs=['bold'])
             else:
                 message = colored('💀 Game Over! 💀', 'light_red', attrs=['bold'])
 
@@ -309,9 +309,9 @@ class WordscapesGame:
                     points_earned = self.calculate_points(guess, self.found_words - {guess})
                     self.points += points_earned
                     clear_screen()
-                    self.grid.display_grid(nickname, "white", "on_green")
-                    self.cur_state("white", "on_green")
-                    cprint('✅ Correct!', "green", attrs=["bold"])
+                    self.grid.display_grid(nickname, "white", 'on_light_green')
+                    self.cur_state("white", 'on_light_green')
+                    cprint('✅ Correct!', 'light_green', attrs=["bold"])
                     
 
 
