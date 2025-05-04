@@ -41,7 +41,7 @@ The scrolls await…will your name be etched among the legends?
        guiding your gaze toward the missing incantations still awaiting your chant.
      - 💨 '-exit' or '-e': Retreat from the spell chamber and end your trial as a wizard.
 
-   - Once the the genesis of all utterance, *The First Sigil*, revealed itself, do not forget to enchant its runes to complete your divine task as a spellcaster!
+   - Once the genesis of all utterance, *The First Sigil*, revealed itself, do not forget to chant its runes to complete your divine task as a spellcaster!
 
 ### **Spell Points**
 
