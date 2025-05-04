@@ -2,14 +2,10 @@ import os, random, re, time, subprocess, sys
 from termcolor import colored, cprint
 from termcolor import colored
 
-"""
-DISPLAY MANAGER
-
-----------------ADD LATER
-"""
-
-
 def display_top(main_text):
+    '''
+    Used for consistent vertical spacing in screen layouts.
+    '''
     return [
             "",
             main_text,
@@ -19,6 +15,11 @@ def display_top(main_text):
 ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])'
                          )
 def visible_length(text):
+    '''
+    Calculates the visual length of a string, excluding ANSI color codes
+    and accounting for emojis and wide Unicode characters that helps center 
+    content correctly in the terminal.
+    '''
     clean_text = ansi_escape.sub('', text)
     length = 0
     for char in clean_text:
@@ -31,6 +32,11 @@ def visible_length(text):
     return length
 
 def smart_center(text, width):
+    '''
+    Centers text based on visible length.
+    Adjusts padding for emojis, which may affect width rendering.
+    Ensures clean and aligned display for colored/emojified text.
+    '''
     vis_len = visible_length(text)
     total_padding = width - vis_len
     left_padding = total_padding // 2
@@ -51,9 +57,17 @@ def clear_screen():
         subprocess.run([clear_cmd])
 
 def display_border(background_color="on_white"):
+    '''
+    Displays a solid horizontal border bar using the specified background color.
+    Used for framing of content.
+    '''
     cprint(' ' * 77, on_color=background_color)
 
 def display_row(text, text_color="white", background_color="on_white"):
+    '''
+    Prints a single line of centered text, surrounded by a space on each side,
+    and enclosed with specified foreground and background colors.
+    '''
     cprint(' ', text_color, background_color, end='')
     print(smart_center(text, 75), end='')
     cprint(' ', text_color, background_color)
@@ -63,6 +77,10 @@ def display_body(lines, text_color="white", bg_color="on_white"):
         display_row(line, text_color, bg_color)
 
 def title_color_changer(text):
+    '''
+    Randomly assigns vibrant colors to each character in the input text.
+    Creates a lively, animated text appearance.
+    '''
     available_text_colors = [
         "red", "green", "yellow", "blue", "magenta", "cyan", "white",
         "light_red", "light_green", "light_yellow", "light_blue",
@@ -75,6 +93,10 @@ def title_color_changer(text):
 
 
 def display_header(title, color):
+    '''
+    Clears the screen and displays a bold, colored title between horizontal lines for 
+    major section headers.
+    '''
     clear_screen()
     print("="*75)
     cprint(title.center(75), color, attrs=["bold"])
@@ -82,11 +104,17 @@ def display_header(title, color):
 
 
 def color_dots_in_grid(grid):
+    '''
+    Re-colors all '.' characters in a given 2D grid to appear in 'dark_grey'.
+    '''
     return [[colored(char, 'dark_grey') if char == '.' else char for char in row]
         for row in grid]
 
 
 def welcome_display(message, nickname, on_color):
+    '''
+    Display a welcome animation for the player.
+    '''
     colorful_nick = title_color_changer(nickname)
     welcome = [
         '',
@@ -109,6 +137,13 @@ def welcome_display(message, nickname, on_color):
         time.sleep(0.08)
 
 def ask_game_difficulty(on_color="on_white"):
+    '''
+    Displays the difficulty selection menu:
+    - APPRENTICE: 21–25 words
+    - MAGE: 26–30 words
+    - ARCHMAGE: 31+ words
+    Users can select by number or press 'E' to exit.
+    '''
     clear_screen()
     max_visible_length = 17
 
@@ -135,10 +170,11 @@ def ask_game_difficulty(on_color="on_white"):
     print('')
 
 def format_difficulty(icon, label, tag, color, right_text, target_width):
+    '''
+    Format the difficulty selection page
+    '''
     raw_label = f"{icon} {tag} {label}"
     vis_len = visible_length(raw_label)
     padding = ' ' * (target_width - vis_len)
     colored_label = colored(raw_label + padding, color, attrs=['bold'])
     return f"{colored_label}: {right_text}"
-
-
