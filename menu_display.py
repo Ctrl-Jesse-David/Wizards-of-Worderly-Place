@@ -29,7 +29,7 @@ def display_main_menu(text_color="white", text_bg="on_white"):
     "📖  " + colored("[S]", 'light_cyan', attrs=["bold"]) + "  Start Game    📖",
     "📜  " + colored("[I]", 'light_green', attrs=["bold"]) + "  Instructions  📜",
     "🏆  " + colored("[L]", 'light_yellow', attrs=["bold"]) + "  Leaderboards  🏆",
-    "🧙  " + colored("[P]", "light_blue", attrs=["bold"]) + "  Wizard's Profile  🧙",
+    "🧙  " + colored("[P]", "light_blue", attrs=["bold"]) + "  Profile       🧙",
     "🛒  " + colored("[M]", "light_magenta", attrs=["bold"]) + "  Mystic Market 🛒",
     "🚪  " + colored("[E]", 'light_red', attrs=["bold"]) + "  Exit Game     🚪"
     ]
