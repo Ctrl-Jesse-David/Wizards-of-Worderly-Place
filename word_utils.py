@@ -2,6 +2,14 @@ import random
 from termcolor import colored
 from display_manager import display_body, display_border, clear_screen, ansi_escape
 
+'''
+Word Utilities
+- This module provides utility functions for user input, word validation, and word display formatting
+for use in the terminal-based word game. It also includes logic for validating word guesses not included
+in/more than the available letters, prompting and formatting player input with styled displays, and 
+printing lists of words in a visually formatted and width-constrained layout for terminal output.
+'''
+
 def is_valid(guess, letters):
     '''
     Checks whether a guessed word is valid based on available letters.
@@ -41,6 +49,9 @@ def get_player_input():
     return input(colored("👉 Your choice: ", "white", attrs=["bold"])).strip().upper()
 
 def get_wrapped_words(label, word_list, width=73):
+        """
+        Formats and wraps a list of words into multiple lines with a given width limit (73).
+        """
         words = sorted(word_list)
         prefix_visible_len = len(ansi_escape.sub('', f"{label}: "))
         prefix = f"{label}: "

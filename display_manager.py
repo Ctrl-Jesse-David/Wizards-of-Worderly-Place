@@ -2,9 +2,14 @@ import os, random, re, time
 from termcolor import colored, cprint
 from termcolor import colored
 
-
-
-
+'''
+Display Manager
+- This module provides reusable terminal formatting functions for the game. 
+It includes functions for screen layout, centered and colored text formatting 
+with grids and borders, decorative display animations, and user interface components 
+like welcome messages and difficulty selection menus. These functions help maintain 
+a consistent visual theme throughout the game's terminal interface.
+'''
 
 def display_top(main_text):
     '''

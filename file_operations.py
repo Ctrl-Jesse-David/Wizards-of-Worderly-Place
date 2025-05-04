@@ -2,6 +2,13 @@ import sys
 from random import choice
 from word_utils import is_valid
 
+'''
+File Operations
+- This module handles file-based operations for the game. It includes logic for 
+reading and selecting a random 6-letter word from a dictionary file, computing 
+valid sub-words based on the main word, and saving player scores to a leaderboard file.
+'''
+
 def get_main_and_valid_words(file_path):
     '''
     Selects a random 6-letter word as the main word and finds all valid sub-words.

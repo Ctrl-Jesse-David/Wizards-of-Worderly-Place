@@ -11,12 +11,12 @@ from grid_constructor import (
 )
 from word_utils import is_valid, get_wrapped_words
 
-""" 
-TEST WORDERLY 
-
-----------------------ADD LATER
-"""
-
+'''
+PYTEST worderly.py
+- This module includes comprehensive pytest test suite for the word game. It us used for testing 
+the core grid-building and game mechanics thoroughly, including word placement functions, intersection
+logic, helper functions logic, game mechanics, and edge cases (i.e. repeated guesses, lives running out, invalid word forms, etc.)
+'''
 
 # Test data
 TEST_GRID = [['.' for _ in range(25)] for _ in range(15)]

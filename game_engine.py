@@ -6,12 +6,12 @@ from user_progress import get_user_stats
 import user_progress, random, time
 from termcolor import colored, cprint
 
-"""
+'''
 Game Logic/Engine
-
-This module implements the core game mechanics for Wizards of Worderly Place,
-including word validation, scoring, and game state management.
-"""
+- This module implements the core game mechanics for Wizards of Worderly Place,
+including word validation, scoring, game state management, grid updates and visual
+feedback, endgame behavior, and retry options.
+'''
 
 class WordscapesGame:
     """

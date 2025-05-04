@@ -115,7 +115,7 @@ This project uses the pytest framework for unit testing located in test_wonderly
 
 ### **Adding Tests**
 
-   1. Create a new function in test_worderly.py using the test_ prefix.
+   1. Create a new function in 'test_worderly.py' using the 'test_' prefix.
    2. Use assert statements to verify expected outcomes.
-   3. Reuse or extend the create_game() function for consistent test setup if needed.
+   3. Reuse or extend the 'create_game()' function for consistent test setup if needed.
    3. Run pytest to confirm your test behaves as expected.

@@ -2,6 +2,13 @@ import random
 from file_operations import get_main_and_valid_words
 from display_manager import color_dots_in_grid
 
+'''
+Grid Constructor
+- This module is responsible for constructing the word grid used in the game. It includes logic 
+for placing the main diagonal word, finding valid intersections, validating placements, and 
+populating the grid with as many valid words as possible based on a given word list.
+'''
+
 def place_main_diagonal(word, grid):
     '''
     Places the main 6-letter word diagonally on the grid from top-left to bottom-right.

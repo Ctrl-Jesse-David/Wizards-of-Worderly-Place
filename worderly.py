@@ -7,11 +7,14 @@ from animations import mystical_intro, mystical_loading
 from user_progress import display_shop, display_user_profile, login_user
 from word_utils import get_player_nickname, get_player_input
 
-"""
-WORDERLY
-
---------------------ADD LATER
-"""
+'''
+Main Code
+- This module provides the main entry point for the game application. This module also handles command-line 
+argument processing and initiates the game flow. Additionally, it controls the high-level structure of the 
+user experience, including the initial login prompt, main menu navigation, and transition to various game 
+features such as playing a game session, viewing instructions, checking the leaderboard, visiting the shop, 
+and viewing the user profile.
+'''
 
 def main():
     '''
