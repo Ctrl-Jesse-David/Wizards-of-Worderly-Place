@@ -80,6 +80,7 @@ def display_instructions():
     colored("🔮 Power-ups & Hints:", "light_red", attrs=["bold"]),
     "  ✨ Shuffle - Rearranges the given letters.",
     "  🔍 Hint - Reveals one letter in a hidden word.",
+    "  💥 Flash - Flashes all unrevealed letters red.",
     "  🔵 Extra Life - Given if you find a valid word not in the grid.",
     "-" * 75,
     " ",
