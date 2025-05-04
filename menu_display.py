@@ -26,12 +26,12 @@ def display_main_menu(text_color="white", text_bg="on_white"):
     ]
 
     menu_options = [
-    "📖  " + colored("[S]", 'cyan', attrs=["bold"]) + "  Start Game   📖",
-    "📜  " + colored("[I]", 'green', attrs=["bold"]) + "  Instructions 📜",
-    "🏆  " + colored("[L]", "yellow", attrs=["bold"]) + "  Leaderboards 🏆",
-    "🧙  " + colored("[P]", "light_blue", attrs=["bold"]) + "  Profile      🧙",
-    "🛒  " + colored("[M]", "magenta", attrs=["bold"]) + "  Magic Shop   🛒",
-    "🚪  " + colored("[E]", 'red', attrs=["bold"]) + "  Exit Game    🚪"
+    "📖  " + colored("[S]", 'cyan', attrs=["bold"]) + "  Start Game    📖",
+    "📜  " + colored("[I]", 'green', attrs=["bold"]) + "  Instructions  📜",
+    "🏆  " + colored("[L]", "yellow", attrs=["bold"]) + "  Leaderboards  🏆",
+    "🧙  " + colored("[P]", "light_blue", attrs=["bold"]) + "  Soul Crystal  🧙",
+    "🛒  " + colored("[M]", "magenta", attrs=["bold"]) + "  Mystic Market 🛒",
+    "🚪  " + colored("[E]", 'red', attrs=["bold"]) + "  Exit Game     🚪"
     ]
 
     footer = [
@@ -104,7 +104,7 @@ def display_leaderboard():
         
         leaderboard_lines = [
             " ",
-            colored("🏆 LEADERBOARD 🏆", attrs=["bold"]),
+            colored("🏆 THE CELESTIAL SCROLL OF CHAMPIONS 🏆", attrs=["bold"]),
             " ",
             colored('═'*75, "yellow"),
             " "  # Empty line before scores
