@@ -17,7 +17,8 @@ The scrolls await…will your name be etched among the legends?
    <img width="546" alt="Name" src="https://github.com/user-attachments/assets/46ab8c18-9a7e-47bb-af9e-e5d965d75d13" />
 
    3. Next, consult the ancient runes (your keyboard) and choose an action by invoking the letter nestled within brackets. To unlock the Game, invoke the letter 'S'.
-   <img width="546" alt="Menu" src="https://github.com/user-attachments/assets/cf6168f3-77c1-4db5-9081-487ad9d8c014" />
+   <img width="543" alt="Menu" src="https://github.com/user-attachments/assets/53323a9e-a5e7-431c-9fb9-42888d110c06" />
+
 
    4. Select your preffered level of mastery (based on preferred word count in the grid).
    <img width="546" alt="Level" src="https://github.com/user-attachments/assets/0f010fae-eaf9-4548-b94a-0380298d1971" />
