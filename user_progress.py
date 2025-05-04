@@ -3,6 +3,15 @@ from termcolor import cprint, colored
 from display_manager import display_body, display_border, clear_screen, welcome_display
 from word_utils import get_player_input
 
+'''
+User Progress
+- This module handles user profile management by interfacing with a JSON file 
+(`user_progress.json`) to persist user data across sessions. It also handles
+login/logout, stat tracking, hint purchases, and score updates for the game. 
+Additionally, it supports user authentication by nickname, magic point tracking, 
+hint limitations, and personal best score recording.
+'''
+
 current_user = None
 
 MAX_PURCHASED_HINTS = 10
