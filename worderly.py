@@ -1,4 +1,4 @@
-import sys, os, time
+import sys, os, time, argparse
 from termcolor import cprint
 from display_manager import clear_screen
 from game_master import start_game_session
@@ -7,29 +7,35 @@ from animations import mystical_intro, mystical_loading
 from user_progress import display_shop, display_user_profile, login_user
 from word_utils import get_player_nickname, get_player_input
 
+
 def main():
     '''
     Entry point of the Wizards of Worderly Place game.
-    
-    This function handles command-line arguments and initializes the game:
-    - If no arguments are provided, starts the game with default dictionary
-    - If one argument is provided, validates it as a dictionary file
-    - Raises errors for invalid arguments or non-existent files
-    '''
-    
-    if len(sys.argv) >= 3:
-        raise IndexError('Provide only one filename.')
-    
-    elif len(sys.argv) == 2:
-        filename = sys.argv[1]
 
-        if not os.path.isfile(filename):
-            raise FileNotFoundError('File does not exist.')
+    Uses argparse to handle command-line arguments:
+    - If a dictionary file is provided, uses it after validating existence
+    - If no file is provided, defaults to the built-in dictionary (corncob-lowercase.txt)
+    '''
+
+    parser = argparse.ArgumentParser(
         
-        else:
-            main_game_loop(filename)
+        description="Wizards of Worderly Place: A word puzzle game."
+    )
+    parser.add_argument(
+        'dictionary_file',
+        nargs='?',
+        help='Optional path to a custom dictionary file.'
+    )
+
+    args = parser.parse_args()
+
+    if args.dictionary_file:
+        if not os.path.isfile(args.dictionary_file):
+            raise FileNotFoundError(f"File '{args.dictionary_file}' does not exist.")
+        main_game_loop(args.dictionary_file)
     else:
         main_game_loop()
+
 
 def main_game_loop(dictionary_file='corncob-lowercase.txt'):
     '''

@@ -1,6 +1,6 @@
 import random
 from file_operations import get_main_and_valid_words
-from termcolor import colored
+from display_manager import color_dots_in_grid
 
 def place_main_diagonal(word, grid):
     for i, letter in enumerate(word.upper()):
@@ -92,17 +92,14 @@ def generate_word_grid(dictionary_file, min, max):
             return color_dots_in_grid(grid), placed_words, non_placed_words
         else:
             continue
-
-def color_dots_in_grid(grid):
-    return [[colored(char, 'dark_grey') if char == '.' else char for char in row]
-        for row in grid]
         
 def main_has_adjacent_letter(grid):
     coords = [(2 + i*2, 7 + i*2) for i in range(6)]
     for r, c in coords:
-        if any(grid[dr + r][dc + c] != '.' for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)]):
-            return True
-    return False
+        has_adjacent = any(grid[r + dr][c + dc] != '.' for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)])
+        if not has_adjacent:
+            return False
+    return True
 
 
 def generate_positions_dict(placed_words):
@@ -120,7 +117,7 @@ def generate_positions_dict(placed_words):
 
 
 if __name__ == '__main__':
-    grid, placed_words, non = generate_word_grid('corncob-lowercase.txt')
+    grid, placed_words, non = generate_word_grid('corncob-lowercase.txt', 21, 25)
 
 
     print("\nGrid:")
