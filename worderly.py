@@ -87,6 +87,7 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
         else:
             display_main_menu(text_bg='on_light_red')
             cprint("🚫 Invalid Choice. Please try again!", 'light_red', attrs=["bold"])
+            print('')
             time.sleep(0.35)
             clear_screen()
 

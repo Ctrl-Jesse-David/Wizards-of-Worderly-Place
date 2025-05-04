@@ -172,7 +172,6 @@ class WordscapesGame:
                 continue
 
             else:
-                print('')
                 cprint("🚫 Invalid response!", "light_red", attrs=["bold"])
                 time.sleep(0.5)
                 clear_screen()
@@ -206,8 +205,6 @@ class WordscapesGame:
                 continue
             
             elif guess in ['-EXIT', '-E', 'E']: 
-                update_leaderboard(self.name, self.points)
-                user_progress.update_score(self.points)
                 return self.get_retry_option(nickname, "on_light_red", 'lost')
 
             self.the_guess(guess, nickname)
@@ -215,8 +212,6 @@ class WordscapesGame:
         clear_screen()
 
         if len(self.found_words) == len(self.words):
-            update_leaderboard(self.name, self.points)
-            user_progress.update_score(self.points)
             return self.get_retry_option(nickname, 'on_light_green', 'win')
             
 

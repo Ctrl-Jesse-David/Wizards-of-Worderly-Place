@@ -6,6 +6,7 @@ from termcolor import cprint, colored
 from user_progress import update_score
 from animations import mystical_loading
 from word_utils import get_player_input
+from file_operations import update_leaderboard
 
 """
 GAME MASTER
@@ -64,6 +65,7 @@ def initialize_game(letters, incomplete_grid, positions, name, non_placed_words,
     retry_option = game.play(name)
 
     update_score(game.points)
+    update_leaderboard(game.name, game.points)
     return retry_option
 
 

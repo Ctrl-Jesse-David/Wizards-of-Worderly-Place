@@ -3,13 +3,6 @@ from termcolor import cprint, colored
 from display_manager import display_body, display_border, clear_screen, welcome_display
 from word_utils import get_player_input
 
-"""
-USER PROGRESS
-
--------------------ADD LATER
-"""
-
-
 current_user = None
 
 MAX_PURCHASED_HINTS = 10
@@ -36,8 +29,8 @@ def login_user(nickname):
     """
     global current_user
     users = load_users()
-    
-    #lagyan ng better 
+
+    # lagyan ng better 
     if nickname not in users:
         users[nickname] = {
             "points": 0,
@@ -56,9 +49,6 @@ def login_user(nickname):
 
 
 def get_user_stats():
-    """
-    Returns the current user's progress
-    """
     global current_user
     if not current_user:
         return None
@@ -74,10 +64,9 @@ def get_user_stats():
         "highest_score": user_data.get("highest_score", 0)
     }
 
-
 def update_score(session_score):
     """
-    Add session score to total points and update highest_score if the new total exceeds the previous high.
+    Add session score to total points and update highest_score if this session was the user's best game.
     """
     global current_user
     if not current_user:
@@ -86,48 +75,16 @@ def update_score(session_score):
     users = load_users()
     user = users[current_user]
     
-    #Update total magic points
-    total = user.get('points', 0) + session_score
-    user['points'] = total
+    # Update total magic points
+    user['points'] = user.get('points', 0) + session_score
 
-    #Update highest score to reflect peak total points
-    if total > user.get('highest_score', 0):
-        user['highest_score'] = total
-        update_leaderboard(current_user, total)
+    # Update highest_score if this session is their best
+    if session_score > user.get('highest_score', 0):
+        user['highest_score'] = session_score
 
     save_users(users)
     return True
 
-
-def update_leaderboard(nickname, score):
-    """
-    Updates the leaderboard scores
-    """
-    scores = []
-    
-    try:
-        with open("leaderboard.txt", "r") as file:
-            scores = [line.strip().split(": ") for line in file]
-    except FileNotFoundError:
-        pass
-    
-    #Check if user already exists in leaderboard
-    user_exists = False
-    for i, (name, old_score) in enumerate(scores):
-        if name == nickname:
-            user_exists = True
-            if int(score) > int(old_score):
-                scores[i][1] = str(score)
-            break
-    
-    #Add new user if not found
-    if not user_exists:
-        scores.append([nickname, str(score)])
-    
-    #Write updated scores
-    with open("leaderboard.txt", "w") as file:
-        for name, sc in scores:
-            file.write(f"{name}: {sc}\n")
 
 
 def purchase_hint(hint_id, cost):
@@ -173,15 +130,6 @@ def logout_user():
     return False
 
 def display_user_profile():
-    """
-    Displays one of the main options in the main menu [P]
-    
-    Shows the user's current stats:
-        - Magic Points
-        - Available Hints
-        - Personal Highest Score
-    """
-    
     global current_user
     
     if not current_user:
@@ -215,12 +163,6 @@ def display_user_profile():
 
 
 def display_shop():
-    """
-    Displays one of the main options in the main menu [M]
-    
-    Shows the Magic Shop:
-        - Purchaseable hint for 10 Magic Points
-    """
     global current_user
     
     if not current_user:
@@ -264,9 +206,9 @@ def display_shop():
         clear_screen()
         shop_lines[5] = colored(f"💰 Your Magic Points 💰: {get_user_stats()['points']}", "white")
         
-        display_border("on_light_magenta")
-        display_body(shop_lines, "white", "on_light_magenta")
-        display_border("on_light_magenta")
+        display_border("on_magenta")
+        display_body(shop_lines, "white", "on_magenta")
+        display_border("on_magenta")
         print('')
         
         choice = get_player_input()
@@ -297,7 +239,8 @@ def display_shop():
 
 def use_hint():
     """
-    Use one of the purchased hints of the user
+    Use one of the purchased hints.
+    Returns True if a hint was successfully used, False otherwise.
     """
     global current_user
     if not current_user:

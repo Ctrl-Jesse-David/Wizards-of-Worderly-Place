@@ -476,5 +476,34 @@
         "hints_purchased": [],
         "hints_available": 0,
         "highest_score": 264
+    },
+    "NEWNEW": {
+        "points": 352,
+        "hints_purchased": [],
+        "hints_available": 0,
+        "highest_score": 352
+    },
+    "PLEYUH": {
+        "points": 88,
+        "hints_purchased": [],
+        "hints_available": 0,
+        "highest_score": 88
+    },
+    "NEWPLAYER": {
+        "points": 13,
+        "hints_purchased": [],
+        "hints_available": 0,
+        "highest_score": 13
+    },
+    "NEWULIT": {
+        "points": 7,
+        "hints_purchased": [
+            "basic_hint",
+            "basic_hint",
+            "basic_hint",
+            "basic_hint"
+        ],
+        "hints_available": 4,
+        "highest_score": 47
     }
 }
