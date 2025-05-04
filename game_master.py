@@ -8,14 +8,17 @@ from animations import mystical_loading
 from word_utils import get_player_input
 from file_operations import update_leaderboard
 
-"""
-GAME MASTER
-
-----------------------------ADD LATER
-"""
-
+'''
+Game Master
+- This module manages the high-level flow of the game session. It handles game setup 
+based on player-selected difficulty, initializes a new game instance, and manages 
+retry or exit behavior following each round.
+'''
 
 def get_game_level(dictionary_file, min, max):
+    '''
+    Generates a new game level with a randomized letter set and word grid.
+    '''
     grid_data, placed_words, non_placed_words = generate_word_grid(dictionary_file, min, max)
     letters = list(placed_words[0][0])
     random.shuffle(letters)
