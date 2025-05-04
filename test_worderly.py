@@ -204,7 +204,12 @@ def test_place_word():
     assert grid[5][7] == 'A'
     assert grid[5][8] == 'R'
     assert grid[5][9] == 'E'
+    assert grid[5][10] == '.'
 
+    #False assertion (deliberately incorrect)
+    assert not grid[5][9] == 'X' #False assertion if not placed correctly
+    assert not grid[5][9] == 1 #False assertion if a number was placed
+    assert not grid[5][9] == '.' #False assertion if it's still a dot
 
 def test_generate_positions_dict():
     """
@@ -226,6 +231,10 @@ def test_generate_positions_dict():
     
     #Check horizontal word positions
     assert positions["TAKE"] == [(6, 9), (6, 10), (6, 11), (6, 12)]
+
+    #Deliberately incorrect position
+    assert not(positions["STARE"] == [(4, 9), (4, 10), (4, 11), (4, 12), (4, 13)])
+
 
 def test_is_valid():
     """
@@ -283,6 +292,10 @@ def test_calculate_points():
     
     #TAKE positions: [(6, 9), (6, 10), (6, 11), (6, 12)]
     assert points == 2  #Only 2 positions not overlapping with STREAK or STARE
+
+    assert not points == 3 #False assertion (1)
+    assert not points == '-' #False assertion (2) -> fails if points is a symbol
+    assert not points == 'a'  # False assertion (3) –> fails if points is alphabetic
 
 def test_invalid_word_with_valid_letters():
     """
@@ -370,11 +383,19 @@ def test_generate_word_grid():
     #Check grid dimensions
     assert len(grid) == 15
     assert len(grid[0]) == 25
+
+    #False assertiom
+    assert not len(grid) == 16 #wrong coords
+    assert not len(grid[0]) == 26 #wrong coords
     
     #Check that some words are placed
-    assert len(placed_words) >= 21  # Min parameter
-    assert len(placed_words) <= 25  # Max parameter
+    assert len(placed_words) >= 21  #Min parameter
+    assert len(placed_words) <= 25  #Max parameter
     
+    #False assertion
+    assert not len(placed_words) <= 21  #Wrong min parameter
+    assert not len(placed_words) >= 25  #Wrong max parameter
+
     #Validate that placed_words format is correct (word, (row, col), direction)
     for word_info in placed_words:
         assert len(word_info) == 3
@@ -384,6 +405,10 @@ def test_generate_word_grid():
     
     #Check that main word (first in list) is placed in diagonal
     assert placed_words[0][2] == 'd'
+
+    #False assertion (shows that it is not h or v)
+    assert not placed_words[0][2] == 'h' 
+    assert not placed_words[0][2] == 'v'
     
 def test_main_has_adjacent_letter():
     """
@@ -398,7 +423,7 @@ def test_main_has_adjacent_letter():
     
     #No adjacent letters 
     assert main_has_adjacent_letter(grid) == False
-    
+
     #Add adjacent letters to all diagonal positions
     for i in range(len(word)):
         r, c = 2 + i*2, 7 + i*2
