@@ -2,6 +2,12 @@ import random
 from file_operations import get_main_and_valid_words
 from termcolor import colored
 
+"""
+GRID CONSTRUCTOR
+
+-------------------ADD LATER
+"""
+
 def place_main_diagonal(word, grid):
     for i, letter in enumerate(word.upper()):
         grid[2 + i*2][7 + i*2] = letter

@@ -4,7 +4,7 @@ from animations import mystical_intro
 from word_utils import get_player_input
 
 '''
-Options
+Menu Display
 
 This module handles the game's menu options and player interactions for Wizards of Worderly Place.
 It manages game sessions, displays instructions, and maintains the leaderboard system.

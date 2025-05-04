@@ -2,6 +2,13 @@ import random, time, threading
 from termcolor import colored, cprint
 from display_manager import display_body, display_border, clear_screen, title_color_changer
 
+"""
+ANIMATIONS
+
+----------------------__ADD LATER
+"""
+
+
 def mystical_intro():
     from display_manager import display_body, display_border, clear_screen, title_color_changer
     width = 75

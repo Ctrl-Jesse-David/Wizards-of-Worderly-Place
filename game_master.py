@@ -7,6 +7,13 @@ from user_progress import update_score
 from animations import mystical_loading
 from word_utils import get_player_input
 
+"""
+GAME MASTER
+
+----------------------------ADD LATER
+"""
+
+
 def get_game_level(dictionary_file, min, max):
     grid_data, placed_words, non_placed_words = generate_word_grid(dictionary_file, min, max)
     letters = list(placed_words[0][0])

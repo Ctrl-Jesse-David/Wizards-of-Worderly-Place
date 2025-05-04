@@ -3,6 +3,13 @@ from termcolor import cprint, colored
 from display_manager import display_body, display_border, clear_screen, welcome_display
 from word_utils import get_player_input
 
+"""
+USER PROGRESS
+
+-------------------ADD LATER
+"""
+
+
 current_user = None
 
 MAX_PURCHASED_HINTS = 10
@@ -30,8 +37,7 @@ def login_user(nickname):
     global current_user
     users = load_users()
     
-
-    # lagyan ng better 
+    #lagyan ng better 
     if nickname not in users:
         users[nickname] = {
             "points": 0,
@@ -50,6 +56,9 @@ def login_user(nickname):
 
 
 def get_user_stats():
+    """
+    Returns the current user's progress
+    """
     global current_user
     if not current_user:
         return None
@@ -91,6 +100,9 @@ def update_score(session_score):
 
 
 def update_leaderboard(nickname, score):
+    """
+    Updates the leaderboard scores
+    """
     scores = []
     
     try:
@@ -161,6 +173,15 @@ def logout_user():
     return False
 
 def display_user_profile():
+    """
+    Displays one of the main options in the main menu [P]
+    
+    Shows the user's current stats:
+        - Magic Points
+        - Available Hints
+        - Personal Highest Score
+    """
+    
     global current_user
     
     if not current_user:
@@ -194,6 +215,12 @@ def display_user_profile():
 
 
 def display_shop():
+    """
+    Displays one of the main options in the main menu [M]
+    
+    Shows the Magic Shop:
+        - Purchaseable hint for 10 Magic Points
+    """
     global current_user
     
     if not current_user:
@@ -270,8 +297,7 @@ def display_shop():
 
 def use_hint():
     """
-    Use one of the purchased hints.
-    Returns True if a hint was successfully used, False otherwise.
+    Use one of the purchased hints of the user
     """
     global current_user
     if not current_user:

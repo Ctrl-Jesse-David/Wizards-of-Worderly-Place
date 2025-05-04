@@ -7,6 +7,12 @@ from animations import mystical_intro, mystical_loading
 from user_progress import display_shop, display_user_profile, login_user
 from word_utils import get_player_nickname, get_player_input
 
+"""
+WORDERLY
+
+--------------------ADD LATER
+"""
+
 def main():
     '''
     Entry point of the Wizards of Worderly Place game.

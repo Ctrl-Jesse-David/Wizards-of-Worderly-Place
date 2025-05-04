@@ -6,23 +6,23 @@ from user_progress import get_user_stats
 import user_progress, random, time
 from termcolor import colored, cprint
 
-'''
-Game Logic
+"""
+Game Logic/Engine
 
 This module implements the core game mechanics for Wizards of Worderly Place,
 including word validation, scoring, and game state management.
-'''
+"""
 
 class WordscapesGame:
-    '''
+    """
     Main game class that manages the Wordscapes puzzle game logic.
     
     This class handles all game mechanics including letter management,
     word guessing, scoring, grid updates, and game state tracking.
-    '''
+    """
 
     def __init__(self, letters, incomplete_grid, positions, non_placed_words, complete_grid, name):
-        '''
+        """
         Initialize a new WordscapesGame instance.
         
         ==========
@@ -34,7 +34,7 @@ class WordscapesGame:
             2D grid representation of the puzzle
         positions : dict
             Dictionary mapping words to their grid positions
-        '''
+        """
 
         self.letters = letters
         self.words = set(positions.keys())
@@ -63,7 +63,7 @@ class WordscapesGame:
         time.sleep(0.35)
     
     def calculate_points(self, guess, found_words):
-        '''
+        """
         Calculates points earned for a correct guess.
         
         Points are awarded based on the number of new grid cells (letters)
@@ -77,16 +77,16 @@ class WordscapesGame:
             The correctly guessed word
         found_words: set
             Set of words already found by the player
-        '''
+        """
 
         return len(set(self.positions[guess]) - \
             set(coordinate for word in found_words 
                 for coordinate in self.positions[word]))
 
     def get_hint(self, nickname):
-        '''
+        """
         Reveals a random unrevealed letter, using free hints first then purchased.
-        '''
+        """
         #Determine source
         if self.free_hints > 0:
             self.free_hints -= 1
@@ -178,7 +178,7 @@ class WordscapesGame:
                 clear_screen()
 
     def play(self, nickname):
-        '''
+        """
         Main game loop that manages the gameplay flow.
         
         Continues until all words are found, lives run out,
@@ -189,7 +189,7 @@ class WordscapesGame:
         ==========
         nickname: str
             Player's nickname for display purposes
-        '''
+        """
 
         while self.found_words != self.words and self.lives > 0:
             self.grid.display_grid(nickname)
@@ -260,12 +260,12 @@ class WordscapesGame:
 
     
     def cur_state(self, color="white", on_color="on_white"):
-        '''
+        """
         Displays the current game state information.
         
         Shows available letters, remaining lives, current score,
         words found, last correct guess, and available commands to the player.
-        '''
+        """
         info = [
             '='*75,
             "",
@@ -286,7 +286,7 @@ class WordscapesGame:
         print("")
 
     def the_guess(self, guess, nickname):
-        '''
+        """
         Processes a player's word guess.
         
         Validates the guess, updates game state based on correctness,
@@ -297,7 +297,7 @@ class WordscapesGame:
         ==========
         guess: str
             The player's word guess
-        '''
+        """
 
         if is_valid(guess, ''.join(self.letters)):
             if guess not in self.found_words and guess not in self.found_non_placed_words:
