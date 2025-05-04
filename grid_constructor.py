@@ -2,6 +2,13 @@ import random
 from file_operations import get_main_and_valid_words
 from display_manager import color_dots_in_grid
 
+"""
+ GRID CONSTRUCTOR
+ 
+ -------------------ADD LATER
+"""
+
+
 def place_main_diagonal(word, grid):
     '''
     Places the main 6-letter word diagonally on the grid from top-left to bottom-right.

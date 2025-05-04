@@ -1,6 +1,14 @@
 from display_manager import title_color_changer, clear_screen, display_border, display_body, display_top
 from termcolor import colored
 
+
+"""
+ GRID RENDERER
+ 
+ ADD LATER-------------
+ """
+ 
+
 class GameGrid:
     '''
     Manages the game grid:

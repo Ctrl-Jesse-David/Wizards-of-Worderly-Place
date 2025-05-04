@@ -2,6 +2,13 @@ import random, time, threading
 from termcolor import colored, cprint
 from display_manager import display_body, display_border, clear_screen, title_color_changer
 
+"""
+ ANIMATIONS
+ 
+ ----------------------__ADD LATER
+ """
+
+
 def mystical_intro():
     """
     Displays an animated introduction screen in the terminal with 
