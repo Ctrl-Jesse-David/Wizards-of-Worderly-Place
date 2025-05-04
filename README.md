@@ -2,7 +2,7 @@
 
 Step into a realm where language is magic and every letter holds power!
 
-In this enchanted word puzzle adventure, spellcasters unravel hidden words woven into a mystical grid using the sacred letters of a six-rune incantation. Summon your vocabulary, wield your wits, and rise through the ranks of arcane linguists.
+In this enchanted word puzzle adventure, spellcasters unravel hidden words woven into a mystical grid using the sacred letters of *The First Sigil*, a six-rune incantation. Summon your vocabulary, wield your wits, and rise through the ranks of arcane linguists.
 
 The scrolls await…will your name be etched among the legends?
 
@@ -31,7 +31,7 @@ The scrolls await…will your name be etched among the legends?
 <img width="523" alt="Controls" src="https://github.com/user-attachments/assets/d59d0d14-be46-471c-bfc9-b793c739234e" />
 
 
-   - As a spellcaster, you are tasked with uncovering the enchanted words hidden within the ruins using the letters summoned from a powerful six-letter word that lies diagonally across the grid like a secret rune.
+   - As a spellcaster, you are tasked with uncovering the enchanted words hidden within the ruins using the letters summoned from *The First Sigil*, a powerful six-letter word that lies diagonally across the grid like a secret rune.
 
    - Spells:
 
@@ -40,6 +40,8 @@ The scrolls await…will your name be etched among the legends?
      - 💥 '-flash' or '-f': Cast this spell in dire times to enchant all unanswered runes pulse with crimson light,
        guiding your gaze toward the missing incantations still awaiting your chant.
      - 💨 '-exit' or '-e': Retreat from the spell chamber and end your trial as a wizard.
+
+   - Once the the genesis of all utterance, *The First Sigil*, revealed itself, do not forget to enchant its runes to complete your divine task as a spellcaster!
 
 ### **Spell Points**
 
