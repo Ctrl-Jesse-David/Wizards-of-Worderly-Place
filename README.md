@@ -23,7 +23,8 @@ The scrolls await…will your name be etched among the legends?
    <img width="546" alt="Level" src="https://github.com/user-attachments/assets/0f010fae-eaf9-4548-b94a-0380298d1971" />
 
    5. Embrace your inner wizard and start summoning spells as your trial begins!
-   <img width="546" alt="Game" src="https://github.com/user-attachments/assets/7920123b-696a-45c2-b43a-8d0321018d51" />
+   <img width="544" alt="Start" src="https://github.com/user-attachments/assets/ae071cf0-89bc-4432-a5c4-7396366ea056" />
+
 
 ### **Spellcasting**
 
