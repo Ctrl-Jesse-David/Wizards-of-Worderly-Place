@@ -18,7 +18,7 @@ def mystical_intro():
 
     frames = 30
     available_text_colors = [
-        "red", "green", "yellow", "blue", "magenta", "cyan", "white",
+        "red", "green", 'light_yellow', "blue", "magenta", "cyan", "white",
         "light_red", "light_green", "light_yellow", "light_blue",
         "light_magenta", "light_cyan"
     ]
@@ -86,7 +86,7 @@ def mystical_loading(message, final_message, color, bg_color):
     height = 7
     bg_charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     available_text_colors = [
-        "red", "green", "yellow", "blue", "magenta", "cyan",
+        "red", "green", 'light_yellow', "blue", "magenta", "cyan",
         "light_red", "light_green", "light_yellow", "light_blue",
         "light_magenta", "light_cyan"
     ]
@@ -114,7 +114,7 @@ def mystical_loading(message, final_message, color, bg_color):
         display_body(lines)
         display_border()
         print('')
-        time.sleep(0.07)
+        time.sleep(0.055)
     
     if not final_message:
         return
@@ -126,7 +126,3 @@ def mystical_loading(message, final_message, color, bg_color):
         display_border(bg_color)
         print('')
         time.sleep(0.8)
-
-
-if __name__ == "__main__":
-    mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "green", "on_green")

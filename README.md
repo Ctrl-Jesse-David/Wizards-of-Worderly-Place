@@ -1,50 +1,57 @@
-# Wizards of Worderly Place
+# 🧙🏽‍♂️ WIZARDS OF WORDERLY PLACE 🧙🏽‍♂️
 
-A magical word puzzle game where players uncover hidden words in a grid using available letters.
+Step into a realm where language is magic and every letter holds power!
 
-## 🎮 How to Play
+In this enchanted word puzzle adventure, spellcasters unravel hidden words woven into a mystical grid using the sacred letters of a six-rune incantation. Summon your vocabulary, wield your wits, and rise through the ranks of arcane linguists.
 
-1. **Starting the Game**
+The scrolls await…will your name be etched among the legends?
 
-   - Run 'python3 worderly.py' in your terminal
-   - Enter your nickname when prompted
-   <img width="551" alt="Image" src="https://github.com/user-attachments/assets/b8cbb0ff-bad2-4e89-811b-b5e7278d4c6f" />
+## 🪄 HOW TO PLAY 🪄
 
-   - Enter 'S' to initialize the main game
-   <img width="543" alt="Image" src="https://github.com/user-attachments/assets/cb437b37-27d1-4ed7-810d-5a5898d081e1" />
+### **Summoning the Game**
 
-     - Select a difficulty level (based on preferred word count in the grid)
-       <img width="543" alt="Image" src="https://github.com/user-attachments/assets/22d8cce0-a998-4550-8246-b73a4735a618" />
+<img width="546" alt="Start" src="https://github.com/user-attachments/assets/986bcc08-3c20-4ef7-8f36-2976dd68172e" />
 
-       - Play the game!
-       <img width="540" alt="Image" src="https://github.com/user-attachments/assets/b6211224-8ed7-46c1-aad8-43ba0c21bbaa" />
+   1. To begin your magical journey, cast the  incantation 'python3 worderly.py' in your terminal from the sacred project root directory.
+   2. You shall be asked to reveal your wizarding name—enter it with pride.
+   <img width="546" alt="Name" src="https://github.com/user-attachments/assets/46ab8c18-9a7e-47bb-af9e-e5d965d75d13" />
 
-2. **Game Controls**
+   3. Next, consult the ancient runes (your keyboard) and choose an action by invoking the letter nestled within brackets. To unlock the Game, invoke the letter 'S'.
+   <img width="546" alt="Menu" src="https://github.com/user-attachments/assets/cf6168f3-77c1-4db5-9081-487ad9d8c014" />
 
-<img width="522" alt="Image" src="https://github.com/user-attachments/assets/b01dbd10-8917-432e-9d46-5bebdd80acf0" />
+   4. Select your preffered level of mastery (based on preferred word count in the grid).
+   <img width="546" alt="Level" src="https://github.com/user-attachments/assets/0f010fae-eaf9-4548-b94a-0380298d1971" />
 
-   - Guess the words that are hidden in the grid by using the available letters provided
+   5. Embrace your inner wizard and start summoning spells as your trial begins!
+   <img width="546" alt="Game" src="https://github.com/user-attachments/assets/7920123b-696a-45c2-b43a-8d0321018d51" />
 
-     - The letters provided are based on the main 6 letter-word diagonally placed in the grid
+### **Spellcasting**
 
-   - Commands:
-     - '-shuffle' or '-s': Rearrange the available letters
-     - '-hint' or '-h': Get a hint (5 free hints per game)
-     - '-exit' or '-e': End the current game
+<img width="523" alt="Controls" src="https://github.com/user-attachments/assets/bf33c9bb-2b6b-40dd-8dfb-8998828a48aa" />
 
-3. **Scoring**
+   - As a spellcaster, you are tasked with uncovering the enchanted words hidden within the ruins using the letters summoned from a powerful six-letter word that lies diagonally across the grid like a secret rune.
 
-   - Points are awarded for each correct letter that was unrevealed
-   - Extra Lives are rewarded for revealing valid words that are not in the grid
-   - Your total score is saved to your profile
+   - Spells:
 
-4. **Shop System**
+     - '-shuffle' or '-s':  Stir the cauldron and rearrange the available letters for new inspiration!
+     - '-hint' or '-h': Receive a whisper of guidance from the spirits. You may call upon this magic five (5) times freely per game.
+     - '-exit' or '-e': Retreat from the spell chamber and end your trial as a wizard.
 
-   - Earn points to purchase hints
-     - Basic Hint (10 points): Reveals one letter
-       - The 5 free hints are to be exhausted first before purchased hints
+### **Spell Points**
 
-## 💻 Code Organization
+   - Each time you unearth a hidden word from the enchanted grid, every hidden letter you unveil glows with point-bearing power.
+   - Should you conjure a valid word not inscribed within the grid, the spirits of language shall bestow you EXTRA LIVES as a reward for your clever sorcery.
+   - All your hard-earned spell points are sealed within your soul crystal, etched into your eternal profile for future spellwork and magic purchases.
+   - Those who prove most potent in the mystical arts shall have their names etched upon the Celestial Scroll of Champions, a leaderboard of the realm’s finest spellcasters. Climb the ranks, surpass your fellow word-wizards, and let all behold your sorcerous skill!
+
+
+### **The Mystic Market**
+
+   - Use your hard-earned spell points to purchase more hints when your free ones run dry.
+      - A Whisper from the Spirits (10 points): Reveals a single mystical letter.
+      - Remember, your first five hints are gifts from the mystic elders. Spend wisely after they are gone.
+
+## 💻 CODE ORGANIZATION 💻
 
 The project is organized into several key modules:
 
@@ -55,7 +62,7 @@ The project is organized into several key modules:
 - 'word_utils.py': Word validation and processing
 - 'display_manager.py': UI and display utilities
 
-## ✨ Bonus Features
+## ✨ BONUS FEATURES ✨
 
 1. **User Profile System**
 
@@ -85,3 +92,30 @@ The project is organized into several key modules:
 
    - Bonus lives for finding non-grid words
    - Free hints system
+
+## 🧪 UNIT TESTING 🧪
+
+This project uses the pytest framework for unit testing located in test_wonderly.py to ensure the correctness and robustness of the game's core logic and its application under both normal and unexpected cases.
+
+### **Running Tests**
+
+   1. From the project root directory, run 'pytest test_worderly.py'.
+   2. A report of passed or failed test will be displayed after running the test.
+
+### **Test Coverage**
+
+   - Grid Construction
+      - Validates correct placement of the main diagonal word and other words in the grid.
+   - Word Intersection & Placement Validation
+      - Ensures that words can be placed without conflicts and with correct overlap logic.
+   - Word Validation
+      - Determines whether a word input is valid (i.e. included in the word list or a bonus word) using available letters while validating repeated and incorrect inputs. 
+   - Game Mechanics
+      - Verifies initialization, point calculation, input handling, and the full gameplay, such as completing the game or running out of lives.
+
+### **Adding Tests**
+
+   1. Create a new function in test_worderly.py using the test_ prefix.
+   2. Use assert statements to verify expected outcomes.
+   3. Reuse or extend the create_game() function for consistent test setup if needed.
+   3. Run pytest to confirm your test behaves as expected.

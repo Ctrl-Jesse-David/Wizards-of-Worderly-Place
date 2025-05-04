@@ -1,4 +1,4 @@
-import os, random, re, time
+import os, random, re, time, subprocess, sys
 from termcolor import colored, cprint
 from termcolor import colored
 
@@ -44,8 +44,11 @@ def smart_center(text, width):
         left_padding -= 1
     
     return (' ' * max(left_padding, 0)) + text + (' ' * max(right_padding, 0))
+
 def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    if sys.stdout.isatty():
+        clear_cmd = 'cls' if os.name == 'nt' else 'clear'
+        subprocess.run([clear_cmd])
 
 def display_border(background_color="on_white"):
     cprint(' ' * 77, on_color=background_color)
@@ -76,6 +79,12 @@ def display_header(title, color):
     print("="*75)
     cprint(title.center(75), color, attrs=["bold"])
     print("="*75)
+
+
+def color_dots_in_grid(grid):
+    return [[colored(char, 'dark_grey') if char == '.' else char for char in row]
+        for row in grid]
+
 
 def welcome_display(message, nickname, on_color):
     colorful_nick = title_color_changer(nickname)
@@ -109,14 +118,14 @@ def ask_game_difficulty(on_color="on_white"):
         '',
         '='*75,
         '',
-        format_difficulty('🪄', 'APPRENTICE', ' [1]', 'green', '21 - 25 words', max_visible_length),
-        format_difficulty('🔮', 'MAGE', '[2]', 'blue', '26 - 30 words', max_visible_length),
-        format_difficulty('🧙', 'ARCHMAGE', '[3]', 'magenta', '31+ words     ', max_visible_length),
+        format_difficulty('✨', 'APPRENTICE', '[1]', 'light_green', '21 - 25 words', max_visible_length),
+        format_difficulty('🔮', 'MAGE', '[2]', 'light_blue', '26 - 30 words', max_visible_length),
+        format_difficulty('🧙', 'ARCHMAGE', '[3]', "light_magenta", '31+ words     ', max_visible_length),
         '',
         '-'*75,
         '',
-        colored(f"Select a difficulty level [{colored('Enter Number', 'cyan', attrs=['bold'])}] or "
-                f"[{colored('E', 'red', attrs=['bold'])}] to exit:", attrs=['bold']),
+        colored(f"Select a difficulty level [{colored('Enter Number', 'light_cyan', attrs=['bold'])}] or "
+                f"[{colored('E', 'light_red', attrs=['bold'])}] to exit:", attrs=['bold']),
         ''
     ]
     

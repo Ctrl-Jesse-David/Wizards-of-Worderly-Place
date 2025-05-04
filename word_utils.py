@@ -33,7 +33,7 @@ def get_player_nickname():
     
     clear_screen()
     """Get nickname with colorful header (no animation)"""
-    colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan']
+    colors = ['light_red', 'light_green', 'light_yellow', 'light_blue', 'light_magenta', 'light_cyan']
     
     message = "👤 ENTER YOUR USERNAME 👤"
     colored_chars = [colored(char, random.choice(colors), attrs=['bold']) for char in message]
