@@ -23,12 +23,14 @@ The scrolls await…will your name be etched among the legends?
    <img width="546" alt="Level" src="https://github.com/user-attachments/assets/0f010fae-eaf9-4548-b94a-0380298d1971" />
 
    5. Embrace your inner wizard and start summoning spells as your trial begins!
-   <img width="544" alt="Start" src="https://github.com/user-attachments/assets/ae071cf0-89bc-4432-a5c4-7396366ea056" />
+   <img width="544" alt="Start" src="https://github.com/user-attachments/assets/92ea6848-8ab8-45d4-8d34-38fb75ba7e5a" />
+
 
 
 ### **Spellcasting**
 
-<img width="523" alt="Controls" src="https://github.com/user-attachments/assets/d59d0d14-be46-471c-bfc9-b793c739234e" />
+<img width="523" alt="Controls" src="https://github.com/user-attachments/assets/973d1989-6b22-43e8-89e2-b704f3c969f7" />
+
 
 
    - As a spellcaster, you are tasked with uncovering the enchanted words hidden within the ruins using the letters summoned from *The First Sigil*, a powerful six-letter word that lies diagonally across the grid like a secret rune.
