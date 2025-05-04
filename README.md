@@ -10,6 +10,7 @@ The scrolls await…will your name be etched among the legends?
 
 ### **Summoning the Game**
 
+   <img width="687" alt="Image" src="https://github.com/user-attachments/assets/fd07e2a7-e303-4f1a-b0dd-19a2f6d60d8d" />
    1. To begin your magical journey, cast the  incantation 'python3 worderly.py' in your terminal from the sacred project root directory.
    2. You shall be asked to reveal your wizarding name—enter it with pride.
    <img width="551" alt="Image" src="https://github.com/user-attachments/assets/b8cbb0ff-bad2-4e89-811b-b5e7278d4c6f" />
