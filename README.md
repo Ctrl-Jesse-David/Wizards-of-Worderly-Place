@@ -23,21 +23,23 @@ The scrolls await…will your name be etched among the legends?
    <img width="546" alt="Level" src="https://github.com/user-attachments/assets/0f010fae-eaf9-4548-b94a-0380298d1971" />
 
    5. Embrace your inner wizard and start summoning spells as your trial begins!
-   <img width="546" alt="Game" src="https://github.com/user-attachments/assets/7920123b-696a-45c2-b43a-8d0321018d51" />
+   <img width="544" alt="Start" src="https://github.com/user-attachments/assets/ae071cf0-89bc-4432-a5c4-7396366ea056" />
+
 
 ### **Spellcasting**
 
-<img width="523" alt="Controls" src="https://github.com/user-attachments/assets/bf33c9bb-2b6b-40dd-8dfb-8998828a48aa" />
+<img width="523" alt="Controls" src="https://github.com/user-attachments/assets/d59d0d14-be46-471c-bfc9-b793c739234e" />
+
 
    - As a spellcaster, you are tasked with uncovering the enchanted words hidden within the ruins using the letters summoned from a powerful six-letter word that lies diagonally across the grid like a secret rune.
 
    - Spells:
 
-     - '-shuffle' or '-s':  Stir the cauldron and rearrange the available letters for new inspiration!
-     - '-hint' or '-h': Receive a whisper of guidance from the spirits. You may call upon this magic five (5) times freely per game.
-     - '-flash' or '-f': Cast this spell in dire times to enchant all unanswered runes pulse with crimson light,
+     - 🌀 '-shuffle' or '-s':  Stir the cauldron and rearrange the available letters for new inspiration!
+     - 🔍 '-hint' or '-h': Receive a whisper of guidance from the spirits. You may call upon this magic five (5) times freely per game.
+     - 💥 '-flash' or '-f': Cast this spell in dire times to enchant all unanswered runes pulse with crimson light,
        guiding your gaze toward the missing incantations still awaiting your chant.
-     - '-exit' or '-e': Retreat from the spell chamber and end your trial as a wizard.
+     - 💨 '-exit' or '-e': Retreat from the spell chamber and end your trial as a wizard.
 
 ### **Spell Points**
 
