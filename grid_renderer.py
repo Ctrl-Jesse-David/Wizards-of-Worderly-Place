@@ -1,13 +1,12 @@
 from display_manager import title_color_changer, clear_screen, display_border, display_body, display_top
 from termcolor import colored
 
-
-"""
- GRID RENDERER
- 
- ADD LATER-------------
- """
- 
+'''
+Grid Renderer
+- This module handles the display and updating of the word grid during gameplay. It provides functionality 
+for rendering the partially completed grid (as seen by the player), updating the grid when correct words are 
+guessed, and displaying the full solution grid once the game ends.
+'''
 
 class GameGrid:
     '''
