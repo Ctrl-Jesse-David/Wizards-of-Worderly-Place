@@ -4,7 +4,6 @@ from display_manager import display_body, display_border, clear_screen, title_co
 
 '''
 Animations
-
 -This module provides mystical-themed terminal animations for the game.
 It includes immersive visual effects such as an animated title intro and 
 magical loading screens, designed to enhance the player's experience and 
