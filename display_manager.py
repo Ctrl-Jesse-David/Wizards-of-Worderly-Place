@@ -2,6 +2,7 @@ import os, random, re, time
 from termcolor import colored, cprint
 from termcolor import colored
 
+
 """
  DISPLAY MANAGER
  
@@ -9,7 +10,6 @@ from termcolor import colored
  """
  
  
-
 def display_top(main_text):
     '''
     Used for consistent vertical spacing in screen layouts.

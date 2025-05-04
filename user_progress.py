@@ -163,6 +163,13 @@ def display_user_profile():
 
 
 def display_shop():
+    """
+    Displays one of the main options in the main menu [M]
+    
+    Shows the Magic Shop:
+        - Purchaseable hint for 10 Magic Points
+    """
+
     global current_user
     
     if not current_user:
