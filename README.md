@@ -10,23 +10,24 @@ The scrolls await…will your name be etched among the legends?
 
 ### **Summoning the Game**
 
-   <img width="687" alt="Image" src="https://github.com/user-attachments/assets/fd07e2a7-e303-4f1a-b0dd-19a2f6d60d8d" />
+<img width="546" alt="Start" src="https://github.com/user-attachments/assets/986bcc08-3c20-4ef7-8f36-2976dd68172e" />
+
    1. To begin your magical journey, cast the  incantation 'python3 worderly.py' in your terminal from the sacred project root directory.
    2. You shall be asked to reveal your wizarding name—enter it with pride.
-   <img width="551" alt="Image" src="https://github.com/user-attachments/assets/b8cbb0ff-bad2-4e89-811b-b5e7278d4c6f" />
+   <img width="546" alt="Name" src="https://github.com/user-attachments/assets/46ab8c18-9a7e-47bb-af9e-e5d965d75d13" />
 
    3. Next, consult the ancient runes (your keyboard) and choose an action by invoking the letter nestled within brackets. To unlock the Game, invoke the letter 'S'.
-   <img width="543" alt="Image" src="https://github.com/user-attachments/assets/cb437b37-27d1-4ed7-810d-5a5898d081e1" />
+   <img width="546" alt="Menu" src="https://github.com/user-attachments/assets/cf6168f3-77c1-4db5-9081-487ad9d8c014" />
 
    4. Select your preffered level of mastery (based on preferred word count in the grid).
-   <img width="543" alt="Image" src="https://github.com/user-attachments/assets/22d8cce0-a998-4550-8246-b73a4735a618" />
+   <img width="546" alt="Level" src="https://github.com/user-attachments/assets/0f010fae-eaf9-4548-b94a-0380298d1971" />
 
    5. Embrace your inner wizard and start summoning spells as your trial begins!
-   <img width="540" alt="Image" src="https://github.com/user-attachments/assets/b6211224-8ed7-46c1-aad8-43ba0c21bbaa" />
+   <img width="546" alt="Game" src="https://github.com/user-attachments/assets/7920123b-696a-45c2-b43a-8d0321018d51" />
 
 ### **Spellcasting**
 
-<img width="522" alt="Image" src="https://github.com/user-attachments/assets/b01dbd10-8917-432e-9d46-5bebdd80acf0" />
+<img width="523" alt="Controls" src="https://github.com/user-attachments/assets/bf33c9bb-2b6b-40dd-8dfb-8998828a48aa" />
 
    - As a spellcaster, you are tasked with uncovering the enchanted words hidden within the ruins using the letters summoned from a powerful six-letter word that lies diagonally across the grid like a secret rune.
 
