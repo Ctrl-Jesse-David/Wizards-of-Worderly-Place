@@ -1,9 +1,11 @@
 import random, time, threading
 from termcolor import colored, cprint
 from display_manager import display_body, display_border, clear_screen, title_color_changer
+
 '''
 Animations
-- This module provides mystical-themed terminal animations for the game.
+
+This module provides mystical-themed terminal animations for the game.
 It includes immersive visual effects such as an animated title intro and 
 magical loading screens, designed to enhance the player's experience and 
 set a whimsical tone to the overall experience. These effects rely on 
