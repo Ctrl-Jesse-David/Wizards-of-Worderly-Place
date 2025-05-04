@@ -30,7 +30,6 @@ TEST_NON_PLACED_WORDS = ['TARE', 'SEAR']
 TEST_LETTERS = list(TEST_MAIN_WORD)
 
 
-#
 class MockTest_Game:
     """
     Mock simple game class for testing without other dependencies
@@ -358,3 +357,29 @@ def test_game_over():
     
     assert game.lives == 0
     assert len(game.found_words) < len(game.words)
+
+def test_generate_word_grid():
+    """
+    Test the complete grid generation function
+    """
+    dictionary_file = "corncob-lowercase.txt" #For unit testing (Change txt file if necessary)
+    
+    grid, placed_words, non_placed_words = generate_word_grid(dictionary_file, 21, 25)  #Apprentice level difficulty instance
+    
+    #Check grid dimensions
+    assert len(grid) == 15
+    assert len(grid[0]) == 25
+    
+    #Check that some words are placed
+    assert len(placed_words) >= 21  # Min parameter
+    assert len(placed_words) <= 25  # Max parameter
+    
+    #Validate that placed_words format is correct (word, (row, col), direction)
+    for word_info in placed_words:
+        assert len(word_info) == 3
+        assert isinstance(word_info[0], str)
+        assert isinstance(word_info[1], tuple)
+        assert word_info[2] in ['h', 'v', 'd']
+    
+    #Check that main word (first in list) is placed in diagonal
+    assert placed_words[0][2] == 'd'
