@@ -1,6 +1,7 @@
 import random, time, threading
 from termcolor import colored, cprint
 from display_manager import display_body, display_border, clear_screen, title_color_changer
+
 '''
 Animations
 - This module provides mystical-themed terminal animations for the game.
@@ -10,6 +11,7 @@ set a whimsical tone to the overall experience. These effects rely on
 terminal color manipulation and timed screen updates to create a dynamic 
 and enchanted feel, fitting for a fantasy word game.
 '''
+
 def mystical_intro():
     """
     Displays an animated introduction screen in the terminal with 
