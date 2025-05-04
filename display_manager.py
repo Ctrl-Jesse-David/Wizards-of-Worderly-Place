@@ -2,6 +2,10 @@ import os, random, re, time, subprocess, sys
 from termcolor import colored, cprint
 from termcolor import colored
 
+
+
+
+
 def display_top(main_text):
     '''
     Used for consistent vertical spacing in screen layouts.
