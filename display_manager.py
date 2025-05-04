@@ -1,4 +1,4 @@
-import os, random, re, time, subprocess, sys
+import os, random, re, time
 from termcolor import colored, cprint
 from termcolor import colored
 
@@ -52,9 +52,8 @@ def smart_center(text, width):
     return (' ' * max(left_padding, 0)) + text + (' ' * max(right_padding, 0))
 
 def clear_screen():
-    if sys.stdout.isatty():
-        clear_cmd = 'cls' if os.name == 'nt' else 'clear'
-        subprocess.run([clear_cmd])
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 
 def display_border(background_color="on_white"):
     '''
