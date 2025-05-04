@@ -113,7 +113,7 @@ def ask_game_difficulty(on_color="on_white"):
         '',
         format_difficulty('✨', 'APPRENTICE', '[1]', 'light_green', '21 - 25 words', max_visible_length),
         format_difficulty('🔮', 'MAGE', '[2]', 'light_blue', '26 - 30 words', max_visible_length),
-        format_difficulty('🧙', 'ARCHMAGE', '[3]', 'magenta', '31+ words     ', max_visible_length),
+        format_difficulty('🧙', 'ARCHMAGE', '[3]', "light_magenta", '31+ words     ', max_visible_length),
         '',
         '-'*75,
         '',

@@ -13,7 +13,7 @@ def load_users():
             with open("user_progress.json", "r") as file:
                 return json.load(file)
         except json.JSONDecodeError:
-            cprint("Warning: User data file is corrupted. Starting with empty database.", "red")
+            cprint("Warning: User data file is corrupted. Starting with empty database.", "light_red")
             return {}
     else:
         return {}
@@ -141,7 +141,7 @@ def purchase_hint(hint_id, cost):
     #Check if enough points
     if user["points"] < cost:
         print('')
-        cprint(f"🚫 Not enough magic points! You have {user['points']} but the hint costs {cost}.", "red", attrs=["bold"])
+        cprint(f"🚫 Not enough magic points! You have {user['points']} but the hint costs {cost}.", "light_red", attrs=["bold"])
         return False
     
     #Deduct cost and give hint
@@ -164,7 +164,7 @@ def display_user_profile():
     global current_user
     
     if not current_user:
-        cprint("No wizard is currently logged in!", "red")
+        cprint("No wizard is currently logged in!", "light_red")
         return
         
     stats = get_user_stats()
@@ -197,7 +197,7 @@ def display_shop():
     global current_user
     
     if not current_user:
-        cprint("Please log in to access the shop!", "red")
+        cprint("Please log in to access the shop!", "light_red")
         return
         
     stats = get_user_stats()
@@ -226,9 +226,9 @@ def display_shop():
     shop_lines.extend([
     '-'*75,
     "",
-    colored("Enter ", attrs=["bold"]) + colored("item number", "magenta") + \
-        colored(" to purchase | [", attrs=["bold"]) + colored("e", "red") + colored("|", attrs=["bold"]) + \
-            colored("exit", "red") + colored("] to exit", attrs=["bold"]),
+    colored("Enter ", attrs=["bold"]) + colored("item number", "light_magenta") + \
+        colored(" to purchase | [", attrs=["bold"]) + colored("e", "light_red") + colored("|", attrs=["bold"]) + \
+            colored("exit", "light_red") + colored("] to exit", attrs=["bold"]),
     ""
 ])
 
@@ -237,9 +237,9 @@ def display_shop():
         clear_screen()
         shop_lines[5] = colored(f"💰 Your Magic Points 💰: {get_user_stats()['points']}", "white")
         
-        display_border("on_magenta")
-        display_body(shop_lines, "white", "on_magenta")
-        display_border("on_magenta")
+        display_border("on_light_magenta")
+        display_body(shop_lines, "white", "on_light_magenta")
+        display_border("on_light_magenta")
         print('')
         
         choice = get_player_input()
@@ -264,7 +264,7 @@ def display_shop():
             display_body(shop_lines, "white", "on_light_red")
             display_border("on_light_red")
             print('')
-            cprint('Invalid Choice', "red", attrs=["bold"])
+            cprint('Invalid Choice', "light_red", attrs=["bold"])
             time.sleep(0.75)
             continue
 

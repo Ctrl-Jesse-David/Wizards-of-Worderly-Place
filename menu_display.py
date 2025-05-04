@@ -30,7 +30,7 @@ def display_main_menu(text_color="white", text_bg="on_white"):
     "📜  " + colored("[I]", 'light_green', attrs=["bold"]) + "  Instructions  📜",
     "🏆  " + colored("[L]", 'light_yellow', attrs=["bold"]) + "  Leaderboards  🏆",
     "🧙  " + colored("[P]", "light_blue", attrs=["bold"]) + "  Soul Crystal  🧙",
-    "🛒  " + colored("[M]", "magenta", attrs=["bold"]) + "  Mystic Market 🛒",
+    "🛒  " + colored("[M]", "light_magenta", attrs=["bold"]) + "  Mystic Market 🛒",
     "🚪  " + colored("[E]", 'light_red', attrs=["bold"]) + "  Exit Game     🚪"
     ]
 

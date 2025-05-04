@@ -73,7 +73,7 @@ def start_game_session(dictionary_file, nickname):
             difficulty = get_player_input().lower()
             if difficulty not in ['1', '2', '3', 'mage', 'apprentice','archmage', 'e', 'exit']:
                 ask_game_difficulty('on_light_red')
-                cprint("🚫 Invalid response!", "red", attrs=["bold"])
+                cprint("🚫 Invalid response!", "light_red", attrs=["bold"])
                 print('')
                 time.sleep(0.5)
             else:
@@ -99,7 +99,7 @@ def start_game_session(dictionary_file, nickname):
 
         if retry_option:
             if retry_option.lower() == 'n':
-                mystical_loading('CLOSING THE PORTAL...', '' , "magenta", "on_magenta")
+                mystical_loading('CLOSING THE PORTAL...', '' , "light_magenta", "on_light_magenta")
                 break
             elif retry_option.lower() == 'p':
                 continue

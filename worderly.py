@@ -76,7 +76,7 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
         elif choice == "M":
             display_shop()  
         elif choice == "E":
-            mystical_loading('UNWEAVING THE ENCHANTMENT...', 'SAFE TRAVELS, SORCERER!', "red", 'on_light_red')
+            mystical_loading('UNWEAVING THE ENCHANTMENT...', 'SAFE TRAVELS, SORCERER!', "light_red", 'on_light_red')
             sys.exit()
 
         else:
