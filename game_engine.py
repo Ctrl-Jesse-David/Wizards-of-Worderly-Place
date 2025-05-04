@@ -100,7 +100,7 @@ class WordscapesGame:
                 clear_screen()
                 self.grid.display_grid(nickname, "white", "on_light_red")
                 self.cur_state("white", "on_light_red")
-                cprint("No hints remaining!", "light_red", attrs=["bold"])
+                cprint("No whispers remaining!", "light_red", attrs=["bold"])
                 time.sleep(0.75)
                 return False
 
@@ -134,7 +134,7 @@ class WordscapesGame:
         self.grid.display_grid(nickname, "white", "on_light_magenta")
         self.cur_state("white", "on_light_magenta")
         cprint(
-            f"Hint used! ({source})  -  Free left: {self.free_hints}, Extra left: {self.bought_hints}",
+            f"Whisper used! ({source})  -  Free left: {self.free_hints}, Extra left: {self.bought_hints}",
             "light_magenta", attrs=["bold"]
         )
         time.sleep(0.75)
@@ -235,7 +235,7 @@ class WordscapesGame:
                 self.shuffle_letters(nickname)
                 continue
             
-            elif guess in ['-HINT', '-H', 'H']:
+            elif guess in ['-WHISPER', '-W', 'W']:
                 self.get_hint(nickname)
                 continue
             
@@ -306,12 +306,12 @@ class WordscapesGame:
             f"🔠 {colored('Available letters:', attrs=['bold'])} {'-'.join(self.letters)}",
             f"🌱 {colored('Lives:', attrs=['bold'])} {self.lives}",
             f"🌟 {colored('Score:', attrs=['bold'])} {self.points}",
-            f"💡 {colored('Hints - Free:', attrs=['bold'])} {self.free_hints}, Extra: {self.bought_hints}",
+            f"💡 {colored('Whispers - Free:', attrs=['bold'])} {self.free_hints}, Extra: {self.bought_hints}",
             f"📖 {colored('Words found:', attrs=['bold'])} {len(self.found_words)}/{len(self.words)}",
             f"📝 {colored('Last correct guess:', attrs=['bold'])} {self.last_guess}",
             f"🎮 {colored('Commands:', attrs=['bold'])} " \
             f"[{colored('-shuffle', 'light_cyan', attrs=['bold'])}|{colored('-s', 'light_cyan', attrs=['bold'])}], " \
-            f"[{colored('-hint', "light_magenta", attrs=['bold'])}|{colored('-h', "light_magenta", attrs=['bold'])}], " \
+            f"[{colored('-whisper', "light_magenta", attrs=['bold'])}|{colored('-w', "light_magenta", attrs=['bold'])}], " \
             f"[{colored('-flash', 'light_blue', attrs=['bold'])}|{colored('-f', 'light_blue', attrs=['bold'])}], " \
             f"[{colored('-exit', 'light_red', attrs=['bold'])}|{colored('-e', 'light_red', attrs=['bold'])}]",
             ""
