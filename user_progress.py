@@ -6,7 +6,7 @@ from word_utils import get_player_input
 '''
 User Progress
 - This module handles user profile management by interfacing with a JSON file 
-(`user_progress.json`) to persist user data across sessions. It also handles
+('user_progress.json') to persist user data across sessions. It also handles
 login/logout, stat tracking, hint purchases, and score updates for the game. 
 Additionally, it supports user authentication by nickname, magic point tracking, 
 hint limitations, and personal best score recording.
@@ -175,7 +175,7 @@ def display_shop():
     """
     Displays one of the main options in the main menu [M]
     
-    Shows the Magic Shop:
+    Shows the Mystic Market:
         - Purchaseable hint for 10 Magic Points
     """
 
@@ -189,7 +189,7 @@ def display_shop():
     
     shop_lines = [
         "",
-        colored("🛒 MAGICAL SHOP 🛒", attrs=["bold"]),
+        colored("🛒 Mystic Market 🛒", attrs=["bold"]),
         "",
         colored('═'*75),
         "",

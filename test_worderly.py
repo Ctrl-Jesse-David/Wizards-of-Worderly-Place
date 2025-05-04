@@ -22,9 +22,9 @@ logic, helper functions logic, game mechanics, and edge cases (i.e. repeated gue
 TEST_GRID = [['.' for _ in range(25)] for _ in range(15)]
 TEST_MAIN_WORD = "STREAK"
 TEST_POSITIONS = {
-    'STREAK': [(2 + i*2, 7 + i*2) for i in range(6)],  #Main diagonal word
-    'STARE': [(4, 9), (5, 9), (6, 9), (7, 9), (8, 9)],     #Vertical word
-    'TAKE': [(6, 9), (6, 10), (6, 11), (6, 12)]    #Horizontal word
+    'STREAK': [(2 + i*2, 7 + i*2) for i in range(6)],       #Main diagonal word
+    'STARE': [(4, 9), (5, 9), (6, 9), (7, 9), (8, 9)],      #Vertical word
+    'TAKE': [(6, 9), (6, 10), (6, 11), (6, 12)]             #Horizontal word
 }
 TEST_NON_PLACED_WORDS = ['TARE', 'SEAR']
 TEST_LETTERS = list(TEST_MAIN_WORD)
@@ -190,7 +190,7 @@ def test_place_word():
     """
     grid = [['.' for _ in range(25)] for _ in range(15)]
     
-    #Create a word placement tuple for testing
+    #For testing
     placed_word = ("STARE", (5, 5), 'h')
     
     word, (row, col), direction = placed_word

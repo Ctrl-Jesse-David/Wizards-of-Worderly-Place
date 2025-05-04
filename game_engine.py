@@ -140,6 +140,41 @@ class WordscapesGame:
         time.sleep(0.75)
         return True
     
+    def flash_unrevealed(self, nickname):
+        """
+        Flashes unrevealed positions (hashtags) in red to make them more visible.
+        """
+        #Save the orig grid state
+        original_grid = []
+        for row in self.grid.incomplete_grid:
+            original_grid.append(row.copy())
+        
+        #Find and flash all #
+        flash_count = 0
+        for row_idx, row in enumerate(self.grid.incomplete_grid):
+            for col_idx, cell in enumerate(row):
+                if cell == '#' or (isinstance(cell, str) and '#' in cell and not 'light_red' in cell):
+                    self.grid.incomplete_grid[row_idx][col_idx] = colored('#', 'light_red', attrs=["bold", "blink"])
+                    flash_count += 1
+        
+        #Display the grid with flashed #
+        clear_screen()
+        self.grid.display_grid(nickname, "white", "on_light_blue")
+        self.cur_state("white", "on_light_blue")
+        cprint(f"📍 Flashing {flash_count} unrevealed letters...", "light_blue", attrs=["bold"])
+        time.sleep(1.15)
+        
+        #Restore orig grid 
+        self.grid.incomplete_grid = original_grid
+        
+        #Redisplay with normal colors
+        clear_screen()
+        self.grid.display_grid(nickname)
+        self.cur_state()
+        print(f"Found {flash_count} hidden cells in the grid")
+        time.sleep(0.5)
+        return
+    
     def get_retry_option(self, nickname, on_color, state):
         if state == "lost":
             color = 'light_red'
@@ -202,6 +237,10 @@ class WordscapesGame:
             
             elif guess in ['-HINT', '-H', 'H']:
                 self.get_hint(nickname)
+                continue
+            
+            elif guess in ['-FLASH', '-F', 'F']:
+                self.flash_unrevealed(nickname)
                 continue
             
             elif guess in ['-EXIT', '-E', 'E']: 
@@ -273,6 +312,7 @@ class WordscapesGame:
             f"🎮 {colored('Commands:', attrs=['bold'])} " \
             f"[{colored('-shuffle', 'light_cyan', attrs=['bold'])}|{colored('-s', 'light_cyan', attrs=['bold'])}], " \
             f"[{colored('-hint', "light_magenta", attrs=['bold'])}|{colored('-h', "light_magenta", attrs=['bold'])}], " \
+            f"[{colored('-flash', 'light_blue', attrs=['bold'])}|{colored('-f', 'light_blue', attrs=['bold'])}], " \
             f"[{colored('-exit', 'light_red', attrs=['bold'])}|{colored('-e', 'light_red', attrs=['bold'])}]",
             ""
         ]
@@ -286,12 +326,6 @@ class WordscapesGame:
         
         Validates the guess, updates game state based on correctness,
         and provides feedback to the player.
-        
-        ==========
-        Parameters:
-        ==========
-        guess: str
-            The player's word guess
         """
 
         if is_valid(guess, ''.join(self.letters)):
@@ -333,7 +367,6 @@ class WordscapesGame:
                 cprint('🔁 Word has already been found.', "light_magenta", attrs=["bold"])
                 
                
-            
             else:
                 self.lives -= 1
                 clear_screen()
@@ -342,7 +375,6 @@ class WordscapesGame:
                 cprint('🚫 Incorrect.', "light_red", attrs=["bold"])
                 
             
-
         else:
             clear_screen()
             self.grid.display_grid(nickname, "white", "on_light_red")
