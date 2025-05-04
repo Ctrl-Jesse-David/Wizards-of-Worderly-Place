@@ -27,7 +27,8 @@ The scrolls await…will your name be etched among the legends?
 
 ### **Spellcasting**
 
-<img width="523" alt="Controls" src="https://github.com/user-attachments/assets/bf33c9bb-2b6b-40dd-8dfb-8998828a48aa" />
+<img width="523" alt="Controls" src="https://github.com/user-attachments/assets/d59d0d14-be46-471c-bfc9-b793c739234e" />
+
 
    - As a spellcaster, you are tasked with uncovering the enchanted words hidden within the ruins using the letters summoned from a powerful six-letter word that lies diagonally across the grid like a secret rune.
 
