@@ -2,14 +2,13 @@ import random, time, threading
 from termcolor import colored, cprint
 from display_manager import display_body, display_border, clear_screen, title_color_changer
 
-"""
-ANIMATIONS
-
-----------------------__ADD LATER
-"""
-
-
 def mystical_intro():
+    """
+    Displays an animated introduction screen in the terminal with 
+    random letters that gradually reveal the game title. It ends with a 
+    colorful shimmering title and waits for user input (press Enter) to continue.
+
+    """
     from display_manager import display_body, display_border, clear_screen, title_color_changer
     width = 75
     height = 14
@@ -55,6 +54,11 @@ def mystical_intro():
     stop_animation = threading.Event()
 
     def animate():
+        '''
+        Runs a looping shimmer animation that continuously displays the full title
+        "WELCOME TO WIZARDS OF WORDERLY PLACE" in randomly changing colors at the center
+        of the screen. This acts as an idle screen until the player presses Enter.
+        '''
         while not stop_animation.is_set():
             clear_screen()
             display_border()
@@ -81,6 +85,10 @@ def mystical_intro():
     animation_thread.join()
 
 def mystical_loading(message, final_message, color, bg_color):
+    '''
+    Displays an animated loading sequence that gradually reveals a message character by character
+    in the terminal using random letter background noise.
+    '''
     message = ' '.join(i for i in message)
     width = 75
     height = 7
