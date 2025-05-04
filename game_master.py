@@ -72,7 +72,7 @@ def start_game_session(dictionary_file, nickname):
             ask_game_difficulty()
             difficulty = get_player_input().lower()
             if difficulty not in ['1', '2', '3', 'mage', 'apprentice','archmage', 'e', 'exit']:
-                ask_game_difficulty('on_red')
+                ask_game_difficulty('on_light_red')
                 cprint("🚫 Invalid response!", "red", attrs=["bold"])
                 print('')
                 time.sleep(0.5)
@@ -90,7 +90,7 @@ def start_game_session(dictionary_file, nickname):
         elif difficulty in ['e', 'exit']:
             break
 
-        mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "green", "on_green")
+        mystical_loading('FORGING SPELLS!', ' FORGING COMPLETE!', "light_green", "on_light_green")
         letters, incomplete_grid, positions, non_placed_words, complete_grid = get_game_level(dictionary_file, min, max)
         retry_option = initialize_game(
             letters, incomplete_grid, positions,
@@ -99,14 +99,14 @@ def start_game_session(dictionary_file, nickname):
 
         if retry_option:
             if retry_option.lower() == 'n':
-                mystical_loading('CLOSING THE PORTAL...', '' , "magenta", "on_magenta")
+                mystical_loading('CLOSING THE PORTAL...', '' , "light_magenta", "on_light_magenta")
                 break
             elif retry_option.lower() == 'y':
                 continue
             else:
-                mystical_loading('CLOSING THE PORTAL...', '' , "magenta", "on_magenta")
+                mystical_loading('CLOSING THE PORTAL...', '' , "light_magenta", "on_light_magenta")
                 break
         else:
-            mystical_loading('CLOSING THE PORTAL...', '' , "magenta", "on_magenta")
+            mystical_loading('CLOSING THE PORTAL...', '' , "light_magenta", "on_light_magenta")
             break
 

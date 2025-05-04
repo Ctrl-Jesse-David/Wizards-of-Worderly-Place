@@ -464,5 +464,17 @@
         "hints_purchased": [],
         "hints_available": 0,
         "highest_score": 0
+    },
+    "JUAN": {
+        "points": 30,
+        "hints_purchased": [],
+        "hints_available": 0,
+        "highest_score": 30
+    },
+    "PAGOD NA": {
+        "points": 264,
+        "hints_purchased": [],
+        "hints_available": 0,
+        "highest_score": 264
     }
 }

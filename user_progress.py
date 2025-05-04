@@ -135,7 +135,7 @@ def purchase_hint(hint_id, cost):
         
     #Check purchase limit
     if user["hints_available"] >= MAX_PURCHASED_HINTS:
-        cprint(f"Maximum of {MAX_PURCHASED_HINTS} hints reached!", "yellow")
+        cprint(f"Maximum of {MAX_PURCHASED_HINTS} hints reached!", 'light_yellow')
         return False
     
     #Check if enough points
@@ -186,9 +186,9 @@ def display_user_profile():
     ]
     
     clear_screen()
-    display_border("on_blue")
-    display_body(profile_lines, "white", "on_blue")
-    display_border("on_blue")
+    display_border("on_light_blue")
+    display_body(profile_lines, "white", "on_light_blue")
+    display_border("on_light_blue")
     print("")
     input()
 
@@ -260,9 +260,9 @@ def display_shop():
 
         except ValueError:
             clear_screen()
-            display_border("on_red")
-            display_body(shop_lines, "white", "on_red")
-            display_border("on_red")
+            display_border("on_light_red")
+            display_body(shop_lines, "white", "on_light_red")
+            display_border("on_light_red")
             print('')
             cprint('Invalid Choice', "red", attrs=["bold"])
             time.sleep(0.75)

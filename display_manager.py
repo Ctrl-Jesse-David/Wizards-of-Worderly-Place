@@ -111,14 +111,14 @@ def ask_game_difficulty(on_color="on_white"):
         '',
         '='*75,
         '',
-        format_difficulty('🪄', 'APPRENTICE', '[1]', 'green', '21 - 25 words', max_visible_length),
-        format_difficulty('🔮', 'MAGE', '[2]', 'blue', '26 - 30 words', max_visible_length),
+        format_difficulty('✨', 'APPRENTICE', '[1]', 'green', '21 - 25 words', max_visible_length),
+        format_difficulty('🔮', 'MAGE', '[2]', 'light_blue', '26 - 30 words', max_visible_length),
         format_difficulty('🧙', 'ARCHMAGE', '[3]', 'magenta', '31+ words     ', max_visible_length),
         '',
         '-'*75,
         '',
-        colored(f"Select a difficulty level [{colored('Enter Number', 'cyan', attrs=['bold'])}] or "
-                f"[{colored('E', 'red', attrs=['bold'])}] to exit:", attrs=['bold']),
+        colored(f"Select a difficulty level [{colored('Enter Number', 'light_cyan', attrs=['bold'])}] or "
+                f"[{colored('E', 'light_red', attrs=['bold'])}] to exit:", attrs=['bold']),
         ''
     ]
     

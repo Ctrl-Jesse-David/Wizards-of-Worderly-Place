@@ -11,7 +11,7 @@ def is_valid(guess, letters):
 def get_player_nickname():
     clear_screen()
     """Get nickname with colorful header (no animation)"""
-    colors = ['red', 'green', 'yellow', 'blue', 'magenta', 'cyan']
+    colors = ['light_red', 'green', 'yellow', 'blue', 'magenta', 'cyan']
     
     message = "👤 ENTER YOUR USERNAME 👤"
     colored_chars = [colored(char, random.choice(colors), attrs=['bold']) for char in message]

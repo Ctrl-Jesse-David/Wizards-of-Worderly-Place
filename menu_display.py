@@ -26,12 +26,12 @@ def display_main_menu(text_color="white", text_bg="on_white"):
     ]
 
     menu_options = [
-    "📖  " + colored("[S]", 'cyan', attrs=["bold"]) + "  Start Game    📖",
+    "📖  " + colored("[S]", 'light_cyan', attrs=["bold"]) + "  Start Game    📖",
     "📜  " + colored("[I]", 'green', attrs=["bold"]) + "  Instructions  📜",
-    "🏆  " + colored("[L]", "yellow", attrs=["bold"]) + "  Leaderboards  🏆",
+    "🏆  " + colored("[L]", 'light_yellow', attrs=["bold"]) + "  Leaderboards  🏆",
     "🧙  " + colored("[P]", "light_blue", attrs=["bold"]) + "  Soul Crystal  🧙",
     "🛒  " + colored("[M]", "magenta", attrs=["bold"]) + "  Mystic Market 🛒",
-    "🚪  " + colored("[E]", 'red', attrs=["bold"]) + "  Exit Game     🚪"
+    "🚪  " + colored("[E]", 'light_red', attrs=["bold"]) + "  Exit Game     🚪"
     ]
 
     footer = [
@@ -78,7 +78,7 @@ def display_instructions():
     "  💀 Choose your words wisely! You have limited lives.",
     "-" * 75,
     colored("🔮 Power-ups & Hints:", "light_red", attrs=["bold"]),
-    "  🪄  Shuffle - Rearranges the given letters.",
+    "  ✨ Shuffle - Rearranges the given letters.",
     "  🔍 Hint - Reveals one letter in a hidden word.",
     "  🔵 Extra Life - Given if you find a valid word not in the grid.",
     "-" * 75,
@@ -87,9 +87,9 @@ def display_instructions():
     " ",
 ]
     clear_screen()
-    display_border("on_red")
-    display_body(instructions, "white", "on_red")
-    display_border("on_red")
+    display_border("on_light_red")
+    display_body(instructions, "white", "on_light_red")
+    display_border("on_light_red")
     print("")
     input()
     clear_screen()
@@ -106,8 +106,8 @@ def display_leaderboard():
             " ",
             colored("🏆 THE CELESTIAL SCROLL OF CHAMPIONS 🏆", attrs=["bold"]),
             " ",
-            colored('═'*75, "yellow"),
-            " "  # Empty line before scores
+            colored('═'*75, 'light_yellow'),
+            " "
         ]
         
         if scores:
@@ -123,36 +123,36 @@ def display_leaderboard():
         
         leaderboard_lines.extend([
             " ",  # Empty line after scores
-            colored('─'*75, "yellow"),
+            colored('─'*75, 'light_yellow'),
             " ",
             colored("Press Enter to return to the main menu.", attrs=["bold"]),
             " "
         ])
         
         clear_screen()
-        display_border("on_yellow")
-        display_body(leaderboard_lines, "yellow", "on_yellow")
-        display_border("on_yellow")
+        display_border("on_light_yellow")
+        display_body(leaderboard_lines, 'light_yellow', "on_light_yellow")
+        display_border("on_light_yellow")
         print("")
         input()
         
     except FileNotFoundError:
         error_lines = [
             " ",
-            colored("🏆 LEADERBOARD 🏆", "yellow", attrs=["bold"]),
+            colored("🏆 THE CELESTIAL SCROLL OF CHAMPIONS 🏆", "light_yellow", attrs=["bold"]),
             " ",
-            colored('═'*75, "yellow"),
+            colored('═'*75, 'light_yellow'),
             colored("No leaderboard found.", "white"),
             colored("Play the game to create one!", "white"),
-            colored('─'*75, "yellow"),
+            colored('─'*75, 'light_yellow'),
             " ",
             colored("Press Enter to return to the main menu.", attrs=["bold"]),
             " "
         ]
         clear_screen()
-        display_border("on_yellow")
-        display_body(error_lines, "yellow", "on_yellow")
-        display_border("on_yellow")
+        display_border("on_light_yellow")
+        display_body(error_lines, "light_yellow", "on_light_yellow")
+        display_border("on_light_yellow")
         
         input()
 

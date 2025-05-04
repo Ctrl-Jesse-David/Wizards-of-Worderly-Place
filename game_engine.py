@@ -57,8 +57,8 @@ class WordscapesGame:
         Randomly reorders the available letters.
         '''
         clear_screen()
-        self.grid.display_grid(nickname, "white", "on_cyan")
-        self.cur_state("white", "on_cyan")
+        self.grid.display_grid(nickname, "white", 'on_light_cyan')
+        self.cur_state("white", 'on_light_cyan')
         random.shuffle(self.letters)
         time.sleep(0.35)
     
@@ -98,8 +98,8 @@ class WordscapesGame:
                 source = "purchased"
             else:
                 clear_screen()
-                self.grid.display_grid(nickname, "white", "on_red")
-                self.cur_state("white", "on_red")
+                self.grid.display_grid(nickname, "white", "on_light_red")
+                self.cur_state("white", "on_light_red")
                 cprint("No hints remaining!", "red", attrs=["bold"])
                 time.sleep(0.75)
                 return False
@@ -112,9 +112,9 @@ class WordscapesGame:
 
         if not hidden_positions:
             clear_screen()
-            self.grid.display_grid(nickname, "white", "on_yellow")
-            self.cur_state("white", "on_yellow")
-            cprint("No hidden letters to reveal!", "yellow", attrs=["bold"])
+            self.grid.display_grid(nickname, "white", "on_light_yellow")
+            self.cur_state("white", "on_light_yellow")
+            cprint("No hidden letters to reveal!", 'light_yellow', attrs=["bold"])
             time.sleep(0.75)
             return False
 
@@ -125,7 +125,7 @@ class WordscapesGame:
             if (row, col) in poses:
                 idx = poses.index((row, col))
                 if (row, col) in [(2 + i*2, 7 + i*2) for i in range(6)]:
-                    self.grid.incomplete_grid[row][col] = colored(word[idx], "blue", attrs=["bold"])
+                    self.grid.incomplete_grid[row][col] = colored(word[idx], 'light_blue', attrs=["bold"])
                 else:
                     self.grid.incomplete_grid[row][col] = colored(word[idx], "magenta", attrs=["bold"])
                 break
@@ -142,7 +142,7 @@ class WordscapesGame:
     
     def get_retry_option(self, nickname, on_color, state):
         if state == "lost":
-            color = 'red'
+            color = 'light_red'
         else:
             color = 'green'
         while True:
@@ -154,8 +154,8 @@ class WordscapesGame:
             print('')
             retry_option = input(
                 f"👉 [{colored('Y', 'green', attrs=['bold'])}] {colored('Play', 'green', attrs=['bold'])} / "
-                f"[{colored('N', 'red', attrs=['bold'])}] {colored('Exit', 'red', attrs=['bold'])} / "
-                f"[{colored('C', 'cyan', attrs=['bold'])}] {colored('Cheatsheet', 'cyan', attrs=['bold'])}: "
+                f"[{colored('N', 'light_red', attrs=['bold'])}] {colored('Exit', 'light_red', attrs=['bold'])} / "
+                f"[{colored('C', 'light_cyan', attrs=['bold'])}] {colored('Cheatsheet', 'light_cyan', attrs=['bold'])}: "
             ).lower().strip()
             print('')
 
@@ -164,8 +164,8 @@ class WordscapesGame:
             
             elif retry_option == 'c':
                 while True:
-                    self.grid.display_complete_grid(nickname,'white', 'on_cyan')
-                    self.end_game("on_cyan", 'cheat')
+                    self.grid.display_complete_grid(nickname,'white', 'on_light_cyan')
+                    self.end_game('on_light_cyan', 'cheat')
                     print('')
                     input()
                     break
@@ -208,7 +208,7 @@ class WordscapesGame:
             elif guess in ['-EXIT', '-E', 'E']: 
                 update_leaderboard(self.name, self.points)
                 user_progress.update_score(self.points)
-                return self.get_retry_option(nickname, "on_red", 'lost')
+                return self.get_retry_option(nickname, "on_light_red", 'lost')
 
             self.the_guess(guess, nickname)
             
@@ -221,10 +221,10 @@ class WordscapesGame:
             
 
         elif self.lives <= 0:
-            return self.get_retry_option(nickname, "on_red", 'lost')
+            return self.get_retry_option(nickname, "on_light_red", 'lost')
 
         else:
-            return self.get_retry_option(nickname, "on_red", 'lost')
+            return self.get_retry_option(nickname, "on_light_red", 'lost')
 
     def end_game(self, on_color, state="none"):
         """
@@ -247,13 +247,13 @@ class WordscapesGame:
         display_body(info, "white", on_color)
 
         if state == "cheat":
-            message = colored(f"Press {colored('Enter', 'cyan')} to return...", attrs=['bold'])
+            message = colored(f"Press {colored('Enter', 'light_cyan')} to return...", attrs=['bold'])
 
         else:
             if len(self.found_words) == len(self.words):
                 message = colored('🎉 Congratulations! You guessed all the words. 🎉', 'green', attrs=['bold'])
             else:
-                message = colored('💀 Game Over! 💀', 'red', attrs=['bold'])
+                message = colored('💀 Game Over! 💀', 'light_red', attrs=['bold'])
 
         display_body(['', message, ''], "white", on_color)
         display_border(on_color)
@@ -275,10 +275,11 @@ class WordscapesGame:
             f"💡 {colored('Hints - Free:', attrs=['bold'])} {self.free_hints}, Extra: {self.bought_hints}",
             f"📖 {colored('Words found:', attrs=['bold'])} {len(self.found_words)}/{len(self.words)}",
             f"📝 {colored('Last correct guess:', attrs=['bold'])} {self.last_guess}",
+            f"{self.words}",
             f"🎮 {colored('Commands:', attrs=['bold'])} " \
-            f"[{colored('-shuffle', 'cyan', attrs=['bold'])}|{colored('-s', 'cyan', attrs=['bold'])}], " \
+            f"[{colored('-shuffle', 'light_cyan', attrs=['bold'])}|{colored('-s', 'light_cyan', attrs=['bold'])}], " \
             f"[{colored('-hint', 'magenta', attrs=['bold'])}|{colored('-h', 'magenta', attrs=['bold'])}], " \
-            f"[{colored('-exit', 'red', attrs=['bold'])}|{colored('-e', 'red', attrs=['bold'])}]",
+            f"[{colored('-exit', 'light_red', attrs=['bold'])}|{colored('-e', 'light_red', attrs=['bold'])}]",
             ""
         ]
         display_body(info, color, on_color)
@@ -318,16 +319,16 @@ class WordscapesGame:
                     self.lives += 1
                     self.found_non_placed_words.add(guess)
                     clear_screen()
-                    self.grid.display_grid(nickname, "white", "on_yellow")
-                    self.cur_state("white", "on_yellow")
-                    cprint('🧠 Word not found in the grid. Bonus life granted!', 'yellow', attrs=['bold'])
+                    self.grid.display_grid(nickname, "white", "on_light_yellow")
+                    self.cur_state("white", "on_light_yellow")
+                    cprint('🧠 Word not found in the grid. Bonus life granted!', 'light_yellow', attrs=['bold'])
                     
 
                 else:
                     self.lives -= 1
                     clear_screen()
-                    self.grid.display_grid(nickname, "white", "on_red")
-                    self.cur_state("white", "on_red")
+                    self.grid.display_grid(nickname, "white", "on_light_red")
+                    self.cur_state("white", "on_light_red")
                     cprint('🚫 Incorrect.', "red", attrs=["bold"])
                     
                     
@@ -345,16 +346,16 @@ class WordscapesGame:
             else:
                 self.lives -= 1
                 clear_screen()
-                self.grid.display_grid(nickname, "white", "on_red")
-                self.cur_state("white", "on_red")
+                self.grid.display_grid(nickname, "white", "on_light_red")
+                self.cur_state("white", "on_light_red")
                 cprint('🚫 Incorrect.', "red", attrs=["bold"])
                 
             
 
         else:
             clear_screen()
-            self.grid.display_grid(nickname, "white", "on_red")
-            self.cur_state("white", "on_red")
+            self.grid.display_grid(nickname, "white", "on_light_red")
+            self.cur_state("white", "on_light_red")
             cprint(f"🚫 Invalid word! Only {'-'.join(list(self.letters))} is allowed", "red", attrs=["bold"])
             self.lives -= 1
             

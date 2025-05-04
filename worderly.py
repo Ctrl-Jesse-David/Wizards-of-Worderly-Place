@@ -76,12 +76,12 @@ def main_game_loop(dictionary_file='corncob-lowercase.txt'):
         elif choice == "M":
             display_shop()  
         elif choice == "E":
-            mystical_loading('CLOSING THE PORTAL...', 'SAFE TRAVELS, SORCERER!', "red", 'on_red')
+            mystical_loading('UNWEAVING THE ENCHANTMENT...', 'SAFE TRAVELS, SORCERER!', "red", 'on_light_red')
             sys.exit()
 
         else:
-            display_main_menu(text_bg='on_red')
-            cprint("🚫 Invalid Choice. Please try again!", 'red', attrs=["bold"])
+            display_main_menu(text_bg='on_light_red')
+            cprint("🚫 Invalid Choice. Please try again!", 'light_red', attrs=["bold"])
             time.sleep(0.35)
             clear_screen()
 
