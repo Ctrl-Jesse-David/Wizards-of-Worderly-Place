@@ -5,9 +5,9 @@ from word_utils import get_player_input
 
 '''
 Menu Display
-
-This module handles the game's menu options and player interactions for Wizards of Worderly Place.
-It manages game sessions, displays instructions, and maintains the leaderboard system.
+- This module handles the game's menu options and player interactions for the game.
+It provides functions for displaying the game's main menu, instructions, and leaderboards,
+including stylized formatting and interactivity to enhance player experience.
 '''
 
 def display_main_menu(text_color="white", text_bg="on_white"):
