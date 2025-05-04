@@ -99,9 +99,9 @@ def start_game_session(dictionary_file, nickname):
 
         if retry_option:
             if retry_option.lower() == 'n':
-                mystical_loading('CLOSING THE PORTAL...', '' , "light_magenta", "on_light_magenta")
+                mystical_loading('CLOSING THE PORTAL...', '' , "magenta", "on_magenta")
                 break
-            elif retry_option.lower() == 'y':
+            elif retry_option.lower() == 'p':
                 continue
             else:
                 mystical_loading('CLOSING THE PORTAL...', '' , "light_magenta", "on_light_magenta")
