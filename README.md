@@ -35,6 +35,8 @@ The scrolls await…will your name be etched among the legends?
 
      - '-shuffle' or '-s':  Stir the cauldron and rearrange the available letters for new inspiration!
      - '-hint' or '-h': Receive a whisper of guidance from the spirits. You may call upon this magic five (5) times freely per game.
+     - '-[additional]' or '-ad': Cast this spell in dire times to enchant all unanswered runes pulse with crimson light,
+       guiding your gaze toward the missing incantations still awaiting your chant.
      - '-exit' or '-e': Retreat from the spell chamber and end your trial as a wizard.
 
 ### **Spell Points**
