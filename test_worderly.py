@@ -400,8 +400,8 @@ def test_generate_word_grid():
     assert len(placed_words) <= 25  #Max parameter
     
     #False assertion
-    assert not len(placed_words) <= 21  #Wrong min parameter
-    assert not len(placed_words) >= 25  #Wrong max parameter
+    assert not len(placed_words) < 21  #Wrong min parameter
+    assert not len(placed_words) > 25  #Wrong max parameter
 
     #Validate that placed_words format is correct (word, (row, col), direction)
     for word_info in placed_words:
