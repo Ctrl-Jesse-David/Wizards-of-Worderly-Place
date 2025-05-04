@@ -7,7 +7,8 @@ from grid_constructor import (
     is_valid_placement,
     place_word,
     generate_positions_dict,
-    generate_word_grid
+    generate_word_grid,
+    main_has_adjacent_letter
 )
 from word_utils import is_valid, get_wrapped_words
 
@@ -383,3 +384,31 @@ def test_generate_word_grid():
     
     #Check that main word (first in list) is placed in diagonal
     assert placed_words[0][2] == 'd'
+    
+def test_main_has_adjacent_letter():
+    """
+    Test for main_has_adjacent_letter
+    """
+    grid = [['.' for _ in range(25)] for _ in range(15)]
+    
+    #Main diag
+    word = "STREAK"
+    for i, letter in enumerate(word):
+        grid[2 + i*2][7 + i*2] = letter.upper()
+    
+    #No adjacent letters 
+    assert main_has_adjacent_letter(grid) == False
+    
+    #Add adjacent letters to all diagonal positions
+    for i in range(len(word)):
+        r, c = 2 + i*2, 7 + i*2
+        grid[r][c + 1] = 'X'    #Adding letter to the right of each diagonal letter
+    
+    #All letters have adjacent letters
+    assert main_has_adjacent_letter(grid) == True
+    
+    #Remove one adjacent letter (should be False)
+    middle_idx = len(word) // 2
+    r, c = 2 + middle_idx*2, 7 + middle_idx*2
+    grid[r][c + 1] = '.'    #Remove the adjacent letter
+    assert main_has_adjacent_letter(grid) == False
