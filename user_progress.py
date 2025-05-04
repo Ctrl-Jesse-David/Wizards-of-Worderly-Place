@@ -113,13 +113,13 @@ def purchase_hint(hint_id, cost):
         
     #Check purchase limit
     if user["hints_available"] >= MAX_PURCHASED_HINTS:
-        cprint(f"Maximum of {MAX_PURCHASED_HINTS} hints reached!", 'light_yellow')
+        cprint(f"Maximum of {MAX_PURCHASED_HINTS} whispers reached!", 'light_yellow')
         return False
     
     #Check if enough points
     if user["points"] < cost:
         print('')
-        cprint(f"🚫 Not enough magic points! You have {user['points']} but the hint costs {cost}.", "light_red", attrs=["bold"])
+        cprint(f"🚫 Not enough magic points! You have {user['points']} but a whisper costs {cost}.", "light_red", attrs=["bold"])
         return False
     
     #Deduct cost and give hint
@@ -128,7 +128,7 @@ def purchase_hint(hint_id, cost):
     user["hints_available"] += 1
     save_users(users)
     print('')
-    cprint(f"✨ Hint purchased! You have {user['points']} magic points remaining.", 'light_green', attrs=['bold'])
+    cprint(f"✨ Whisper attained! You have {user['points']} magic points remaining.", 'light_green', attrs=['bold'])
     return True
 
 def logout_user():
@@ -154,7 +154,7 @@ def display_user_profile():
         '═'*75,
         "",
         colored(f"✨ Magic Points: {stats['points']}", "white"),
-        colored(f"🔮 Available Hints: {stats['hints_available']}"),
+        colored(f"🔮 Available Whispers: {stats['hints_available']}"),
         colored(f"🏆 Highest Score: {stats['highest_score']}"),
         "",
         '─'*75,
@@ -189,7 +189,7 @@ def display_shop():
     
     shop_lines = [
         "",
-        colored("🛒 Mystic Market 🛒", attrs=["bold"]),
+        colored("🛒 The Mystic Market 🛒", attrs=["bold"]),
         "",
         colored('═'*75),
         "",
@@ -200,12 +200,12 @@ def display_shop():
     ]
     
     shop_items = [
-        {"id": "basic_hint", "name": "Basic Hint", "cost": 10, "description": "🔍 Reveals one letter in a hidden word"},
+        {"id": "basic_hint", "name": "Whisper of Guidance", "cost": 10, "description": "🔍 Reveals one letter in a hidden word"},
     ]
     
     for i, item in enumerate(shop_items, 1):
         shop_lines.append(colored(f"{i}. {item['name']} - {item['cost']} points", "white"))
-        shop_lines.append(colored(f"   {item['description']}", "white"))
+        shop_lines.append(colored(f"{item['description']}", "white"))
         shop_lines.append("")
     
     shop_lines.extend([
