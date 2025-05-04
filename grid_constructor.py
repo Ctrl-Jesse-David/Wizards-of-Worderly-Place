@@ -2,18 +2,18 @@ import random
 from file_operations import get_main_and_valid_words
 from display_manager import color_dots_in_grid
 
-"""
-GRID CONSTRUCTOR
-
--------------------ADD LATER
-"""
-
 def place_main_diagonal(word, grid):
+    '''
+    Places the main 6-letter word diagonally on the grid from top-left to bottom-right.
+    '''
     for i, letter in enumerate(word.upper()):
         grid[2 + i*2][7 + i*2] = letter
     return grid
 
 def find_intersections(word, grid):
+    '''
+    Finds valid grid positions where a word intersects with existing letters.
+    '''
     intersections = []
     for i, letter in enumerate(word):
         for r in range(len(grid)):
@@ -30,12 +30,19 @@ def find_intersections(word, grid):
     return intersections
 
 def place_word_on_grid(word, row, col, direction, grid):
+    '''
+    Places a word on the grid in a specified direction.
+    '''
     for i, letter in enumerate(word):
         r = row + (i if direction == 'v' else 0)
         c = col + (i if direction == 'h' else 0)
         grid[r][c] = letter
 
 def is_valid_placement(word, row, col, direction, grid):
+    '''
+    Checks if a word can be placed at a given position and direction 
+    without invalid overlaps or adjacency issues.
+    '''
     rows, cols = len(grid), len(grid[0])
     for i, letter in enumerate(word):
         r, c = row + (i if direction == 'v' else 0), col + (i if direction == 'h' else 0)
@@ -69,6 +76,9 @@ def is_valid_placement(word, row, col, direction, grid):
     return True
 
 def place_word(word, grid):
+    '''
+    Attempts to place a word on the grid using valid intersections.
+    '''
     intersections = find_intersections(word, grid)
     random.shuffle(intersections)
 
@@ -80,6 +90,9 @@ def place_word(word, grid):
     return False, None
 
 def generate_word_grid(dictionary_file, min, max):
+    '''
+    Generates a grid filled with words with limited number of placed words.
+    '''
     while True:
         main_word, valid_words = get_main_and_valid_words(dictionary_file)
         grid = [[('.') for _ in range(25)] for _ in range(15)]
@@ -100,6 +113,9 @@ def generate_word_grid(dictionary_file, min, max):
             continue
         
 def main_has_adjacent_letter(grid):
+    '''
+    Verifies that each letter in the main diagonal word has at least one adjacent letter.
+    '''
     coords = [(2 + i*2, 7 + i*2) for i in range(6)]
     for r, c in coords:
         has_adjacent = any(grid[r + dr][c + dc] != '.' for dr, dc in [(-1, 0), (1, 0), (0, -1), (0, 1)])
@@ -109,6 +125,9 @@ def main_has_adjacent_letter(grid):
 
 
 def generate_positions_dict(placed_words):
+    '''
+    Creates a mapping of word to list of its letters' (row, col) positions on the grid.
+    '''
     positions = {}
     for word, coords, direction in placed_words:
         r, c = coords
