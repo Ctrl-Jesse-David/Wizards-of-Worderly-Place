@@ -153,13 +153,13 @@ class WordscapesGame:
             cprint('🔄 Would you like to play again, exit, or view cheatsheet?', attrs=['bold'])
             print('')
             retry_option = input(
-                f"👉 [{colored('Y', 'green', attrs=['bold'])}] {colored('Play', 'green', attrs=['bold'])} / "
-                f"[{colored('N', 'red', attrs=['bold'])}] {colored('Exit', 'red', attrs=['bold'])} / "
+                f"👉 [{colored('P', 'green', attrs=['bold'])}] {colored('Play', 'green', attrs=['bold'])} / "
+                f"[{colored('E', 'red', attrs=['bold'])}] {colored('Exit', 'red', attrs=['bold'])} / "
                 f"[{colored('C', 'cyan', attrs=['bold'])}] {colored('Cheatsheet', 'cyan', attrs=['bold'])}: "
             ).lower().strip()
             print('')
 
-            if retry_option in ['y', 'n']:
+            if retry_option in ['p', 'e']:
                 return retry_option
             
             elif retry_option == 'c':
