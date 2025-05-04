@@ -280,11 +280,18 @@ def test_calculate_points():
     points = game.calculate_points("STREAK", set())
     assert points == 6  #STREAK has 6 letters/positions
 
+    assert not points == 5 #False assertion -> fails since incorrect handling of points
+    assert not points == 'a' #False assertion -> fails if point is a str
+    
+
     found_words = {"STREAK"}
     points = game.calculate_points("STARE", found_words)
     #STARE positions: [(4, 9), (5, 9), (6, 9), (7, 9), (8, 9)]
     #STREAK positions: [(2, 7), (4, 9), (6, 11), (8, 13), (10, 15), (12, 17)]
     assert points == 4  #4 positions not overlapping with STREAK
+
+    assert not points == 5 #False assertion -> fails since incorrect handling of points
+    assert not points == 'z' #False assertion -> fails if point is a str
     
     #Test with two previously found words
     found_words = {"STREAK", "STARE"}
